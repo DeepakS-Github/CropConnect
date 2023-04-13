@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import CropPredictor from './components/CropPredictor'
+import HomePage from './components/HomePage'
+import InsecticidePredictor from './components/InsecticidePredictor'
+import ItemBoard from './components/ItemBoard'
+import ItemTable from './components/ItemTable'
 
-function App() {
+import{
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import FarmerDashboard from './components/FarmerDashboard'
+import Navbar from './components/Navbar'
+import SellerSignUpPage from './components/SellerSignUpPage'
+import UserLogin from './components/UserLogin'
+import UserSignUpPage from './components/UserSignUpPage'
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    // <>
+    // <div>
+    //   {window.location.pathname === '/' && <HomePage/>}
+    //   {/* {window.location.pathname === '/itemboard' && <ItemBoard/>} */}
+    //   {window.location.pathname === '/croppredictor' && <CropPredictor/>}
+    //   {window.location.pathname === '/insecticidepredictor' && <InsecticidePredictor/>}
+    //   {window.location.pathname === '/itemtable' && <ItemTable/>}
+    // </div>
+      
+    <Router>
+        <Navbar/>
+      <Routes>
+        <Route exact path="/" element={<HomePage/>} />
+        <Route exact path="/croppredictor" element={<CropPredictor/>} />
+        <Route exact path="/itemtable/:category" element={<ItemTable/>} />
+        <Route exact path="/insecticidepredictor" element={<InsecticidePredictor/>} />
+        <Route exact path="/itemboard/:itemData" element={<ItemBoard/>} />
+        <Route exact path="/farmerdashboard" element={<FarmerDashboard/>} />
+        <Route exact path="/sellersignup" element={<SellerSignUpPage/>} />
+        <Route exact path="/usersignup" element={<UserSignUpPage/>} />
+      </Routes>
+    </Router>
+    // {/* </> */}
+  )
 }
-
-export default App;
