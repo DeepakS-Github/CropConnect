@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from 'react';
 import axios from "axios";
+import Spinner from "./Spinner";
 
 
 
@@ -13,32 +14,36 @@ function CropPredictor() {
     const [temperature, setTemperature] = useState('');
     const [region, setRegion] = useState('');
     const [rainfall, setRainfall] = useState('');
+    const [loading, setLoading] = useState(false);
 
 
-    let [prompt, setPrompt] = useState("");
-    const [response, setResponse] = useState("");
 
     const handleSubmit = (e) =>{
       e.preventDefault();
+      setLoading(true);
 
       let userQues =  `region: ${region}, soil: ${soil}, temperature: ${temperature}, altitude: ${altitude}, humidity: ${humidity}, rainfall: ${rainfall}. Recommed me the crops that can be grown in India following the given conditions. Write in points, the crops name and some text for explanation.`;
 
       axios
         .post("http://localhost:8080/chat", {prompt: userQues})
         .then((res)=>{
-          setResponse(res.data);
+          let modifiedText = res.data.message.replace(/\n/g, "<br>");
+          document.getElementById("crop").innerHTML = modifiedText;
           console.log(res.data);
+          setLoading(false);
         })
         .catch((err)=>{
           console.log(err);
+          setLoading(false);
+          alert("Something went wrong. Try again later!");
         });
     }
     
 
   return (
     <>
-      <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
-        <div className="container max-w-screen-lg mx-auto">
+      <div className="min-h-screen p-6 bg-gray-100">
+        <div className="container max-w-screen-lg mx-auto mt-32">
           <div>
             <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
@@ -136,8 +141,10 @@ function CropPredictor() {
 
                     <div className="md:col-span-6 text-right">
                       <div className="inline-flex items-end">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                          Find
+                       
+
+                        <button className="relative bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        {(loading)?<Spinner/>:"Find"}
                         </button>
                       </div>    
                     </div>
@@ -146,11 +153,11 @@ function CropPredictor() {
                   <div className="md:col-span-6">
                       <label for="address">Crops</label>
 
-                      <p
-                        id="w3review"
+                      <div
+                        id="crop"
                         name="w3review"
                         className="resize-none h-auto border mt-1 py-4 rounded px-4 w-full bg-gray-50"
-                      >{response}</p>
+                      ></div>
                       
                     </div>
                   </div>

@@ -15,6 +15,8 @@ import Navbar from './components/Navbar'
 import SellerSignUpPage from './components/SellerSignUpPage'
 import UserLogin from './components/UserLogin'
 import UserSignUpPage from './components/UserSignUpPage'
+import CropGrowingSteps from './components/CropGrowingSteps'
+import Footer from './components/Footer'
 
 
 export default function App() {
@@ -35,11 +37,13 @@ export default function App() {
         <Route exact path="/croppredictor" element={<CropPredictor/>} />
         <Route exact path="/itemtable/:category" element={<ItemTable/>} />
         <Route exact path="/insecticidepredictor" element={<InsecticidePredictor/>} />
+        <Route exact path="/cropgrowingsteps" element={<CropGrowingSteps/>} />
         <Route exact path="/itemboard/:itemData" element={<ItemBoard/>} />
         <Route exact path="/farmerdashboard" element={<FarmerDashboard/>} />
         <Route exact path="/sellersignup" element={<SellerSignUpPage/>} />
         <Route exact path="/usersignup" element={<UserSignUpPage/>} />
       </Routes>
+      <Footer/>
     </Router>
     // {/* </> */}
   )

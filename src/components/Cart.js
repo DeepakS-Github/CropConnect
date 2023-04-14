@@ -58,7 +58,7 @@ function Cart(props) {
     console.log("Click");
 
     fetch(`http://localhost:4100/api/deleteCartItem/${userData}/${toDelete}`, {
-      method: "DELETE",
+      method: "DELETE"
     })
       .then((response) => {
         if (response.status == 500) {

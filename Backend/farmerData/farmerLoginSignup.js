@@ -39,4 +39,15 @@ app.get("/api/farmer/login/:email/:password", async(req, res)=>{
 });
 
 
+// Get Farmer Data using its Id
+app.get("/api/farmer/getFarmerData/:key", async(req, res)=>{
+    try{
+        let data = await Farmer.findOne({_id :req.params.key});
+        res.status(400).send(data);
+    } catch(error){
+        res.status(500).send('Something went wrong!');
+    }
+});
+
+
 app.listen(3700);

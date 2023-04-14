@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Spinner from "./Spinner";
 
-function InsecticidePredictor() {
+function CropGrowingSteps() {
   const [crops, setCrops] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -13,13 +13,13 @@ function InsecticidePredictor() {
     console.log(prompt);
     setLoading(true);
 
-    let userQues = `crops: ${crops}. Recommed me the insecticides that can be grown in India for the given crop. Write insecticide name and some text for explanation`;
+    let userQues = `crops: ${crops}. Give the steps to grow this crop in India. If this is not the crop then give error statement`;
 
     axios
         .post("http://localhost:8080/chat", {prompt: userQues})
         .then((res)=>{
           let modifiedText = res.data.message.replace(/\n/g, "<br>");
-          document.getElementById("insecticide").innerHTML = modifiedText;
+          document.getElementById("steps").innerHTML = modifiedText;
           console.log(res.data);
           setLoading(false);
         })
@@ -39,7 +39,7 @@ function InsecticidePredictor() {
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                 <div className="text-gray-600">
                   <p className="font-medium text-lg">
-                    Insecticide Predictor
+                  How to Grow Crop
                   </p>
                   <p>Please fill out all the fields.</p>
                 </div>
@@ -71,9 +71,9 @@ function InsecticidePredictor() {
                     </form>
 
                     <div className="md:col-span-6">
-                      <label for="address">Insecticides</label>
+                      <label for="address">Steps</label>
                       <div
-                        id="insecticide"
+                        id="steps"
                         name="w3review"
                         className="resize-none h-auto border mt-1 py-4 rounded px-4 w-full bg-gray-50"
                       ></div>
@@ -89,4 +89,4 @@ function InsecticidePredictor() {
   );
 }
 
-export default InsecticidePredictor;
+export default CropGrowingSteps;

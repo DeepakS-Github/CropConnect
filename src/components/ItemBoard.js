@@ -5,8 +5,11 @@ import { Link } from "react-router-dom";
 
 function ItemBoard() {
   const { itemData } = useParams();
+
   const itData = JSON.parse(itemData);
-  const [data, setData] = useState([]);
+  console.log("itemData", itData);
+  const [data, setData] = useState();
+
 
   let userData = localStorage.getItem("userObjId");
 
@@ -29,7 +32,7 @@ function ItemBoard() {
   }
 
   // API Fetch
-  let API = `http://localhost:3500/api/farmer/login/${itData.farmerId}`;
+  let API = `http://localhost:3700/api/farmer/getFarmerData/${itData.farmerId}`;
 
   const fetchApiData = async (url) => {
     try {
@@ -68,26 +71,26 @@ function ItemBoard() {
       .catch((error) => alert("Something went wrong. Try again!"));
   };
 
-  const items = data.map((item) => (
-    <div class="bg-white relative flex flex-wrap py-6 rounded shadow-md">
-      <div class="lg:w-1/2 px-6">
-        <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs">
-          ADDRESS
-        </h2>
-        <p class="mt-1">{item.address}</p>
-      </div>
-      <div class="lg:w-1/2 px-6 mt-4 lg:mt-0">
-        <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs">
-          EMAIL
-        </h2>
-        <a class="leading-relaxed">{item.email}</a>
-        <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs mt-4">
-          PHONE
-        </h2>
-        <p class="leading-relaxed">{item.phoneNo}</p>
-      </div>
-    </div>
-  ));
+  // const items = data.map((item) => (
+  //   <div class="bg-white relative flex flex-wrap py-6 rounded shadow-md">
+  //     <div class="lg:w-1/2 px-6">
+  //       <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs">
+  //         ADDRESS
+  //       </h2>
+  //       <p class="mt-1">{item.address}</p>
+  //     </div>
+  //     <div class="lg:w-1/2 px-6 mt-4 lg:mt-0">
+  //       <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs">
+  //         EMAIL
+  //       </h2>
+  //       <a class="leading-relaxed">{item.email}</a>
+  //       <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs mt-4">
+  //         PHONE
+  //       </h2>
+  //       <p class="leading-relaxed">{item.phoneNo}</p>
+  //     </div>
+  //   </div>
+  // ));
 
   return (
     <>
@@ -416,7 +419,7 @@ function ItemBoard() {
                     <h1>Something went wrong.</h1>
                   ) : (
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224556.37167284272!2d-96.80666700324347!3d32.7959605861787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDE5JzQzLjgiTiA5NsKwMjYnMjcuMCJX!5e0!3m2!1sen!2sus!4v1615650154708!5m2!1sen!2sus"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3402.5657354084187!2d76.1881151755368!3d31.48113007423195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391adb198180014f%3A0xbf76347093a3aa9a!2sIndian%20Institute%20of%20Information%20Technology%20(IIIT)%20Una!5e0!3m2!1sen!2sin!4v1681507459197!5m2!1sen!2sin"
                       width="100%"
                       height="100%"
                       frameborder="0"
@@ -448,7 +451,24 @@ function ItemBoard() {
                       <p class="leading-relaxed">{APIdata[0].phoneNo}</p>
                     </div>
                   </div> */}
-                  {items}
+                   {/* <div class="bg-white relative flex flex-wrap py-6 rounded shadow-md">
+     <div class="lg:w-1/2 px-6">
+       <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs">
+         ADDRESS
+       </h2>
+       <p class="mt-1">{data.address}</p>
+     </div>
+     <div class="lg:w-1/2 px-6 mt-4 lg:mt-0">
+       <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs">
+         EMAIL
+       </h2>
+       <a class="leading-relaxed">{data.email}</a>
+       <h2 class="title-font font-semibold text-rose-600 tracking-widest text-xs mt-4">
+         PHONE
+       </h2>
+       <p class="leading-relaxed">{data.phoneNo}</p>
+     </div>
+   </div> */}
                 </div>
 
                 <div class="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
@@ -507,8 +527,8 @@ function ItemBoard() {
           </div>
 
           <div class="lg:w-11/12 mx-auto flex flex-wrap">
-            <div class="container my-24 px-6 mx-auto">
-              <section class="mb-32 text-gray-900">
+            <div class="container mt-24 px-6 mx-auto">
+              <section class=" text-gray-900">
                 <h2 class="text-gray-900 text-center text-3xl title-font font-medium mb-12">
                   Frequently asked questions
                 </h2>
