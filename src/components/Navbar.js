@@ -130,6 +130,25 @@ function Navbar() {
                       </a>
                       </Link>
                     </li>
+                    <li>
+                        <Link to="/infoweather">
+                      <a
+                        href="#"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Weather Forecast
+                      </a>
+                      </Link>
+                    </li>
+                    
+                    <li>
+                      <a
+                        href="https://enam.gov.in/web/dashboard/trade-data" target="_blank"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Estimate Crop Price
+                      </a>
+                    </li>
                   </ul>
                   
                 </div>

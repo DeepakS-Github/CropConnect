@@ -13,10 +13,10 @@ import{
 import FarmerDashboard from './components/FarmerDashboard'
 import Navbar from './components/Navbar'
 import SellerSignUpPage from './components/SellerSignUpPage'
-import UserLogin from './components/UserLogin'
 import UserSignUpPage from './components/UserSignUpPage'
 import CropGrowingSteps from './components/CropGrowingSteps'
 import Footer from './components/Footer'
+import Weather from './components/Weather'
 
 
 export default function App() {
@@ -42,6 +42,7 @@ export default function App() {
         <Route exact path="/farmerdashboard" element={<FarmerDashboard/>} />
         <Route exact path="/sellersignup" element={<SellerSignUpPage/>} />
         <Route exact path="/usersignup" element={<UserSignUpPage/>} />
+        <Route exact path="/infoweather" element={<Weather/>} />
       </Routes>
       <Footer/>
     </Router>

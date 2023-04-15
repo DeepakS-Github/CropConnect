@@ -4,7 +4,8 @@ function Footer() {
   return (
     <>
   {/* <!-- Container for demo purpose --> */}
-<div class="container mb-8 mt-24 px-6 mx-auto">
+  <div className='pt-32  bg-gray-100'>
+<div class="container mb-8 px-6 mx-auto">
 
   {/* <!-- Section: Design Block --> */}
   <section class=" text-gray-800">
@@ -192,6 +193,7 @@ function Footer() {
   {/* <!--Copyright section--> */}
  
 </footer>
+</div>
 
 
 
