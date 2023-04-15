@@ -1,7 +1,6 @@
 const express = require('express');
 require('./connectDB');
 const Farmer = require('./farmerSchema');
-const Cart = require("../cart/cartSchema");
 const cors = require('cors');
 
 const app = express();

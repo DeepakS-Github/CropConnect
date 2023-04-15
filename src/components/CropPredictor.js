@@ -22,7 +22,7 @@ function CropPredictor() {
       e.preventDefault();
       setLoading(true);
 
-      let userQues =  `region: ${region}, soil: ${soil}, temperature: ${temperature}, altitude: ${altitude}, humidity: ${humidity}, rainfall: ${rainfall}. Recommed me the crops that can be grown in India following the given conditions. Write in points, the crops name and some text for explanation.`;
+      let userQues =  `region: ${region}, soil: ${soil}, temperature: ${temperature} degree celcius, altitude: ${altitude} km, humidity: ${humidity}%, rainfall: ${rainfall} mm. Recommed me the crops that can be grown in India following the given conditions. Write in points, the crops name and some text for explanation.`;
 
       axios
         .post("http://localhost:8080/chat", {prompt: userQues})
@@ -115,7 +115,7 @@ function CropPredictor() {
 
                     <div className="md:col-span-2">
                       <label for="email">
-                        Humidity (in gm<sup>-3</sup>)
+                        Humidity (in %)
                       </label>
                       <input
                         type="number"
@@ -128,7 +128,7 @@ function CropPredictor() {
 
                     <div className="md:col-span-2">
                       <label for="email">
-                        Rainfall (in mm<sup>3</sup>)
+                        Rainfall (in mm)
                       </label>
                       <input
                         type="text"

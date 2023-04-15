@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Spinner from "./Spinner";
 
 function Weather() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [realTimeData, setRealTimeData] = useState(1);
   const [timezone, setTimezone] = useState(1);
 
@@ -23,6 +24,9 @@ function Weather() {
   let latitude = 0, longitude = 0;
 
   const getFutureData = async (lat, long) => {
+
+    setIsLoading(true);
+
     lat = lat.toString();
     long = long.toString();
   
@@ -42,6 +46,7 @@ function Weather() {
       const data = await response.json();
       console.log(latitude, longitude);
       console.log(data);
+      setIsLoading(false);
       console.log(`https://weatherapi-com.p.rapidapi.com/forecast.json?q=${latitude}%2C${longitude}&days=3`);
       setRealTimeCondition(data.current.condition.text);
       setRealTimeData(data.current);
@@ -111,7 +116,7 @@ function Weather() {
                 }
             }}
           >
-            Give Location Access
+            {(isLoading)?<Spinner/>:"Give Location Access"}
           </button>
         </div>
 
@@ -220,7 +225,7 @@ function Weather() {
                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                           <tr>
                             <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                              Date
+                              Time
                             </td>
                             <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                               {realTimeData.last_updated}
