@@ -16,7 +16,7 @@ function InsecticidePredictor() {
     let userQues = `crops: ${crops}. Recommed me the insecticides that can be grown in India for the given crop. Write insecticide name and some text for explanation`;
 
     axios
-        .post("http://localhost:8080/chat", {prompt: userQues})
+        .post("/chat", {prompt: userQues}) // s3
         .then((res)=>{
           let modifiedText = res.data.message.replace(/\n/g, "<br>");
           document.getElementById("insecticide").innerHTML = modifiedText;
