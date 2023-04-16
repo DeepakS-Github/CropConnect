@@ -15,7 +15,9 @@ const sdk = require("api")("@writesonic/v2.2#4enbxztlcbti48j");
 const app = express();
 app.use(express.json());
 app.use(cors());
+require("dotenv").config();
 
+console.log(process.env.CHATSONIC_API_KEY);
 sdk.auth("06bc910a-d3c6-46cf-96e4-9ea99f93c52c");
 // endpoint for chatgpt
 app.post("/chat", async (req, res) => {
