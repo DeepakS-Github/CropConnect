@@ -16,7 +16,7 @@ function CropGrowingSteps() {
     let userQues = `crops: ${crops}. Give the steps to grow this crop in India. If this is not the crop then give error statement`;
 
     axios
-        .post("http://localhost:8080/chat", {prompt: userQues})
+        .post("/chat", {prompt: userQues}) // 8080 - s3
         .then((res)=>{
           let modifiedText = res.data.message.replace(/\n/g, "<br>");
           document.getElementById("steps").innerHTML = modifiedText;
