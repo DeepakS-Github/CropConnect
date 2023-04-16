@@ -43,7 +43,7 @@ function FarmerDashboard() {
       about: `${about}`,
     };
 
-    fetch("http://localhost:4500/api/addItem", {
+    fetch("/api/addItem", { //s2
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ function FarmerDashboard() {
 
 
     fetch(
-      `http://localhost:4500/api/farmerdashboard/getItemData/update/${toEdit}`,
+      `/api/farmerdashboard/getItemData/update/${toEdit}`, // s2
       {
         method: "PUT",
         headers: {
@@ -121,7 +121,7 @@ function FarmerDashboard() {
     console.log(toDelete);
 
     fetch(
-      `http://localhost:4500/api/farmerdashboard/getItemData/delete/${toDelete}`,
+      `/api/farmerdashboard/getItemData/delete/${toDelete}`, // s2
       {
         method: "DELETE",
       }
@@ -142,7 +142,7 @@ function FarmerDashboard() {
 
   let Sno=0;
 
-  let API = `http://localhost:4500/api/farmerdashboard/getItemData/${farmerID}`;
+  let API = `/api/farmerdashboard/getItemData/${farmerID}`; // s2
 
   const fetchApiData = async (url) => {
     try {
