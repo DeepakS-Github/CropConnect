@@ -27,7 +27,7 @@ function UserSignUpPage() {
           address: `${address}`,
         };
     
-        fetch("http://localhost:3600/api/user/signup", {
+        fetch("/api/user/signup", { //s5
           method: "POST",
           headers: {
             "Content-Type": "application/json",
