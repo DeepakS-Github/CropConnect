@@ -1,4 +1,4 @@
-# CropConnect
+# CropConnect (AgroTech)
 
 ## Objective
 CropConnect is a website that connects crop and dairy farmers directly to consumers, eliminating the need for intermediaries in the traditional supply chain. The website also provides additional features such as a crop predictor, insecticide predictor, crop growind steps, soil nutrient predictor, weather forecast and estimate crop price, which can help farmers optimize their farming practices and increase their yields.
