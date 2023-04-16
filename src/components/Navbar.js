@@ -94,7 +94,7 @@ function Navbar() {
                     ></path>
                   </svg>
                   <div
-                  class={`z-10 absolute top-12 left-0 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 ${(showDropdown)?"":"hidden"}`}
+                  class={`z-10 absolute top-12 left-0 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 ${(showDropdown)?"":"hidden"}`}
                 >
                   <ul
                     class="py-2 text-md text-gray-700 dark:text-gray-400"
@@ -127,6 +127,16 @@ function Navbar() {
                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Crop Growing Steps
+                      </a>
+                      </Link>
+                    </li>
+                    <li>
+                        <Link to="/soilnutrientpredictor">
+                      <a
+                        href="#"
+                        class="block px-4 py-2 whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Soil Nutrient Predictor
                       </a>
                       </Link>
                     </li>
@@ -172,6 +182,7 @@ function Navbar() {
                   href="#"
                   class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   onClick={()=>{
+                    // window.location.href = "/";
                     setDropBox(1);
                   }}
                 >

@@ -1,5 +1,5 @@
 const express = require('express');
-require('./connectDB');
+require('../connectDB');
 const User = require('./userSchema');
 const cors = require('cors');
 
@@ -12,12 +12,12 @@ app.use(express.json());
 app.post("/api/user/signup", async(req,res)=>{
     try{
         let data = User(req.body);
-        let result = await data.save();
+        let result = await data.save({ writeConcern: { w: 'majority' } } );
         console.log(result);
         res.send(result);
     } catch(error){
         console.log(error);
-        res.status(500).send('Something went wrong!');
+        
     }
 });
 

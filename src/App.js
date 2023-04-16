@@ -1,5 +1,6 @@
 import './App.css'
 import CropPredictor from './components/CropPredictor'
+import SoilNutrients from './components/SoilNutrients'
 import HomePage from './components/HomePage'
 import InsecticidePredictor from './components/InsecticidePredictor'
 import ItemBoard from './components/ItemBoard'
@@ -21,14 +22,6 @@ import Weather from './components/Weather'
 
 export default function App() {
   return (
-    // <>
-    // <div>
-    //   {window.location.pathname === '/' && <HomePage/>}
-    //   {/* {window.location.pathname === '/itemboard' && <ItemBoard/>} */}
-    //   {window.location.pathname === '/croppredictor' && <CropPredictor/>}
-    //   {window.location.pathname === '/insecticidepredictor' && <InsecticidePredictor/>}
-    //   {window.location.pathname === '/itemtable' && <ItemTable/>}
-    // </div>
       
     <Router>
         <Navbar/>
@@ -43,9 +36,9 @@ export default function App() {
         <Route exact path="/sellersignup" element={<SellerSignUpPage/>} />
         <Route exact path="/usersignup" element={<UserSignUpPage/>} />
         <Route exact path="/infoweather" element={<Weather/>} />
+        <Route exact path="/soilnutrientpredictor" element={<SoilNutrients/>} />
       </Routes>
       <Footer/>
     </Router>
-    // {/* </> */}
   )
 }

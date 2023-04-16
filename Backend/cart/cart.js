@@ -1,5 +1,5 @@
 const express = require("express");
-require("./connectDB");
+require("../connectDB");
 const Cart = require("./cartSchema");
 const cors = require("cors");
 
@@ -16,11 +16,11 @@ app.post("/api/addCartItem/:key1/:key2", async (req, res) => {
       data = await Cart({userId: req.params.key1});
     }
     data.itemsId.push(req.params.key2)
-    let result = await data.save();
+    let result = await data.save({ writeConcern: { w: 'majority' } } );
     console.log(result);
     res.status(200).send(result);
   } catch (error) {
-    res.status(400).send("Something went wrong!");
+    res.status(400);
   }
 });
 
@@ -31,7 +31,7 @@ app.get("/api/showCartItem/:key", async (req, res) => {
     let data = await Cart.findOne({ userId: req.params.key });
     res.status(200).send(data);
   } catch (error) {
-    res.status(400).send("Something went wrong!");
+    res.status(400);
     console.log(error);
   }
 });
@@ -47,10 +47,10 @@ app.delete("/api/deleteCartItem/:key1/:key2", async (req, res) => {
     }
     const updatedItems = item.itemsId.filter((id) => id !== key);
     item.itemsId = updatedItems;
-    await item.save();
+    await item.save({ writeConcern: { w: 'majority' } } );
     res.status(201).send({ message: "Item deleted successfully!" });
   } catch (error) {
-    res.status(400).send({ message: "Something went wrong!", error: error });
+    res.status(400);
   }
 });
 

@@ -38,7 +38,7 @@ function UserSignUpPage() {
             if (response.status == 500) {
               alert("Please fill all the input fields correctly or this email already exists");
             } else {
-              alert("Seller account created");
+              alert("User account created");
               window.location.href = "/";
             }
           })

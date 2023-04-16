@@ -1,5 +1,5 @@
 const express = require("express");
-require("./connectDB");
+require("../connectDB");
 const Item = require("./itemSchema");
 const cors = require("cors");
 
@@ -12,11 +12,11 @@ app.use(express.json());
 app.post("/api/addItem", async (req, res) => {
   try {
     let data = Item(req.body);
-    let result = await data.save();
+    let result = await data.save({ writeConcern: { w: 'majority' } });
     console.log(result);
     res.status(400).send(result);
   } catch (error) {
-    res.status(500).send("Something went wrong!");
+    res.status(500);
   }
 });
 
@@ -55,29 +55,31 @@ app.get("/api/farmerdashboard/getItemData/:key", async (req, res) => {
 // Delete Item
 app.delete("/api/farmerdashboard/getItemData/delete/:key", async (req, res) => {
   try {
-    let data = await Item.deleteOne({ _id: req.params.key });
+    let data = await Item.deleteOne({ _id: req.params.key }, { writeConcern: { w: 'majority' } }); // Explicitly set write concern to 'majority'
     res.status(200).send(data);
   } catch (error) {
     res.status(500).send("Something went wrong!");
   }
 });
 
+
 // Update Item
 app.put("/api/farmerdashboard/getItemData/update/:_id", async (req, res) => {
   // console.log(req.params); // req.params here stores id in object
   try {
     let data = await Item.updateOne(
-        // {conditon in object}, {$set:}
-        req.params, // req.params -> already a object
-        {
-          $set: req.body,
-        }
-      );
-      res.status(200).send(data);
+      // {condition in object}, {$set:}
+      req.params, // req.params -> already an object
+      {
+        $set: req.body,
+      },
+      { writeConcern: { w: 'majority' } } // Explicitly set write concern to 'majority'
+    );
+    res.status(200).send(data);
   } catch (error) {
     res.status(500).send("Something went wrong!");
   }
-  
 });
+
 
 app.listen(4500);

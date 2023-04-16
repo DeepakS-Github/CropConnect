@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-sdk.auth("7e3e6f54-209a-439b-91f4-d4b933a24502");
+sdk.auth("06bc910a-d3c6-46cf-96e4-9ea99f93c52c");
 // endpoint for chatgpt
 app.post("/chat", async (req, res) => {
 
