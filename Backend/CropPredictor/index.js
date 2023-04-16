@@ -39,18 +39,6 @@ app.post("/chat", async (req, res) => {
 });
 
 
- // const completions = await openai.createCompletion({
-  //   model: "text-davinci-003",
-  //   prompt: `${prompt}`,
-  //   max_tokens: 1024,
-  //   temperature: 0.7,
-  //   // top_p: 1.0,
-  //   // frequency_penalty: 0.0,
-  //   // presence_penalty: 0.0,
-  // });
-  // res.send(completions.data.choices[0].text.trim());
-
-
 const port = 8080;
 app.listen(port, () => {
   console.log(`Server is listening at port ${port}`);
