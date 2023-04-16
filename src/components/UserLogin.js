@@ -13,7 +13,7 @@ function UserLogin(props) {
   const handleLogin = (email, password) => {
     console.log("Click");
 
-    fetch(`http://localhost:3600/api/user/login/${email}/${password}`, {
+    fetch(`/api/user/login/${email}/${password}`, {// s5 
       method: "GET",
     })
       .then((response) => {
