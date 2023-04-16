@@ -25,7 +25,7 @@ function CropPredictor() {
       let userQues =  `region: ${region}, soil: ${soil}, temperature: ${temperature} degree celcius, altitude: ${altitude} km, humidity: ${humidity}%, rainfall: ${rainfall} mm. Recommed me the crops that can be grown in India following the given conditions. Write in points, the crops name and some text for explanation.`;
 
       axios
-        .post("http://localhost:8080/chat", {prompt: userQues})
+        .post("/chat", {prompt: userQues})// s3
         .then((res)=>{
           let modifiedText = res.data.message.replace(/\n/g, "<br>");
           document.getElementById("crop").innerHTML = modifiedText;
