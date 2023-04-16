@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# CropConnect (AgroTech)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Objective
+CropConnect is a website that connects crop and dairy farmers directly to consumers, eliminating the need for intermediaries in the traditional supply chain. The website also provides additional features such as a crop predictor, insecticide predictor, crop growind steps, soil nutrient predictor, weather forecast and estimate crop price, which can help farmers optimize their farming practices and increase their yields.
 
-## Available Scripts
+## Methodology
+To install CropConnect, follow these steps:
 
-In the project directory, you can run:
+### Clone the repository from GitHub.
 
-### `npm start`
+1. Install the required dependencies using npm install.
+2. Configure the environment variables for Mongo DB Atlas(that uses Google Cloud), Rapid API and ChatSonic API.
+3. Run the backend servers separately
+4. Launch the website using npm start.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Usage
+To use CropConnect, follow these steps:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Create a profile for farmers or consumers.
+2. Browse products and prices.
+3. Purchase directly from farmers.
+4. Use additional features such as the rop predictor, insecticide predictor, crop growind steps, soil nutrient predictor, weather forecast and estimate crop price.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Technology Used
+1. CropConnect is built using the following technologies:
+2. NodeJS: back-end web development framework
+3. Express: web application framework
+4. ReactJS: front-end web development library
+5. Tailwind CSS: CSS framework
+6. Mongo DB Atlas: cloud-based database management system **(Google Cloud)**
+7. Rapid API: weather prediction API
+8. Google Cloud: cloud computing resources
+9. AMD instances: machine learning and data analysis resources
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Result
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+CropConnect has successfully created a platform that connects crop and dairy farmers directly to consumers, eliminating the need for intermediaries in the traditional supply chain. The website's additional features such as the crop predictor, insecticide predictor, crop growind steps, soil nutrient predictor, weather forecast and estimate crop price have also helped farmers optimize their farming practices and increase their yields. The technology used to build CropConnect, including NodeJS, Express, ReactJS, Tailwind CSS, Mongo DB Atlas, Rapid API, Google Cloud, and AMD instances, has enabled the website to be reliable, user-friendly, and scalable.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
