@@ -2,6 +2,8 @@
 
 ### NOTE: We have used Google Cloud for MongoDB Atlas and also used Google Cloud and AMD Instance for ML Model Training.
 
+https://drive.google.com/file/d/1zOnKv4Aob37XumfqeRLcC4ivJpccB9if/view?usp=sharing - Google Drive Link for ML Model Trained on Google Cloud using AMD Instance
+
 ## Objective
 CropConnect is a website that connects crop and dairy farmers directly to consumers, eliminating the need for intermediaries in the traditional supply chain. The website also provides additional features such as a crop predictor, insecticide predictor, crop cultivation, soil nutrient predictor, weather forecast and estimate crop price, which can help farmers optimize their farming practices and increase their yields.
 
