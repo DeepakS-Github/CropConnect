@@ -32,7 +32,7 @@ function ItemBoard() {
   }
 
   // API Fetch
-  let API = `http://localhost:3700/api/farmer/getFarmerData/${itData.farmerId}`;
+  let API = `/api/farmer/getFarmerData/${itData.farmerId}`; // s4
 
   const fetchApiData = async (url) => {
     try {
@@ -56,7 +56,7 @@ function ItemBoard() {
       return;
     }
 
-    fetch(`http://localhost:4100/api/addCartItem/${userData}/${toAdd}`, {
+    fetch(`/api/addCartItem/${userData}/${toAdd}`, {// s1
       method: "POST",
     })
       .then((response) => {

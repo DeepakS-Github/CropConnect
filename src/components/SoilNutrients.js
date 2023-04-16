@@ -17,7 +17,7 @@ function CropGrowingSteps() {
     let userQues = `If I want to grow ${crops} then what are the parameters of the soil I need write their units also`;
 
     axios
-        .post("http://localhost:8080/chat", {prompt: userQues})
+        .post("/chat", {prompt: userQues}) // s2
         .then((res)=>{
           let modifiedText = res.data.message.replace(/\n/g, "<br>");
           document.getElementById("steps").innerHTML = modifiedText;
