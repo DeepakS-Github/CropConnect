@@ -27,7 +27,7 @@ function SellerSignUpPage() {
           address: `${address}`,
         };
     
-        fetch("http://localhost:3700/api/farmer/signup", {
+        fetch("/api/farmer/signup", { // s4
           method: "POST",
           headers: {
             "Content-Type": "application/json",
