@@ -9,7 +9,7 @@ function Cart(props) {
   const [dataCart, setDataCart] = useState([]);
 
   // API Fetch
-  let CartAPI = `http://localhost:4100/api/showCartItem/${userData}`;
+  let CartAPI = `/api/showCartItem/${userData}`; // 4100 - s1
 
   const cItem = [];
 
@@ -18,13 +18,13 @@ function Cart(props) {
     // fetchCartApiData(CartAPI);
 
     axios
-  .get(`http://localhost:4100/api/showCartItem/${userData}`)
+  .get(`/api/showCartItem/${userData}`)// s1
   .then((response) => {
     const mainArr = response.data.itemsId;
     const promises = [];
 
     for (let i = 0; i < mainArr.length; i++) {
-      const nestedApiUrl = `http://localhost:4500/api/getIdItemData/${mainArr[i]}`;
+      const nestedApiUrl = `/api/getIdItemData/${mainArr[i]}`; // 4500 -s2
 
       promises.push(
         axios.get(nestedApiUrl)
@@ -57,7 +57,7 @@ function Cart(props) {
   const handleDelete = (toDelete) => {
     console.log("Click");
 
-    fetch(`http://localhost:4100/api/deleteCartItem/${userData}/${toDelete}`, {
+    fetch(`/api/deleteCartItem/${userData}/${toDelete}`, { // s1
       method: "DELETE"
     })
       .then((response) => {
