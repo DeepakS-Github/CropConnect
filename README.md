@@ -37,7 +37,7 @@ To use CropConnect, follow these steps:
 
 ## Result
 
-CropConnect has successfully created a platform that connects crop and dairy farmers directly to consumers, eliminating the need for intermediaries in the traditional supply chain. The website's additional features such as the crop predictor, insecticide predictor, soil nutrient predictor, and weather forecast have also helped farmers optimize their farming practices and increase their yields. The technology used to build CropConnect, including NodeJS, Express, ReactJS, Tailwind CSS, Mongo DB Atlas, Rapid API, Google Cloud, and AMD instances, has enabled the website to be reliable, user-friendly, and scalable.
+CropConnect has successfully created a platform that connects crop and dairy farmers directly to consumers, eliminating the need for intermediaries in the traditional supply chain. The website's additional features such as the crop predictor, insecticide predictor, crop growind steps, soil nutrient predictor, weather forecast and estimate crop price have also helped farmers optimize their farming practices and increase their yields. The technology used to build CropConnect, including NodeJS, Express, ReactJS, Tailwind CSS, Mongo DB Atlas, Rapid API, Google Cloud, and AMD instances, has enabled the website to be reliable, user-friendly, and scalable.
 
 
 
