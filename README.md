@@ -1,5 +1,5 @@
 # CropConnect
-CropConnect is a website that connects crop and dairy farmers directly to consumers, eliminating the need for intermediaries in the traditional supply chain. The website also provides additional features such as a crop predictor, insecticide predictor, soil nutrient predictor, and weather forecast, which can help farmers optimize their farming practices and increase their yields.
+CropConnect is a website that connects crop and dairy farmers directly to consumers, eliminating the need for intermediaries in the traditional supply chain. The website also provides additional features such as a crop predictor, insecticide predictor, crop growind steps, soil nutrient predictor, weather forecast and estimate crop price, which can help farmers optimize their farming practices and increase their yields.
 
 ## Installation
 To install CropConnect, follow these steps:
@@ -17,7 +17,7 @@ To use CropConnect, follow these steps:
 1. Create a profile for farmers or consumers.
 2. Browse products and prices.
 3. Purchase directly from farmers.
-4. Use additional features such as the crop predictor, insecticide predictor, soil nutrient predictor, and weather forecast to optimize farming practices.
+4. Use additional features such as the rop predictor, insecticide predictor, crop growind steps, soil nutrient predictor, weather forecast and estimate crop price.
 
 
 ### Technology Used
