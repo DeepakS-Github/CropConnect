@@ -10,7 +10,7 @@ To install CropConnect, follow these steps:
 
 1. Install the required dependencies using npm install.
 2. Configure the environment variables for Mongo DB Atlas(that uses Google Cloud), Rapid API and ChatSonic API.
-3. Run the backend servers separately
+3. Run the backend servers separately.
 4. Launch the website using npm start.
 
 ### Usage
