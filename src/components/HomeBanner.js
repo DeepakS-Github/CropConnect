@@ -13,7 +13,7 @@ function HomeBanner() {
   const handleLogin = (email, password) => {
     console.log("Click");
 
-    fetch(`/api/farmer/login/${email}/${password}`, { // s4
+    fetch(`http://localhost:3700/api/farmer/login/${email}/${password}`, {
       method: "GET",
     })
       .then((response) => {

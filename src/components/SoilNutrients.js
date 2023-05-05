@@ -8,27 +8,39 @@ function CropGrowingSteps() {
   const [loading, setLoading] = useState(false);
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(prompt);
     setLoading(true);
 
     
-    let userQues = `If I want to grow ${crops} then what are the parameters of the soil I need write their units also`;
+    let userQues = `If I want to grow ${crops} then what are the parameters of the soil I need write their units also. Give answers in points.`;
 
-    axios
-        .post("/chat", {prompt: userQues}) // s2
-        .then((res)=>{
-          let modifiedText = res.data.message.replace(/\n/g, "<br>");
-          document.getElementById("steps").innerHTML = modifiedText;
-          console.log(res.data);
-          setLoading(false);
-        })
-        .catch((err)=>{
-          console.log(err);
-          setLoading(false);
-          alert("Something went wrong. Try again later!");
-        });
+    const url = "https://smartgpt-api.p.rapidapi.com/ask";
+    const options = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": "8505c9ce07msh2397bcfad35ce0ap1a997ajsn8564acd48860",
+        "X-RapidAPI-Host": "smartgpt-api.p.rapidapi.com",
+      },
+      body: JSON.stringify({
+        query:  `${userQues}`
+      })
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.text();
+      const obj = JSON.parse(result);
+      let modifiedText = obj.response.replace(/\n/g, "<br>");
+      document.getElementById("steps").innerHTML = modifiedText;
+      setLoading(false);
+      console.log(obj.response);
+    } catch (error) {
+      console.error(error);
+    }
+
   };
 
   return (

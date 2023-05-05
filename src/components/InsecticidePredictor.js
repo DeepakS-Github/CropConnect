@@ -8,26 +8,38 @@ function InsecticidePredictor() {
   const [loading, setLoading] = useState(false);
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(prompt);
     setLoading(true);
 
-    let userQues = `crops: ${crops}. Recommed me the insecticides that can be grown in India for the given crop. Write insecticide name and some text for explanation`;
+    let userQues = `crops: ${crops}. Recommed me the insecticides that can be grown in India for the given crop. Write only one insecticide name.`;
 
-    axios
-        .post("/chat", {prompt: userQues}) // s3
-        .then((res)=>{
-          let modifiedText = res.data.message.replace(/\n/g, "<br>");
-          document.getElementById("insecticide").innerHTML = modifiedText;
-          console.log(res.data);
-          setLoading(false);
-        })
-        .catch((err)=>{
-          console.log(err);
-          setLoading(false);
-          alert("Something went wrong. Try again later!");
-        });
+    const url = "https://smartgpt-api.p.rapidapi.com/ask";
+    const options = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": "8505c9ce07msh2397bcfad35ce0ap1a997ajsn8564acd48860",
+        "X-RapidAPI-Host": "smartgpt-api.p.rapidapi.com",
+      },
+      body: JSON.stringify({
+        query:  `${userQues}`
+      })
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.text();
+      const obj = JSON.parse(result);
+      let modifiedText = obj.response.replace(/\n/g, "<br>");
+      document.getElementById("insecticide").innerHTML = modifiedText;
+      setLoading(false);
+      console.log(obj.response);
+    } catch (error) {
+      console.error(error);
+    }
+
   };
 
   return (

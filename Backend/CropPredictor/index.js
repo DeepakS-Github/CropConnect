@@ -15,9 +15,7 @@ const sdk = require("api")("@writesonic/v2.2#4enbxztlcbti48j");
 const app = express();
 app.use(express.json());
 app.use(cors());
-require("dotenv").config();
 
-console.log(process.env.CHATSONIC_API_KEY);
 sdk.auth("06bc910a-d3c6-46cf-96e4-9ea99f93c52c");
 // endpoint for chatgpt
 app.post("/chat", async (req, res) => {
@@ -37,6 +35,18 @@ app.post("/chat", async (req, res) => {
     .then(({ data }) => res.send(data))
     .catch((err) => console.error(err));
 });
+
+
+ // const completions = await openai.createCompletion({
+  //   model: "text-davinci-003",
+  //   prompt: `${prompt}`,
+  //   max_tokens: 1024,
+  //   temperature: 0.7,
+  //   // top_p: 1.0,
+  //   // frequency_penalty: 0.0,
+  //   // presence_penalty: 0.0,
+  // });
+  // res.send(completions.data.choices[0].text.trim());
 
 
 const port = 8080;

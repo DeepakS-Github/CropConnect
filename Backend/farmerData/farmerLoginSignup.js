@@ -1,5 +1,5 @@
 const express = require('express');
-require('../connectDB');
+require("../connectDB");
 const Farmer = require('./farmerSchema');
 const cors = require('cors');
 
@@ -12,16 +12,14 @@ app.use(express.json());
 app.post("/api/farmer/signup", async(req,res)=>{
     try{
         let data = Farmer(req.body);
-        let result = await data.save({ writeConcern: { w: 'majority' } }); // Explicitly set write concern to 'majority'
+        let result = await data.save();
         console.log(result);
-        res.status(400);
         res.send(result);
     } catch(error){
-        res.status(500);
+        res.status(500).send('Something went wrong!');
         console.log(error);
     }
 });
-
 
 
 // Login

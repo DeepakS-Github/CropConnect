@@ -10,7 +10,7 @@ function ItemTable() {
   console.log(itcategory)
 
 
-  let API = `/api/getItemData/${itcategory}`;//s2
+  let API = `http://localhost:4500/api/getItemData/${itcategory}`;
   
 
   const fetchApiData = async (url) => {
