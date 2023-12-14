@@ -1,0 +1,12 @@
+# Ignore env files
+Frontend/.env
+Backend/.env
+
+# Ignore node_modules
+Frontend/node_modules/
+Backend/node_modules/
+
+# Ignore package-lock.json
+Frontend/package-lock.json
+Backend/package-lock.json
+
