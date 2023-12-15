@@ -10,6 +10,7 @@ const review = require("./routes/review");
 const cart = require("./routes/cart");
 const otp = require("./routes/otp");
 const order = require("./routes/order");
+const faq = require("./routes/faq");
 
 const session = require("express-session");
 
@@ -35,6 +36,7 @@ app.use("/review", review);
 app.use("/cart", cart);
 app.use("/otp", otp);
 app.use("/order",order);
+app.use("/faq", faq);
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT: ${PORT}`);

@@ -42,5 +42,8 @@ const orderSchema = new mongoose.Schema({
     }
 })
 
+orderSchema.index({ sellerId: 1 });
+
+
 
 module.exports = mongoose.model('orders',orderSchema);

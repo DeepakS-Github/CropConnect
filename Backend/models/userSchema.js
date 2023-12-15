@@ -19,11 +19,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    faqIds: {
+        type: Array
+    },
     date: {
         type: Date,
         default: Date.now
     }
 })
 
+userSchema.index({ email: 1 });
 
 module.exports = mongoose.model('users',userSchema);

@@ -54,11 +54,16 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    faqIds: {
+        type: Array
+    },
     date: {
         type: Date,
         default: Date.now
     }
 })
+
+productSchema.index({ category: 1, sellerId: 1 });
 
 
 module.exports = mongoose.model('products',productSchema);

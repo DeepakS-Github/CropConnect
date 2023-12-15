@@ -23,12 +23,18 @@ const sellerSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    faqIds: {
+        type: Array
+    },
     date: {
         type: Date,
         default: Date.now
     }
     
 })
+
+
+sellerSchema.index({ email: 1 });
 
 
 module.exports = mongoose.model('sellers',sellerSchema);
