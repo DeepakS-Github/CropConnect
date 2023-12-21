@@ -52,10 +52,13 @@ function SellerOrderRequests() {
                   Order Date
                 </th>
                 <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Minimum Order Quantity
+                  Customer Name
                 </th>
                 <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Price Per Unit
+                  Customer PhoneNo
+                </th>
+                <th scope="col" className="px-6 whitespace-nowrap py-4">
+                  Customer Email
                 </th>
                 <th scope="col" className="px-6 whitespace-nowrap  py-4">
                   Order Quantity
@@ -84,10 +87,13 @@ function SellerOrderRequests() {
                   <td className="px-6 py-4">{item.name}</td>
                   <td className="px-6 py-4">{item.date}</td>
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    {item.minOrderQty} {item.measuringUnit}
+                    {item.customerName}
                   </td>
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    Rs.{item.pricePerUnit}/{item.measuringUnit}
+                    {item.customerPhoneNo}
+                  </td>
+                  <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
+                    {item.customerEmail}
                   </td>
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
                     {item.orderQty} {item.measuringUnit}

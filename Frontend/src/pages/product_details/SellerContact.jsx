@@ -3,11 +3,11 @@ import BingMap from "../../components/BingMap";
 import { postAPI } from "../../utils/api/postRequest";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
+import { notify } from "../../utils/helper/notification";
 
 function SellerContact() {
   const productData = useSelector((state) => state.productReducer);
   const userData = useSelector((state) => state.userReducer);
-  const sellerData = useSelector((state) => state.sellerReducer);
 
   const position = [
     productData.location.latitude,
@@ -21,12 +21,18 @@ function SellerContact() {
     email: null,
     question: null,
     productId: productData._id,
-    sellerId: sellerData._id,
-    userId: userData._id,
+    sellerId: productData.sellerId,
   });
 
   const submitFeedbackForm = async () => {
+    if(userData===null){
+      console.log("e")
+      notify("Login as user to send the feedback", "info");
+      return;
+    }
+
     setIsLoading(true);
+    setFeedbackForm({...feedbackForm, userId: userData._id}); 
     console.log(feedbackForm);
     try {
       await postAPI("faq/add", feedbackForm);

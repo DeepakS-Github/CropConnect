@@ -23,12 +23,13 @@ function Order() {
       const orderData = {
         image: element.image,
         name: element.name,
-        pricePerUnit: element.pricePerUnit,
         measuringUnit: element.unit,
         orderQty: element.qty,
         orderLocation: "Kanpur",
+        customerPhoneNo: userData.phoneNo,
+        customerName: userData.name,
+        custormerEmail: userData.email,
         totalPrice: element.pricePerUnit * element.qty,
-        minOrderQty: element.minQty,
         sellerId: element.sellerId,
       };
       

@@ -8,10 +8,6 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    pricePerUnit: {
-        type: Number, 
-        required: true
-    },
     measuringUnit: {
         type: String, 
         required: true
@@ -20,15 +16,23 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    customerName: {
+        type: String, 
+        required: true
+    },
+   customerPhoneNo: {
+        type: Number,
+        required: true
+    },
+    customerEmail: {
+        type: String,
+        required: true
+    },
     orderLocation: {
         type: String,
         required: true
     },
     totalPrice: {
-        type: Number,
-        required: true
-    },
-    minOrderQty: {
         type: Number,
         required: true
     },
