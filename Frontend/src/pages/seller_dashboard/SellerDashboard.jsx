@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SellerProducts from "./SellerProducts";
 import SellerOrderRequests from "./SellerOrderRequests";
+import SellerFAQs from "./SellerFAQs";
 
 function SellerDashboard() {
   const [category, setCategory] = useState(1);
@@ -69,6 +70,7 @@ function SellerDashboard() {
 
       {category === 1 && <SellerProducts />}
       {category === 2 && <SellerOrderRequests />}
+      {category === 3 && <SellerFAQs/>}
     </>
   );
 }

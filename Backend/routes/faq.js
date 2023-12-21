@@ -11,4 +11,7 @@ router.get("/showbyproduct", faqController.showFAQsbyProduct);
 // Show Paginated FAQ by Seller
 router.get("/showbyseller", faqController.showFAQsbySeller);
 
+// Answering the FAQ
+router.put("/ansfaq/:faqId", faqController.ansFAQ);
+
 module.exports = router;

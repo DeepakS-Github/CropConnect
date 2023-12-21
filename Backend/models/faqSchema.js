@@ -8,9 +8,16 @@ const faqSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    message: {
+    question: {
         type: String, 
         required: true
+    },
+    answer: {
+        type: String
+    },
+    isAnswered: {
+        type: Boolean,
+        default: false
     },
     productId: {
         type: mongoose.Schema.Types.ObjectId,

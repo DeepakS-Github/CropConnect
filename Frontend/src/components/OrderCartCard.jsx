@@ -9,7 +9,7 @@ function OrderCartCard({item}) {
           src={item.image}
           alt="product"
         />
-        <img class="w-full md:hidden object-fill" src={item.image} alt="product" />
+        <img className="w-full md:hidden object-fill" src={item.image} alt="product" />
       </div>
       <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
         <div className="w-full flex flex-col justify-start items-start space-y-8">

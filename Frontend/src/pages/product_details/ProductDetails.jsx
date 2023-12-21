@@ -60,12 +60,6 @@ function ProductDetails() {
           <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
             {productData.name}
           </h1>
-          <div className="flex mb-4 items-center gap-1">
-            <FaLocationDot className="text-lg text-rose-600" />
-            <span>
-            {productData.location.latitude}, {productData.location.longitude}
-            </span>
-          </div>
           <p className="leading-relaxed">
             {productData.description} It is a long established fact that a
             reader will be distracted by the readable content of a page when

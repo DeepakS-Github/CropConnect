@@ -23,9 +23,6 @@ const sellerSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    faqIds: {
-        type: Array
-    },
     date: {
         type: Date,
         default: Date.now

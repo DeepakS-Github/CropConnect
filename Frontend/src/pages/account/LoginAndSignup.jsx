@@ -257,7 +257,6 @@ function LoginAndSignup() {
                       type="password"
                       required
                       value={password}
-                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                       onChange={(e) => setPassword(e.target.value)}
                       className={`block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset ${
                         type === "user"

@@ -54,9 +54,6 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    faqIds: {
-        type: Array
-    },
     date: {
         type: Date,
         default: Date.now

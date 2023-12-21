@@ -19,9 +19,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    faqIds: {
-        type: Array
-    },
     date: {
         type: Date,
         default: Date.now
