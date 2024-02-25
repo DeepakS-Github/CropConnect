@@ -6,7 +6,7 @@ export const deleteAPI = async (endpointURL) => {
 
 
   try {
-    const response = await fetch(`http://localhost:8080/${endpointURL}`, {
+    const response = await fetch(`${import.meta.env.VITE_CROPCONNECT_API}${endpointURL}`, {
       method: "DELETE"
     });
     const responseData = await response.json();

@@ -3,7 +3,7 @@ import { notifyType } from "../helper/notificationType";
 
 export const putAPI = async (endpointURL, data) => {
   try {
-    const response = await fetch(`http://localhost:8080/${endpointURL}`, {
+    const response = await fetch(`${import.meta.env.VITE_CROPCONNECT_API}${endpointURL}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
