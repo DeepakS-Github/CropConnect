@@ -9,6 +9,7 @@ import SellerDashboard from "./pages/seller_dashboard/SellerDashboard";
 import ProductDashboard from "./pages/product_details/ProductDashboard";
 import Order from "./pages/orders/Order";
 import BingMap from "./components/BingMap";
+import LeafletMap from "./components/LeafletMap";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           <Route exact path="/category/:type" element={<Product/>} />
           <Route exact path="/category/:type/details" element={<ProductDashboard/>} />
           <Route exact path="/orders" element={<Order/>} />
-          <Route exact path="/map" element={<BingMap/>} />
+          <Route exact path="/map" element={<LeafletMap/>} />
         </Routes>
       </Router>
     </>

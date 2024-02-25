@@ -7,8 +7,12 @@ import { deleteAPI } from "../../utils/api/deleteRequest";
 import SellerProductModal from "./SellerProductModal";
 import Spinner from "../../components/Spinner";
 import { notify } from "../../utils/helper/notification";
+import { useDispatch } from "react-redux";
+import { editProductDetails } from "../../redux/actions";
 
 function SellerProducts() {
+  const dispatch = useDispatch();
+
   const [dropBox, setDropBox] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -42,6 +46,7 @@ function SellerProducts() {
     setData(productData);
   };
 
+
   useEffect(() => {
     setIsDataUpdated(false);
     getProducts();
@@ -51,15 +56,17 @@ function SellerProducts() {
     <>
       {/* Form Modal */}
 
-      <SellerProductModal
-        dropBox={dropBox}
-        setDropBox={setDropBox}
-        editBox={editBox}
-        setEditBox={setEditBox}
-        setIsDataUpdated={setIsDataUpdated}
-        loading={loading}
-        setLoading={setLoading}
-      />
+      {dropBox && (
+        <SellerProductModal
+          dropBox={dropBox}
+          setDropBox={setDropBox}
+          editBox={editBox}
+          setEditBox={setEditBox}
+          setIsDataUpdated={setIsDataUpdated}
+          loading={loading}
+          setLoading={setLoading}
+        />
+      )}
 
       {/* Table Header */}
       <h1 className="text-3xl font-medium mb-4 px-4">All Products</h1>
@@ -75,6 +82,7 @@ function SellerProducts() {
           className="text-md py-2 px-4 text-white rounded cursor-pointer bg-sky-700"
           onClick={(e) => {
             e.preventDefault();
+            dispatch(editProductDetails(null));
             setDropBox(1);
           }}
         >
@@ -164,12 +172,17 @@ function SellerProducts() {
                         // onClick={()=>{handleEdit(item._id)}}
                         onClick={(e) => {
                           e.preventDefault();
-                          setEditBox(1);
-                          setDropBox(1);
+                          dispatch(editProductDetails(item));
+                          // setEditBox(1);
+                          // setDropBox(1);
                         }}
                       >
                         <i className="fa-regular fa-pen-to-square mr-2"></i>
-                        <span className="font-medium">Edit</span>
+                        <span
+                          className="font-medium"
+                        >
+                          Edit
+                        </span>
                       </div>
 
                       <div

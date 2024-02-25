@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import OrderCartCard from "../../components/OrderCartCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { FaRegUser } from "react-icons/fa";
-import BingMap from "../../components/BingMap";
 import { postAPI } from "../../utils/api/postRequest";
 import { removeFromCart } from "../../redux/actions";
 import { notify } from "../../utils/helper/notification";
 import getCurrentDateTime from "../../utils/helper/getCurrentDateTime";
+import LeafletMap from "../../components/LeafletMap";
 
 function Order() {
-
   const dispatch = useDispatch();
 
   const cartData = useSelector((state) => state.cartReducer);
@@ -18,25 +17,43 @@ function Order() {
 
   const [totalAmount, setTotalAmount] = useState(0);
 
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  const [customerLatitude, setCustomerLatitude] = useState(null);
+  const [customerLongitude, setCustomerLongitude] = useState(null);
+
   const orderNow = async () => {
+    if (customerLatitude === null || customerLongitude === null) {
+      notify("Please select valid delivery location", "info");
+      return;
+    }
+
     cartData.forEach(async (element) => {
       const orderData = {
         image: element.image,
         name: element.name,
         measuringUnit: element.unit,
         orderQty: element.qty,
-        orderLocation: "Kanpur",
+        orderLocation: {
+          latitude: customerLatitude,
+          longitude: customerLongitude,
+        },
         customerPhoneNo: userData.phoneNo,
         customerName: userData.name,
-        custormerEmail: userData.email,
+        customerEmail: userData.email,
         totalPrice: element.pricePerUnit * element.qty,
         sellerId: element.sellerId,
       };
-      
-      console.log(orderData);
-      await postAPI("order/add", orderData);
 
-      dispatch(removeFromCart(element._id));
+      console.log(orderData);
+      let isSuccessfull = await postAPI("order/add", orderData);
+
+      if (isSuccessfull) {
+        dispatch(removeFromCart(element._id));
+      } else {
+        notify("Something went wrong", "error");
+      }
     });
   };
 
@@ -56,7 +73,7 @@ function Order() {
             Your Order
           </h1>
           <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
-          {getCurrentDateTime()}
+            {getCurrentDateTime()}
           </p>
         </div>
         <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
@@ -84,14 +101,14 @@ function Order() {
                       Rs.{totalAmount}.00
                     </p>
                   </div>
-                  <div className="flex justify-between items-center w-full">
+                  {/* <div className="flex justify-between items-center w-full">
                     <p className="text-base dark:text-white leading-4 text-gray-800">
                       Discount{" "}
                     </p>
                     <p className="text-base dark:text-gray-300 leading-4 text-gray-600">
                       Rs.25.00 (5%)
                     </p>
-                  </div>
+                  </div> */}
                   <div className="flex justify-between items-center w-full">
                     <p className="text-base dark:text-white leading-4 text-gray-800">
                       Shipping
@@ -141,10 +158,9 @@ function Order() {
                   <button
                     className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white"
                     onClick={() => {
-                      if(cartData.length===0){
+                      if (cartData.length === 0) {
                         notify("First add some items to cart", "info");
-                      }
-                      else{
+                      } else {
                         orderNow();
                       }
                     }}
@@ -190,6 +206,21 @@ function Order() {
                   </p>
                 </div>
               </div>
+              {customerLatitude !== null && (
+                <div className="flex justify-between xl:h-full items-stretch w-full flex-col mt-6 md:mt-0">
+                  <div className="flex justify-center md:justify-start xl:flex-col flex-col md:space-x-6 lg:space-x-8 xl:space-x-0 space-y-4 xl:space-y-12 md:space-y-0 md:flex-row items-center md:items-start">
+                    <div className="flex w-full justify-center md:justify-start items-center md:items-start flex-col space-y-4 xl:mt-8">
+                      <p className="text-base dark:text-white font-semibold leading-4 text-center md:text-left text-gray-800">
+                        Your Selected Location
+                      </p>
+                      <div>
+                        <div>Latitude: {customerLatitude}</div>
+                        <div>Longitude: {customerLongitude}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="flex justify-between xl:h-full items-stretch w-full flex-col mt-6 md:mt-0">
                 <div className="flex justify-center md:justify-start xl:flex-col flex-col md:space-x-6 lg:space-x-8 xl:space-x-0 space-y-4 xl:space-y-12 md:space-y-0 md:flex-row items-center md:items-start">
                   <div className="flex w-full justify-center md:justify-start items-center md:items-start flex-col space-y-4 xl:mt-8">
@@ -197,13 +228,31 @@ function Order() {
                       Shipping Address
                     </p>
                     <div className="w-full z-10">
-                      <BingMap />
+                      <LeafletMap
+                        width={"w-full"}
+                        height={"h-96"}
+                        showSearchBox={true}
+                        latitude={latitude}
+                        longitude={longitude}
+                        setLatitude={setLatitude}
+                        setLongitude={setLongitude}
+                      />
                     </div>
                   </div>
                 </div>
                 <div className="flex w-full my-2 justify-center items-center md:justify-start md:items-start">
-                  <button className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base leading-4 text-gray-800">
-                    Submit Details
+                  <button
+                    className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base leading-4 text-gray-800"
+                    onClick={() => {
+                      if(latitude === 0 && longitude === 0){
+                        notify("Please select valid delivery location", "info");
+                        return;
+                      } 
+                      setCustomerLatitude(latitude);
+                      setCustomerLongitude(longitude);
+                    }}
+                  >
+                    Submit Location
                   </button>
                 </div>
               </div>
@@ -214,6 +263,5 @@ function Order() {
     </>
   );
 }
-
 
 export default Order;

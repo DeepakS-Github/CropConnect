@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { notify } from "../../utils/helper/notification";
 import { uploadImageToCloudinary } from "../../utils/helper/uploadImageToCloudinary";
 import { MdCancel } from "react-icons/md";
-import BingMap from "../../components/BingMap";
+import LeafletMap from "../../components/LeafletMap";
 
 function SellerProductModal({
   dropBox,
@@ -21,6 +21,10 @@ function SellerProductModal({
   const [image, setImage] = useState(null);
 
   const [imageToUpload, setImageToUpload] = useState(null);
+
+  
+  const [latitiude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
   const handleImageUpload = async (e) => {
     const uploadedImage = e.target.files[0];
@@ -421,7 +425,8 @@ function SellerProductModal({
               >
                 Choose Location
               </label>
-              <BingMap isModalOpen={dropBox} setFormData={setFormData} />
+              {/* <BingMap isModalOpen={dropBox} setFormData={setFormData} /> */}
+              <LeafletMap width="w-full" height="h-96" showSearchBox={true} latitude={latitiude} longitude={longitude} setLatitude={setLatitude} setLongitude={setLongitude}/>
             </div>
             <div className="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
               <button

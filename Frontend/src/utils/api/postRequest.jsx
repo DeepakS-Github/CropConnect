@@ -20,8 +20,10 @@ export const postAPI = async (endpointURL, data) => {
       return responseData["sellerData"];
     }
     notify(responseData["message"], notifyType(response.status));
+    return true;
   } catch (error) {
     notify(error, "error");
+    return false;
   }
 };
 

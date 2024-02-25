@@ -99,7 +99,7 @@ function SellerOrderRequests() {
                     {item.orderQty} {item.measuringUnit}
                   </td>
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    {item.orderLocation}
+                    {item.orderLocation.latitude.toFixed(4)},{" "}{item.orderLocation.longitude.toFixed(4)}
                   </td>
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
                     Rs.{item.totalPrice}

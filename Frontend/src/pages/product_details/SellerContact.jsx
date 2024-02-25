@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import BingMap from "../../components/BingMap";
 import { postAPI } from "../../utils/api/postRequest";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
 import { notify } from "../../utils/helper/notification";
+import LeafletMap from "../../components/LeafletMap";
 
 function SellerContact() {
   const productData = useSelector((state) => state.productReducer);
@@ -43,48 +43,13 @@ function SellerContact() {
     }
   };
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = `https://www.bing.com/api/maps/mapcontrol?key=${
-      import.meta.env.VITE_BING_MAP_API_KEY
-    }&callback=initMap`;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-
-    // Cleanup script on component unmount
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
-
-  // Initialize the map
-  window.initMap = () => {
-    const mapOptions = {
-      center: new Microsoft.Maps.Location(position[0], position[1]),
-      mapTypeId: Microsoft.Maps.MapTypeId.road,
-      zoom: 12,
-    };
-
-    const map = new Microsoft.Maps.Map(
-      document.getElementById("bing-map"),
-      mapOptions
-    );
-
-    // Add a pushpin at the specified location
-    const center = new Microsoft.Maps.Location(position[0], position[1]);
-    const pin = new Microsoft.Maps.Pushpin(center);
-    map.entities.push(pin);
-  };
-  
   return (
     <>
       <div className="lg:w-11/12 mx-auto flex flex-wrap">
         <section className="text-gray-600 w-full body-font relative">
           <div className="container w-full py-24 mx-auto flex sm:flex-nowrap flex-wrap">
             <div className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 flex items-end justify-start relative">
-              <div id="bing-map" style={{ height: "100%", width: "100%" }} />
+              <LeafletMap width="w-full" height="h-full" latitude={position[0]} longitude={position[1]} showSearchBox={false}/>
             </div>
 
             <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">

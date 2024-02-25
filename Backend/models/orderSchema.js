@@ -25,12 +25,19 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
     customerEmail: {
+        
         type: String,
         required: true
     },
     orderLocation: {
-        type: String,
-        required: true
+        latitude: {
+            type: Number,
+            required: true
+        },
+        longitude: {
+            type: Number, 
+            required: true
+        }
     },
     totalPrice: {
         type: Number,

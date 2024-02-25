@@ -84,7 +84,10 @@ function Cart({ setOpenCart }) {
                     </p>
                     <div className="mt-6">
                         <span className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 cursor-pointer" onClick={()=>{
-                          if(userData){
+                          if(cartData.length===0){
+                            notify("Please add some products to cart first","info")
+                          }
+                          else if(userData){
                             navigate('/orders');
                           }
                           else{
