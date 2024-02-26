@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 // const Mailgen = require('mailgen');
-require('dotenv').config();
+// require('dotenv').config();
 
 const sendMail = (receiverEmailAddress, content, userName, subject) => {
 
