@@ -97,7 +97,7 @@ function ProductDetails() {
           <div className="flex justify-between">
             <div>
               <div className="text-green-600 font-medium">
-                Minimum Order Quality: {productData.minimumOrderQuantity}{" "}
+                Minimum Order Quantity: {productData.minimumOrderQuantity}{" "}
                 {productData.measuringUnit}
               </div>
               <div className="flex justify-between">

@@ -12,8 +12,12 @@ import LeafletMap from "../../components/LeafletMap";
 function Order() {
   const dispatch = useDispatch();
 
+  const deliveryCharge = 500;
+  const limitForFreeDelivery = 1500;
+
   const cartData = useSelector((state) => state.cartReducer);
   const userData = useSelector((state) => state.userReducer);
+
 
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -46,7 +50,7 @@ function Order() {
         sellerId: element.sellerId,
       };
 
-      console.log(orderData);
+      console.log("Order data:", orderData);
       let isSuccessfull = await postAPI("order/add", orderData);
 
       if (isSuccessfull) {
@@ -113,9 +117,15 @@ function Order() {
                     <p className="text-base dark:text-white leading-4 text-gray-800">
                       Shipping
                     </p>
-                    <p className="text-base dark:text-gray-300 leading-4 text-gray-600">
-                      Rs.50.00
-                    </p>
+                    {totalAmount >= 1500 ? (
+                      <p className="text-base dark:text-green-300 leading-4 text-green-600">
+                        FREE
+                      </p>
+                    ) : (
+                      <p className="text-base dark:text-gray-300 leading-4 text-gray-600">
+                        Rs.{deliveryCharge}.00
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="flex justify-between items-center w-full">
@@ -123,7 +133,7 @@ function Order() {
                     Total
                   </p>
                   <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">
-                    Rs.{totalAmount + 25 + 50}.00
+                    Rs.{totalAmount + (totalAmount >= limitForFreeDelivery ? 0 : deliveryCharge)}.00
                   </p>
                 </div>
               </div>
@@ -145,13 +155,13 @@ function Order() {
                         CropConnect
                         <br />
                         <span className="font-normal">
-                          Delivery with 24 Hours
+                          Delivery within 24 Hours
                         </span>
                       </p>
                     </div>
                   </div>
                   <p className="text-lg font-semibold leading-6 dark:text-white text-gray-800">
-                    Rs.{totalAmount + 25 + 50}.00
+                    Rs.{totalAmount + (totalAmount >= limitForFreeDelivery ? 0 : deliveryCharge)}.00
                   </p>
                 </div>
                 <div className="w-full flex justify-center items-center">
@@ -244,10 +254,10 @@ function Order() {
                   <button
                     className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base leading-4 text-gray-800"
                     onClick={() => {
-                      if(latitude === 0 && longitude === 0){
+                      if (latitude === 0 && longitude === 0) {
                         notify("Please select valid delivery location", "info");
                         return;
-                      } 
+                      }
                       setCustomerLatitude(latitude);
                       setCustomerLongitude(longitude);
                     }}

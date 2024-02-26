@@ -29,18 +29,18 @@ function ProductCard({ data }) {
           <h2 className="text-xs mb-2 title-font font-medium text-gray-400">
             BRAND: {data.brand}
           </h2>
-          <p className="leading-relaxed mb-1 text-blue-500 font-semibold">
-            <i className="fa-solid fa-indian-rupee-sign text-blue-500 mr-1"></i>
+          <p className="leading-relaxed mb-1 text-red-500 font-semibold">
+            <i className="fa-solid fa-indian-rupee-sign text-red-500 mr-1"></i>
             Rs.{data.pricePerUnit}/{data.measuringUnit}
           </p>
           <h2 className="text-xs title-font font-medium text-gray-400 mb-2">
             Minimum Order Quantity: {data.minimumOrderQuantity}
             {data.measuringUnit}
           </h2>
-          <p className="leading-relaxed mb-3 font-semibold text-red-500">
+          {/* <p className="leading-relaxed mb-3 font-semibold text-red-500">
             <i className="fa-solid fa-location-dot text-red-500 mr-1"></i>
             {data.location.latitude}, {data.location.longitude}
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

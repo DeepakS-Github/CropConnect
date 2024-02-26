@@ -1,6 +1,6 @@
 Left
 1. Responsiveness
 3. Travelling Salesman while covering all the locations
-5. Hosting
+5. Hosting - Done
 6. Editing of the seller product 
 7. Show the locations instead of showing coordinates
