@@ -10,7 +10,6 @@ import { editProductDetails } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
 function SellerProducts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -129,8 +128,16 @@ function SellerProducts() {
                   <td className="px-6 py-4">
                     {item.quantity} {item.measuringUnit}
                   </td>
-                  <td className="px-6 py-4">
-                    {item.location.latitude}, {item.location.longitude}
+                  <td
+                    className="px-6 py-4 cursor-pointer font-medium text-blue-600 hover:underline whitespace-nowrap"
+                    onClick={() => {
+                      navigate(
+                        `/map/${item.location.latitude}/${item.location.longitude}`
+                      );
+                    }}
+                  >
+                    {item.location.latitude.toFixed(4)},{" "}
+                    {item.location.longitude.toFixed(4)}
                   </td>
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
                     {item.minimumOrderQuantity} {item.measuringUnit}

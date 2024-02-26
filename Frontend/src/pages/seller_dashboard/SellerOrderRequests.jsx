@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getAPI } from "../../utils/api/getRequest";
 import { GoDotFill } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 function SellerOrderRequests() {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   // API to GET Data
   const getOrders = async () => {
@@ -98,15 +100,24 @@ function SellerOrderRequests() {
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
                     {item.orderQty} {item.measuringUnit}
                   </td>
-                  <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    {item.orderLocation.latitude.toFixed(4)},{" "}{item.orderLocation.longitude.toFixed(4)}
+                  <td
+                    className=" px-6 py-4 max-w-sm cursor-pointer font-medium text-blue-600 hover:underline whitespace-nowrap"
+                    onClick={() => {
+                      navigate(
+                        `/map/${item.orderLocation.latitude}/${item.orderLocation.longitude}`
+                      );
+                    }}
+                  >
+                    {item.orderLocation.latitude.toFixed(4)},{" "}
+                    {item.orderLocation.longitude.toFixed(4)}
                   </td>
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
                     Rs.{item.totalPrice}
                   </td>
                   <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal text-yellow-500 font-medium">
-                    <span className="flex justify-center items-center"><GoDotFill className="mr-1" />
-                    Pending
+                    <span className="flex justify-center items-center">
+                      <GoDotFill className="mr-1" />
+                      Pending
                     </span>
                   </td>
                 </tr>

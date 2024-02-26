@@ -11,6 +11,7 @@ import Order from "./pages/orders/Order";
 import BingMap from "./components/BingMap";
 import LeafletMap from "./components/LeafletMap";
 import SellerProductOperation from "./pages/seller_product_operation/SellerProductOperation";
+import ShowMap from "./pages/map/ShowMap";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/account/:type" element={<LoginAndSignup />} />
           <Route exact path="/products" element={<Product />} />
           <Route exact path="/sellerdashboard" element={<SellerDashboard/>} />
+          <Route exact path="/map/:latitude/:longitude" element={<ShowMap/>} />
           <Route exact path="/sellerdashboard/product/:operation" element={<SellerProductOperation/>} />
           <Route exact path="/category/:type" element={<Product/>} />
           <Route exact path="/category/:type/details" element={<ProductDashboard/>} />

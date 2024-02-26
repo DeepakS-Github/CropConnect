@@ -111,10 +111,7 @@ function SellerProductOperation() {
     if (!loading) {
       setLoading(true);
       let cloudResp = await uploadImageToCloudinary(imageToUpload);
-      //   } else {
-      //     cloudResp = imageToUpload;
-      //   }
-      //   console.log(cloudResp);
+
 
       console.log("cloud: ",cloudResp);
 
