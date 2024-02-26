@@ -12,6 +12,7 @@ import BingMap from "./components/BingMap";
 import LeafletMap from "./components/LeafletMap";
 import SellerProductOperation from "./pages/seller_product_operation/SellerProductOperation";
 import ShowMap from "./pages/map/ShowMap";
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route exact path="/map" element={<LeafletMap/>} />
         </Routes>
       </Router>
+      <Analytics/>
     </>
   );
 }
