@@ -1,6 +1,8 @@
 Left
 1. Responsiveness
-3. Travelling Salesman while covering all the locations
+3. Delivery charge functionality - Done
 5. Hosting - Done
-6. Editing of the seller product 
+6. Editing of the seller product - Done
 7. Show the locations instead of showing coordinates
+8. Add the Paypal/others for pay now functionality
+

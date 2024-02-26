@@ -6,55 +6,90 @@ import { notify } from "../../utils/helper/notification";
 import { uploadImageToCloudinary } from "../../utils/helper/uploadImageToCloudinary";
 import { MdCancel } from "react-icons/md";
 import LeafletMap from "../../components/LeafletMap";
+import { useParams } from "react-router-dom";
+import { putAPI } from "../../utils/api/putRequest";
+import { useNavigate } from "react-router-dom";
 
-function SellerProductModal({
-  dropBox,
-  setDropBox,
-  editBox,
-  setEditBox,
-  loading,
-  setLoading,
-  setIsDataUpdated,
-}) {
+
+function SellerProductOperation() {
+  const { operation } = useParams();
+  const navigate = useNavigate();
+
   const sellerData = useSelector((state) => state.sellerReducer);
 
-  const [image, setImage] = useState(null);
+  //   console.log(sellerData);
+  const productEditData = useSelector(
+    (state) => state.sellerEditProductReducer
+  );
 
-  const [imageToUpload, setImageToUpload] = useState(null);
+  console.log(productEditData);
 
-  
-  const [latitiude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [renderMap, setRenderMap] = useState(false);
+
+  const [image, setImage] = useState(
+    operation === "edit" ? productEditData.image : null
+  );
+
+  const [imageToUpload, setImageToUpload] = useState(
+    operation === "edit" ? productEditData.image : null
+  );
+
+  const [lat, setLat] = useState(0);
+  const [long, setLong] = useState(0);
+
+  useEffect(() => {
+    if (operation === "edit") {
+      setLat(productEditData.location.latitude);
+      setLong(productEditData.location.longitude);
+      setRenderMap(true);
+    }
+  }, [productEditData]);
+
+  const [loading, setLoading] = useState(false);
 
   const handleImageUpload = async (e) => {
     const uploadedImage = e.target.files[0];
     setImageToUpload(() => uploadedImage);
     if (uploadedImage) {
       const imageUrl = URL.createObjectURL(uploadedImage);
+      console.log(imageUrl);
       setImage(() => imageUrl);
     }
   };
 
+  //   console.log("Latitude", productEditData.location.latitude);
+
+  //   console.log(sellerData.brandName);
+
   const [formData, setFormData] = useState({
-    image: null,
+    image: operation === "edit" ? productEditData.image : null,
     brand: sellerData.brandName,
-    category: null,
-    name: null,
-    description: null,
-    pricePerUnit: null,
-    measuringUnit: null,
-    minimumOrderQuantity: null,
+    category: operation === "edit" ? productEditData.category : null,
+    name: operation === "edit" ? productEditData.name : null,
+    description: operation === "edit" ? productEditData.description : null,
+    pricePerUnit: operation === "edit" ? productEditData.pricePerUnit : null,
+    measuringUnit: operation === "edit" ? productEditData.measuringUnit : null,
+    minimumOrderQuantity:
+      operation === "edit" ? productEditData.minimumOrderQuantity : null,
     location: {
-      latitude: null,
-      longitude: null,
+      latitude: operation === "edit" ? productEditData.location.latitude : null,
+      longitude:
+        operation === "edit" ? productEditData.location.longitude : null,
     },
-    quantity: null,
-    shelfLife: null,
+    quantity: operation === "edit" ? productEditData.quantity : null,
+    shelfLife: operation === "edit" ? productEditData.shelfLife : null,
     sellerId: localStorage.getItem("sellerId"),
   });
 
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      location: { latitude: lat, longitude: long },
+    }));
+  }, [lat, long]);
+
   const handleSubmit = async () => {
-    console.log(formData);
+    // console.log(formData);
 
     if (
       !image ||
@@ -76,90 +111,65 @@ function SellerProductModal({
     if (!loading) {
       setLoading(true);
       let cloudResp = await uploadImageToCloudinary(imageToUpload);
-      console.log(cloudResp);
+      //   } else {
+      //     cloudResp = imageToUpload;
+      //   }
+      //   console.log(cloudResp);
+
+      console.log("cloud: ",cloudResp);
 
       if (cloudResp !== "error") {
-        setFormData((prevData) => ({
-          ...prevData,
-          image: cloudResp,
-        }));
+        try {
+          if (operation === "add") {
+            await postAPI("product/addProduct", {
+              ...formData,
+              image: cloudResp,
+            });
+          } else {
+            await putAPI(`product/update/${productEditData._id}`, {
+              ...formData,
+              image: cloudResp,
+            });
+          }
+        } catch (error) {
+          // Handle error if the API call fails
+          console.error("Error posting data:", error);
+          notify("Something went wrong", "error");
+        } finally {
+          setLoading(false);
+          navigate("/sellerdashboard");
+        }
       }
-
-      setLoading(false);
-      setDropBox(false);
     } else {
       notify("Please wait", "info");
     }
   };
 
-  useEffect(() => {
-    const postData = async () => {
-      if (formData.image) {
-        try {
-          await postAPI("product/addProduct", formData);
-          setIsDataUpdated(true);
-        } catch (error) {
-          // Handle error if the API call fails
-          console.error("Error posting data:", error);
-        }
-      }
-    };
-
-    postData();
-  }, [formData]);
-
   return (
     <>
-      <div
-        className={`fixed inset-0 w-full h-full  ${
-          dropBox ? "bg-black bg-opacity-50 z-40" : "-z-40"
-        }`}
-      ></div>
-
-      <div
-        className={`${
-          dropBox ? "" : "hidden"
-        } fixed top-0 left-0 z-[1055]  h-full w-full overflow-y-auto overflow-x-auto outline-none`}
-        tabIndex="-1"
-      >
-        <div className="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto  items-center  min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[700px]">
-          <div className="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
-            <div className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+      <div className={`h-full w-full`}>
+        <div className="pointer-events-none relative flex min-h-[calc(100%-1rem)] items-center  w-11/12 mx-auto my-12">
+          <div className="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current outline-none dark:bg-neutral-600">
+            <div className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
               <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
-                {editBox ? "Edit Product" : "Add Product"}
+                {operation.charAt(0).toUpperCase() + operation.slice(1)} Product
               </h5>
-
               <button
-                type="button"
-                className="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none hover:text-red-800"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (loading) {
-                    notify("Please wait", "info");
-                    return;
-                  }
-                  setDropBox(0);
-                  setEditBox(0);
+                className="text-base py-2 px-6 flex flex-row justify-center items-center text-white font-medium rounded-full cursor-pointer uppercase bg-sky-700"
+                onClick={() => {
+                  handleSubmit();
                 }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                {loading ? (
+                  <span className="mr-1">
+                    <Spinner width="w-5" color="#ffffff" />
+                  </span>
+                ) : null}
+                <span>{operation.toUpperCase()}</span>
               </button>
             </div>
-            <div className="relative p-4">
-              <div className="p-6 space-y-6">
+            <div className="relative py-6">
+              <div className="space-y-6">
                 <form>
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6">
@@ -180,7 +190,7 @@ function SellerProductModal({
                               />
                             </span>
                           ) : (
-                            <div className="flex flex-col items-center justify-center py-16">
+                            <div className="flex flex-col items-center justify-center py-24">
                               <svg
                                 className="w-8 h-8 mb-4 text-gray-500"
                                 aria-hidden="true"
@@ -203,7 +213,7 @@ function SellerProductModal({
                                 or drag and drop
                               </p>
                               <p className="text-xs text-gray-500">
-                                SVG, PNG, JPG or GIF (MAX. 800x400px)
+                                SVG, PNG, JPG or JPEG
                               </p>
                             </div>
                           )}
@@ -228,6 +238,7 @@ function SellerProductModal({
                         type="text"
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                         placeholder="Fresh Apples"
+                        value={formData.name}
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
                         }
@@ -235,55 +246,13 @@ function SellerProductModal({
                       />
                     </div>
 
-                    {/* <div className="col-span-2 sm:col-span-3">
-                      <label className="text-sm font-medium text-gray-900 block mb-2">
-                        City
-                      </label>
-                      <input
-                        type="text"
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                        placeholder="Una"
-                        onChange={(e) => {
-                          const updatedOriginAndSource = {
-                            ...formData.originAndSource,
-                            city: e.target.value,
-                          };
-                          setFormData({
-                            ...formData,
-                            originAndSource: updatedOriginAndSource,
-                          });
-                        }}
-                        required
-                      />
-                    </div>
-                    <div className="col-span-2 sm:col-span-3">
-                      <label className="text-sm font-medium text-gray-900 block mb-2">
-                        State
-                      </label>
-                      <input
-                        type="text"
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                        placeholder="Himachal Pradesh"
-                        onChange={(e) => {
-                          const updatedOriginAndSource = {
-                            ...formData.originAndSource,
-                            state: e.target.value,
-                          };
-                          setFormData({
-                            ...formData,
-                            originAndSource: updatedOriginAndSource,
-                          });
-                        }}
-                        required
-                      />
-                    </div> */}
-
                     <div className="col-span-2 sm:col-span-2">
                       <label className="text-sm font-medium text-gray-900 block mb-2">
                         Category
                       </label>
                       <select
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        value={formData.category}
                         onChange={(e) =>
                           setFormData({ ...formData, category: e.target.value })
                         }
@@ -301,22 +270,17 @@ function SellerProductModal({
                         <option value="vegetables">Vegetables</option>
                         <option value="pulses">Pulses</option>
                       </select>
-                      {/* <input
-                        type="text"
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                        placeholder="Fruits"
-                        required
-                      /> */}
                     </div>
 
                     <div className="col-span-2 sm:col-span-2">
                       <label className="text-sm font-medium text-gray-900 block mb-2">
-                        Measuing Unit
+                        Measuring Unit
                       </label>
                       <input
                         type="text"
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                         placeholder="kg"
+                        value={formData.measuringUnit}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
@@ -335,6 +299,7 @@ function SellerProductModal({
                         type="number"
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                         placeholder="Rs. 2000"
+                        value={formData.pricePerUnit}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
@@ -353,6 +318,7 @@ function SellerProductModal({
                         type="number"
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                         placeholder="5 kg"
+                        value={formData.minimumOrderQuantity}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
@@ -370,6 +336,7 @@ function SellerProductModal({
                         type="number"
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                         placeholder="20 kg"
+                        value={formData.quantity}
                         onChange={(e) =>
                           setFormData({ ...formData, quantity: e.target.value })
                         }
@@ -385,6 +352,7 @@ function SellerProductModal({
                         type="text"
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                         placeholder="10 years"
+                        value={formData.shelfLife}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
@@ -403,9 +371,10 @@ function SellerProductModal({
                         Description
                       </label>
                       <textarea
-                        rows="6"
+                        rows="10"
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
                         placeholder="e.g. Our apples are hand-picked and carefully inspected to ensure that only the best make it to our customers. "
+                        value={formData.description}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
@@ -418,44 +387,24 @@ function SellerProductModal({
                 </form>
               </div>
             </div>
-            <div className="px-10">
+            <div>
               <label
                 htmlFor="product-details"
                 className="text-sm font-medium text-gray-900 block mb-2"
               >
                 Choose Location
               </label>
-              {/* <BingMap isModalOpen={dropBox} setFormData={setFormData} /> */}
-              <LeafletMap width="w-full" height="h-96" showSearchBox={true} latitude={latitiude} longitude={longitude} setLatitude={setLatitude} setLongitude={setLongitude}/>
-            </div>
-            <div className="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
-              <button
-                type="button"
-                className="inline-block rounded bg-primary-100 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal focus:outline-none focus:ring-0 hover:text-red-800"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (loading) {
-                    notify("Please wait", "info");
-                    return;
-                  }
-                  setDropBox(0);
-                }}
-              >
-                Close
-              </button>
-              <button
-                className="text-xs py-2 px-4 flex flex-row justify-center items-center text-white font-medium rounded cursor-pointer uppercase bg-sky-700"
-                onClick={() => {
-                  if (editBox === true) {
-                    handleEdit(EditID);
-                  } else {
-                    handleSubmit();
-                  }
-                }}
-              >
-                {loading ? <Spinner width="w-5" color="#ffffff" /> : null}
-                <span className="ml-1">{editBox ? "Edit" : "Add"}</span>
-              </button>
+              {((renderMap && operation === "edit") || operation === "add") && (
+                <LeafletMap
+                  width="w-full"
+                  height="h-[450px]"
+                  showSearchBox={true}
+                  latitude={lat}
+                  longitude={long}
+                  setLatitude={setLat}
+                  setLongitude={setLong}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -464,4 +413,4 @@ function SellerProductModal({
   );
 }
 
-export default SellerProductModal;
+export default SellerProductOperation;

@@ -18,6 +18,9 @@ router.get("/getProductDataById/:key", productController.getProductDataById);
 // Delete Product
 router.delete("/delete/:productId", productController.deleteProduct);
 
+// Update Product
+router.put("/update/:productId", productController.updateProduct);
+
 
 // Update Product
 // app.put("/api/farmerdashboard/getProductData/update/:productId", async (req, res) => {

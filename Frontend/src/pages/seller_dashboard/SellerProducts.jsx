@@ -2,23 +2,22 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getAPI } from "../../utils/api/getRequest";
-import { postAPI } from "../../utils/api/postRequest";
 import { deleteAPI } from "../../utils/api/deleteRequest";
-import SellerProductModal from "./SellerProductModal";
 import Spinner from "../../components/Spinner";
 import { notify } from "../../utils/helper/notification";
 import { useDispatch } from "react-redux";
 import { editProductDetails } from "../../redux/actions";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 function SellerProducts() {
   const dispatch = useDispatch();
-
-  const [dropBox, setDropBox] = useState(false);
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
   const [data, setData] = useState([]);
-  const [editBox, setEditBox] = useState(false);
 
   const [isDataUpdated, setIsDataUpdated] = useState(false);
 
@@ -46,7 +45,6 @@ function SellerProducts() {
     setData(productData);
   };
 
-
   useEffect(() => {
     setIsDataUpdated(false);
     getProducts();
@@ -54,20 +52,6 @@ function SellerProducts() {
 
   return (
     <>
-      {/* Form Modal */}
-
-      {dropBox && (
-        <SellerProductModal
-          dropBox={dropBox}
-          setDropBox={setDropBox}
-          editBox={editBox}
-          setEditBox={setEditBox}
-          setIsDataUpdated={setIsDataUpdated}
-          loading={loading}
-          setLoading={setLoading}
-        />
-      )}
-
       {/* Table Header */}
       <h1 className="text-3xl font-medium mb-4 px-4">All Products</h1>
       <div className="w-full flex items-center justify-between px-4">
@@ -78,16 +62,11 @@ function SellerProducts() {
             placeholder="Search for products"
           />
         </div>
-        <div
-          className="text-md py-2 px-4 text-white rounded cursor-pointer bg-sky-700"
-          onClick={(e) => {
-            e.preventDefault();
-            dispatch(editProductDetails(null));
-            setDropBox(1);
-          }}
-        >
-          <i className="fa-regular fa-plus mr-2"></i>Add Product
-        </div>
+        <Link to="product/add">
+          <div className="text-md py-2 px-4 text-white rounded cursor-pointer bg-sky-700">
+            <i className="fa-regular fa-plus mr-2"></i>Add Product
+          </div>
+        </Link>
       </div>
 
       {/* Table */}
@@ -169,20 +148,14 @@ function SellerProducts() {
                     <span className=" flex justify-center items-center gap-2">
                       <div
                         className="text-md py-2 px-4 text-white rounded cursor-pointer bg-sky-700  whitespace-nowrap"
-                        // onClick={()=>{handleEdit(item._id)}}
                         onClick={(e) => {
                           e.preventDefault();
                           dispatch(editProductDetails(item));
-                          // setEditBox(1);
-                          // setDropBox(1);
+                          navigate(`product/edit`);
                         }}
                       >
                         <i className="fa-regular fa-pen-to-square mr-2"></i>
-                        <span
-                          className="font-medium"
-                        >
-                          Edit
-                        </span>
+                        <span className="font-medium">Edit</span>
                       </div>
 
                       <div
