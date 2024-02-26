@@ -129,7 +129,7 @@ function SellerProducts() {
                     {item.quantity} {item.measuringUnit}
                   </td>
                   <td
-                    className="px-6 py-4 cursor-pointer font-medium text-blue-600 hover:underline whitespace-nowrap"
+                    className="px-6 py-4 cursor-pointer font-medium text-sky-700 hover:underline whitespace-nowrap"
                     onClick={() => {
                       navigate(
                         `/map/${item.location.latitude}/${item.location.longitude}`

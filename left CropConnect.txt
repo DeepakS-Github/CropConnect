@@ -3,6 +3,6 @@ Left
 3. Delivery charge functionality - Done
 5. Hosting - Done
 6. Editing of the seller product - Done
-7. Show the locations instead of showing coordinates
+7. Show the locations instead of showing coordinates - Done
 8. Add the Paypal/others for pay now functionality
 

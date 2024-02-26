@@ -101,7 +101,7 @@ function SellerOrderRequests() {
                     {item.orderQty} {item.measuringUnit}
                   </td>
                   <td
-                    className=" px-6 py-4 max-w-sm cursor-pointer font-medium text-blue-600 hover:underline whitespace-nowrap"
+                    className=" px-6 py-4 max-w-sm cursor-pointer font-medium text-sky-700 hover:underline whitespace-nowrap"
                     onClick={() => {
                       navigate(
                         `/map/${item.orderLocation.latitude}/${item.orderLocation.longitude}`
