@@ -1,9 +1,9 @@
 import React from "react";
 
-function BoxSkeleton({ height=0, width="full", paddingX=12, paddingY=8}) {
+function BoxSkeleton({ height, width, paddingX, paddingY, radius}) {
   return (
     <div
-      className={`bg-gray-300 rounded px-${paddingX} py-${paddingY} dark:bg-gray-700 h-${height} w-${width} animate-pulse`}
+      className={`bg-gray-300 ${radius} ${paddingX} ${paddingY} dark:bg-gray-700 ${height} ${width} animate-pulse`}
     ></div>
   );
 }

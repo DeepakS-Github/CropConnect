@@ -8,7 +8,7 @@ const FAQSellerSkeleton = ({ noOfBoxes = 10 }) => {
       {Array(noOfBoxes)
         .fill(0)
         .map((box, index) => (
-          <BoxSkeleton key={index} height={0} width={"full"} paddingX={12} paddingY={8}/>
+          <BoxSkeleton key={index} width={"w-full"} radius={"rounded"} paddingX={"px-12"} paddingY={"py-8"}/>
         ))}
     </div>
     </>

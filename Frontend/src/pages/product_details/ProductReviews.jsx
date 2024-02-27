@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { postAPI } from "../../utils/api/postRequest";
 import { getAPI } from "../../utils/api/getRequest";
 import Spinner from "../../components/Spinner";
+import ReviewsSkeleton from "../../components/skeleton/ReviewsSkeleton";
 
 function ProductReviews() {
   const productData = useSelector((state) => state.productReducer);
@@ -13,7 +14,7 @@ function ProductReviews() {
   const [rate, setRate] = useState(0);
 
   const [reviewForm, setReviewForm] = useState({
-    userId: (userData)?userData._id:null,
+    userId: userData ? userData._id : null,
     productId: productData._id,
     stars: rate,
     heading: "",
@@ -24,12 +25,13 @@ function ProductReviews() {
   const [reachedEnd, setReachedEnd] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDataFetching, setIsDataFetching] = useState(true);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleReviewSubmit = () => {
-    if(userData===null){
-      notify("Please login as a user first","info");
+    if (userData === null) {
+      notify("Please login as a user first", "info");
       return;
     }
 
@@ -78,12 +80,15 @@ function ProductReviews() {
   useEffect(() => {
     const getReview = async () => {
       setIsLoading(true);
-      let data = await getAPI(`review/get?page=${currentPage}&per_page=2&productId=${productData._id}`);
+      let data = await getAPI(
+        `review/get?page=${currentPage}&per_page=2&productId=${productData._id}`
+      );
       if (data.length === 0) {
         setReachedEnd(true);
       }
       setReviewData([...reviewData, ...data]);
       setIsLoading(false);
+      setIsDataFetching(false);
     };
 
     getReview();
@@ -147,22 +152,25 @@ function ProductReviews() {
             ></textarea>
           </form>
 
-          {reviewData.map((item, index) => (
-            <div className="w-full flex justify-start items-start flex-col bg-gray-50 p-8">
-              <div className="flex flex-col md:flex-row justify-between w-full">
-                <div className="flex flex-row justify-between items-start">
-                  <p className="text-xl md:text-2xl font-medium leading-normal text-teal-600">
-                    {item.heading}
-                  </p>
+          {isDataFetching ? (
+            <ReviewsSkeleton />
+          ) : (
+            reviewData.map((item, index) => (
+              <div className="w-full flex justify-start items-start flex-col bg-gray-50 p-8">
+                <div className="flex flex-col md:flex-row justify-between w-full">
+                  <div className="flex flex-row justify-between items-start">
+                    <p className="text-xl md:text-2xl font-medium leading-normal text-teal-600">
+                      {item.heading}
+                    </p>
+                  </div>
+                  <div className="cursor-p  ointer mt-2 md:mt-0">
+                    <Rating rate={item.stars} size="text-lg" />
+                  </div>
                 </div>
-                <div className="cursor-p  ointer mt-2 md:mt-0">
-                  <Rating rate={item.stars} size="text-lg" />
-                </div>
-              </div>
-              <p className="mt-3 text-base leading-normal text-gray-600 w-full md:w-9/12 xl:w-5/6">
-                {item.description}
-              </p>
-              {/* <div className="hidden md:flex mt-6 flex-row justify-start items-start space-x-4">
+                <p className="mt-3 text-base leading-normal text-gray-600 w-full md:w-9/12 xl:w-5/6">
+                  {item.description}
+                </p>
+                {/* <div className="hidden md:flex mt-6 flex-row justify-start items-start space-x-4">
                 <div className="hidden md:block">
                   <img
                     src={`https://source.unsplash.com/random/120x120?rice,indrink`}
@@ -176,8 +184,9 @@ function ProductReviews() {
                   />
                 </div>
               </div> */}
-            </div>
-          ))}
+              </div>
+            ))
+          )}
 
           {!reachedEnd && (
             <div className="w-full text-center flex justify-center">

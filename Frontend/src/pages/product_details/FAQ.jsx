@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
 import { getAPI } from "../../utils/api/getRequest";
+import FAQSkeleton from "../../components/skeleton/FAQSkeleton";
 
 function FAQ() {
   const [reviewData, setReviewData] = useState([]);
   const [reachedEnd, setReachedEnd] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDataFetching, setIsDataFetching] = useState(true);
 
   const productData = useSelector((state) => state.productReducer);
 
@@ -23,6 +25,7 @@ function FAQ() {
       }
       setReviewData([...reviewData, ...data]);
       setIsLoading(false);
+      setIsDataFetching(false);
     };
 
     getReview();
@@ -37,17 +40,23 @@ function FAQ() {
               Frequently asked questions
             </h2>
 
-            <div className="grid lg:grid-cols-3 gap-6">
-              {reviewData.map((data) => (
-                <div className="mb-12">
-                  <p className="font-bold mb-4 text-pink-500">{data.question}</p>
-                  <p className="text-gray-500">{data.answer}</p>
-                </div>
-              ))}
-            </div>
+            {isDataFetching ? (
+              <FAQSkeleton />
+            ) : (
+              <div className="grid lg:grid-cols-3 gap-6">
+                {reviewData.map((data) => (
+                  <div className="mb-12">
+                    <p className="font-bold mb-4 text-pink-500">
+                      {data.question}
+                    </p>
+                    <p className="text-gray-500">{data.answer}</p>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {!reachedEnd && (
-              <div className="w-full text-center flex justify-center">
+              <div className="w-full text-center my-6 flex justify-center">
                 <button
                   className="text-base py-2 px-8 flex flex-row justify-center items-center text-white font-medium rounded-full cursor-pointer bg-pink-500"
                   onClick={(e) => {
