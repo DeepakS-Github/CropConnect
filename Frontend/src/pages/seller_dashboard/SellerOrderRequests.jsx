@@ -4,10 +4,13 @@ import { useEffect } from "react";
 import { getAPI } from "../../utils/api/getRequest";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import TableSkeleton from "../../components/skeleton/TableSkeleton";
 
 function SellerOrderRequests() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+
+  const [isDataFetching, setIsDataFetching] = useState(true);
 
   // API to GET Data
   const getOrders = async () => {
@@ -15,6 +18,7 @@ function SellerOrderRequests() {
       `order/get/${localStorage.getItem("sellerId")}`
     );
     setData(orderedData);
+    setIsDataFetching(false);
   };
 
   useEffect(() => {
@@ -38,92 +42,96 @@ function SellerOrderRequests() {
       {/* Table */}
       <div className="flex flex-col overflow-x-auto w-full">
         <div className="min-w-full py-2">
-          <table className="text-center text-sm font-light w-full">
-            <thead className="border-b font-medium bg-gray-100">
-              <tr>
-                <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  #
-                </th>
-                <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Image
-                </th>
-                <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Product Name
-                </th>
-                <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Order Date
-                </th>
-                <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Customer Name
-                </th>
-                <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Customer PhoneNo
-                </th>
-                <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Customer Email
-                </th>
-                <th scope="col" className="px-6 whitespace-nowrap  py-4">
-                  Order Quantity
-                </th>
-                <th scope="col" className="px-6 py-4 whitespace-nowrap">
-                  Order Location
-                </th>
-                <th scope="col" className="px-6 py-4 whitespace-nowrap">
-                  Total Price
-                </th>
-                <th scope="col" className="px-6 py-4 whitespace-nowrap">
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr
-                  className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 text-center"
-                  key={index}
-                >
-                  <td className="px-6 py-4 font-medium">{index + 1}</td>
-                  <td className="px-6 py-2">
-                    <img src={item.image} className="w-24 h-24" alt="Image" />
-                  </td>
-                  <td className="px-6 py-4">{item.name}</td>
-                  <td className="px-6 py-4">{item.date}</td>
-                  <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    {item.customerName}
-                  </td>
-                  <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    {item.customerPhoneNo}
-                  </td>
-                  <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    {item.customerEmail}
-                  </td>
-                  <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    {item.orderQty} {item.measuringUnit}
-                  </td>
-                  <td
-                    className=" px-6 py-4 max-w-sm cursor-pointer font-medium text-sky-700 hover:underline whitespace-nowrap"
-                    onClick={() => {
-                      navigate(
-                        `/map/${item.orderLocation.latitude}/${item.orderLocation.longitude}`
-                      );
-                    }}
-                  >
-                    {item.orderLocation.latitude.toFixed(4)},{" "}
-                    {item.orderLocation.longitude.toFixed(4)}
-                  </td>
-                  <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                    Rs.{item.totalPrice}
-                  </td>
-                  <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal text-yellow-500 font-medium">
-                    <span className="flex justify-center items-center">
-                      <GoDotFill className="mr-1" />
-                      Pending
-                    </span>
-                  </td>
+          {isDataFetching ? (
+            <TableSkeleton />
+          ) : (
+            <table className="text-center text-sm font-light w-full">
+              <thead className="border-b font-medium bg-gray-100">
+                <tr>
+                  <th scope="col" className="px-6 whitespace-nowrap py-4">
+                    #
+                  </th>
+                  <th scope="col" className="px-6 whitespace-nowrap py-4">
+                    Image
+                  </th>
+                  <th scope="col" className="px-6 whitespace-nowrap py-4">
+                    Product Name
+                  </th>
+                  <th scope="col" className="px-6 whitespace-nowrap py-4">
+                    Order Date
+                  </th>
+                  <th scope="col" className="px-6 whitespace-nowrap py-4">
+                    Customer Name
+                  </th>
+                  <th scope="col" className="px-6 whitespace-nowrap py-4">
+                    Customer PhoneNo
+                  </th>
+                  <th scope="col" className="px-6 whitespace-nowrap py-4">
+                    Customer Email
+                  </th>
+                  <th scope="col" className="px-6 whitespace-nowrap  py-4">
+                    Order Quantity
+                  </th>
+                  <th scope="col" className="px-6 py-4 whitespace-nowrap">
+                    Order Location
+                  </th>
+                  <th scope="col" className="px-6 py-4 whitespace-nowrap">
+                    Total Price
+                  </th>
+                  <th scope="col" className="px-6 py-4 whitespace-nowrap">
+                    Status
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.map((item, index) => (
+                  <tr
+                    className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 text-center"
+                    key={index}
+                  >
+                    <td className="px-6 py-4 font-medium">{index + 1}</td>
+                    <td className="px-6 py-2">
+                      <img src={item.image} className="w-24 h-24" alt="Image" />
+                    </td>
+                    <td className="px-6 py-4">{item.name}</td>
+                    <td className="px-6 py-4">{item.date}</td>
+                    <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
+                      {item.customerName}
+                    </td>
+                    <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
+                      {item.customerPhoneNo}
+                    </td>
+                    <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
+                      {item.customerEmail}
+                    </td>
+                    <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
+                      {item.orderQty} {item.measuringUnit}
+                    </td>
+                    <td
+                      className=" px-6 py-4 max-w-sm cursor-pointer font-medium text-sky-700 hover:underline whitespace-nowrap"
+                      onClick={() => {
+                        navigate(
+                          `/map/${item.orderLocation.latitude}/${item.orderLocation.longitude}`
+                        );
+                      }}
+                    >
+                      {item.orderLocation.latitude.toFixed(4)},{" "}
+                      {item.orderLocation.longitude.toFixed(4)}
+                    </td>
+                    <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
+                      Rs.{item.totalPrice}
+                    </td>
+                    <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal text-yellow-500 font-medium">
+                      <span className="flex justify-center items-center">
+                        <GoDotFill className="mr-1" />
+                        Pending
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </>

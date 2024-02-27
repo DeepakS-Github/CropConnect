@@ -1,4 +1,5 @@
 const Order = require("../models/orderSchema");
+const { decreaseProductStocks } = require("../services/productServices");
 
 // Add Order
 const addOrder = async (req, res) => {
@@ -6,6 +7,7 @@ const addOrder = async (req, res) => {
     let data = Order(req.body);
     let result = await data.save({ writeConcern: { w: "majority" } });
     console.log(result);
+    await decreaseProductStocks(data.productId, data.orderQty);
     res
       .status(200)
       .send({ message: `Order for ${data.name} successfully received` });

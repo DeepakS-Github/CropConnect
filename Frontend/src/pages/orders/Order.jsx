@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import OrderCartCard from "../../components/OrderCartCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { FaRegUser } from "react-icons/fa";
 import { postAPI } from "../../utils/api/postRequest";
 import { removeFromCart } from "../../redux/actions";
 import { notify } from "../../utils/helper/notification";
@@ -17,7 +16,6 @@ function Order() {
 
   const cartData = useSelector((state) => state.cartReducer);
   const userData = useSelector((state) => state.userReducer);
-
 
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -35,6 +33,7 @@ function Order() {
 
     cartData.forEach(async (element) => {
       const orderData = {
+        productId: element._id,
         image: element.image,
         name: element.name,
         measuringUnit: element.unit,
@@ -133,7 +132,12 @@ function Order() {
                     Total
                   </p>
                   <p className="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600">
-                    Rs.{totalAmount + (totalAmount >= limitForFreeDelivery ? 0 : deliveryCharge)}.00
+                    Rs.
+                    {totalAmount +
+                      (totalAmount >= limitForFreeDelivery
+                        ? 0
+                        : deliveryCharge)}
+                    .00
                   </p>
                 </div>
               </div>
@@ -161,7 +165,12 @@ function Order() {
                     </div>
                   </div>
                   <p className="text-lg font-semibold leading-6 dark:text-white text-gray-800">
-                    Rs.{totalAmount + (totalAmount >= limitForFreeDelivery ? 0 : deliveryCharge)}.00
+                    Rs.
+                    {totalAmount +
+                      (totalAmount >= limitForFreeDelivery
+                        ? 0
+                        : deliveryCharge)}
+                    .00
                   </p>
                 </div>
                 <div className="w-full flex justify-center items-center">

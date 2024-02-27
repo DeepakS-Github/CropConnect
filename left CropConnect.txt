@@ -1,8 +1,6 @@
 Left
 1. Responsiveness
-3. Delivery charge functionality - Done
-5. Hosting - Done
-6. Editing of the seller product - Done
-7. Show the locations instead of showing coordinates - Done
 8. Add the Paypal/others for pay now functionality
-
+9. Add the skeleton loader on different sections
+10. Show no data available when there is no data in different sections
+11. Fix the OTP functionality
