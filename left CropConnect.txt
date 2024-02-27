@@ -4,3 +4,5 @@ Left
 9. Add the skeleton loader on different sections
 10. Show no data available when there is no data in different sections
 11. Fix the OTP functionality
+12. Add the socket io in stocks left, minimum order qty, price
+13. Improve the login and signup functionality from both backend and frontend
