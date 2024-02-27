@@ -4,7 +4,8 @@ const sellerController = require("../controllers/sellerController");
 const verifyOTP = require("../middlewares/verifyOTP");
 
 // SignUp
-router.post("/signup", verifyOTP, sellerController.signup);
+// router.post("/signup", verifyOTP, sellerController.signup);
+router.post("/signup", sellerController.signup);
 
 // Login
 router.post("/login", sellerController.login);

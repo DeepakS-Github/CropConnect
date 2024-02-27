@@ -34,7 +34,13 @@ function LoginAndSignup() {
           dispatch(addUserData(userData));
         }
       } else {
-        await postAPI(`user/signup?otp=${otp}`, {
+        // await postAPI(`user/signup?otp=${otp}`, {
+        //   name,
+        //   email,
+        //   password,
+        //   phoneNo,
+        // });
+        await postAPI(`user/signup`, {
           name,
           email,
           password,
@@ -48,7 +54,14 @@ function LoginAndSignup() {
           dispatch(addSellerData(sellerData));
         }
       } else {
-        await postAPI(`seller/signup?otp=${otp}`, {
+        // await postAPI(`seller/signup?otp=${otp}`, {
+        //   name,
+        //   email,
+        //   password,
+        //   phoneNo,
+        //   brandName,
+        // });
+        await postAPI(`seller/signup`, {
           name,
           email,
           password,
@@ -137,11 +150,12 @@ function LoginAndSignup() {
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (!isLoading) {
-                    if (signIn) {
-                      handleFormSubmit();
-                    } else {
-                      sendOTPMail();
-                    }
+                    // if (signIn) {
+                    //   handleFormSubmit();
+                    // } else {
+                    //   sendOTPMail();
+                    // }
+                    handleFormSubmit();
                   }
                 }}
               >
@@ -282,7 +296,8 @@ function LoginAndSignup() {
                     ) : signIn ? (
                       "Sign In"
                     ) : (
-                      "Send OTP"
+                      "Sign Up" 
+                      // "Send OTP"
                     )}
                   </button>
                 </div>
