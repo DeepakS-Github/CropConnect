@@ -140,9 +140,12 @@ function SellerFAQs() {
                       submitAnswer(data._id);
                     }}
                   >
-                    <span className="mr-1">
-                      {loading ? <Spinner width="w-5" color="#ffffff" /> : null}
-                    </span>
+                    {loading && (
+                      <span className="mr-1">
+                        {" "}
+                        <Spinner width="w-5" color="#ffffff" />{" "}
+                      </span>
+                    )}
                     Submit
                   </button>
                 </span>

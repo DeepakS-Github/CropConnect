@@ -7,6 +7,7 @@ import { removeFromCart } from "../../redux/actions";
 import { notify } from "../../utils/helper/notification";
 import getCurrentDateTime from "../../utils/helper/getCurrentDateTime";
 import LeafletMap from "../../components/LeafletMap";
+import Spinner from "../../components/Spinner";
 
 function Order() {
   const dispatch = useDispatch();
@@ -25,13 +26,17 @@ function Order() {
   const [customerLatitude, setCustomerLatitude] = useState(null);
   const [customerLongitude, setCustomerLongitude] = useState(null);
 
+  const [isPaymentInitiated, setIsPaymentInitiated] = useState(false);
+
   const orderNow = async () => {
+    setIsPaymentInitiated(true);
     if (customerLatitude === null || customerLongitude === null) {
       notify("Please select and submit valid delivery location", "info");
+      setIsPaymentInitiated(false);
       return;
     }
 
-    cartData.forEach(async (element) => {
+    for (const element of cartData) {
       const orderData = {
         productId: element._id,
         image: element.image,
@@ -50,14 +55,21 @@ function Order() {
       };
 
       console.log("Order data:", orderData);
-      let isSuccessfull = await postAPI("order/add", orderData);
+      try {
+        let isSuccessfull = await postAPI("order/add", orderData);
 
-      if (isSuccessfull) {
-        dispatch(removeFromCart(element._id));
-      } else {
+        if (isSuccessfull) {
+          dispatch(removeFromCart(element._id));
+        } else {
+          notify("Something went wrong", "error");
+        }
+      } catch (error) {
+        console.error("Error placing order:", error);
         notify("Something went wrong", "error");
       }
-    });
+    }
+
+    setIsPaymentInitiated(false);
   };
 
   useEffect(() => {
@@ -126,7 +138,9 @@ function Order() {
                       </p>
                     )}
                   </div>
-                  <div className="text-xs w-full text-right font-semibold text-green-600">*Order above Rs.{limitForFreeDelivery}.00 for free delivery</div>
+                  <div className="text-xs w-full text-right font-semibold text-green-600">
+                    *Order above Rs.{limitForFreeDelivery}.00 for free delivery
+                  </div>
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">
@@ -176,7 +190,7 @@ function Order() {
                 </div>
                 <div className="w-full flex justify-center items-center">
                   <button
-                    className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white"
+                    className="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white flex flex-row justify-center items-center"
                     onClick={() => {
                       if (cartData.length === 0) {
                         notify("First add some items to cart", "info");
@@ -185,6 +199,12 @@ function Order() {
                       }
                     }}
                   >
+                    {isPaymentInitiated && (
+                      <span className="mr-2">
+                        {" "}
+                        <Spinner width="w-6" color="#ffffff" />{" "}
+                      </span>
+                    )}
                     Pay Now
                   </button>
                 </div>
