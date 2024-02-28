@@ -96,11 +96,11 @@ function ProductReviews() {
   }, [currentPage]);
 
   return (
-    <div className="lg:w-11/12 mx-auto flex mt-24 flex-wrap">
+    <div className="lg:w-11/12 mx-auto flex mt-6 md:mt-24 flex-wrap">
       <div className="py-12 px-4 md:px-6 2xl:px-0 2xl:container 2xl:mx-auto flex justify-center items-center">
-        <div className="flex flex-col justify-start items-start w-full space-y-8">
+        <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-8">
           <div className="flex w-full justify-center items-start">
-            <h2 className="text-gray-900 text-center text-3xl title-font font-medium">
+            <h2 className="text-gray-900 text-center text-xl md:text-3xl title-font font-medium">
               Reviews
             </h2>
           </div>

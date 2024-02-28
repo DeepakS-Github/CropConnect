@@ -53,14 +53,14 @@ function ProductDetails() {
           // src={`https://source.unsplash.com/random/400x400?rice`}
           src = {productData.image}
         />
-        <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-          <h2 className="text-sm title-font text-gray-500 tracking-widest">
+        <div className="lg:w-1/2 w-full px-4 lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+          <h2 className="text-xs md:text-sm title-font text-gray-500 tracking-widest">
             {productData.brand}
           </h2>
-          <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+          <h1 className="text-gray-900 text-xl md:text-3xl title-font font-medium mb-1">
             {productData.name}
           </h1>
-          <p className="leading-relaxed">
+          <p className="text-sm md:text-base">
             {productData.description} It is a long established fact that a
             reader will be distracted by the readable content of a page when
             looking at its layout. The point of using Lorem Ipsum is that it has
@@ -77,31 +77,31 @@ function ProductDetails() {
             <table className="w-full text-base text-left text-gray-500">
               <tbody>
                 <tr className="bg-white border-b">
-                  <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  <th className="px-2 md:px-6 py-2 md:py-4 font-medium text-gray-900 whitespace-nowrap">
                     Stocks Left
                   </th>
-                  <td className="px-6 py-4">
+                  <td className="px-2 md:px-6 py-2 md:py-4 ">
                     {productData.quantity} {productData.measuringUnit}
                   </td>
                 </tr>
                 <tr className="bg-white border-b">
-                  <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  <th className="px-2 md:px-6 py-2 md:py-4 font-medium text-gray-900 whitespace-nowrap">
                     Shelf Life
                   </th>
-                  <td className="px-6 py-4">{productData.shelfLife}</td>
+                  <td className="px-2 md:px-6 py-2 md:py-4 ">{productData.shelfLife}</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-col md:flex-row">
             <div>
-              <div className="text-green-600 font-medium">
+              <div className="text-green-600 font-medium text-sm md:text-base">
                 Minimum Order Quantity: {productData.minimumOrderQuantity}{" "}
                 {productData.measuringUnit}
               </div>
               <div className="flex justify-between">
-                <h2 className="text-4xl text-left mb-1 font-medium">
+                <h2 className="text-2xl md:text-4xl text-left mb-1 font-medium">
                   Rs. {productData.pricePerUnit}/{productData.measuringUnit}
                 </h2>
               </div>
@@ -109,7 +109,7 @@ function ProductDetails() {
 
             {productData.minimumOrderQuantity <= productData.quantity ? (
               <button
-                className={`flex mb-4 mt-1  text-white ${
+                className={`flex mb-2 md:mb-4 mt-4 md:mt-2  text-white ${
                   isProductInCart
                     ? "bg-amber-500 hover:bg-amber-600"
                     : " bg-[#e11d48] hover:bg-[#e5345a]"

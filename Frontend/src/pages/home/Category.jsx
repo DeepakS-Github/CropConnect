@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Category() {
   return (
-    <div className="grid gap-6 lg:grid-cols-4">
+    <div className="grid gap-2 md:gap-4 lg:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <Link to={"/category/rice"}>
         <CategoryCard
           title="Rice"

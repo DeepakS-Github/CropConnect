@@ -28,7 +28,7 @@ function Product() {
       ) : productData.length === 0 ? (
         <EmptyStateText marginTop={"mt-12"} text="Oops! It seems like there are no products available in this category at the moment. Check back later or explore other categories to find what you're looking for!" />
       ) : (
-        <div className="grid gap-8 my-12 lg:grid-cols-4 w-11/12 mx-auto">
+        <div className="grid gap-4 md:gap-8 my-6 md:my-12 grid-cols-2 lg:grid-cols-4 w-11/12 mx-auto">
           {productData.map((data, index) => (
             <ProductCard data={data} key={index} />
           ))}
