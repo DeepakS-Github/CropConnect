@@ -5,6 +5,7 @@ import { getAPI } from "../../utils/api/getRequest";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import TableSkeleton from "../../components/skeleton/TableSkeleton";
+import EmptyStateText from "../../components/EmptyStateText";
 
 function SellerOrderRequests() {
   const [data, setData] = useState([]);
@@ -44,6 +45,8 @@ function SellerOrderRequests() {
         <div className="min-w-full py-2">
           {isDataFetching ? (
             <TableSkeleton />
+          ) : data.length === 0 ? (
+            <EmptyStateText text="It seems like your order request queue is currently empty. No worries, though! Keep an eye out for incoming orders—they'll pop up right here in your dashboard." />
           ) : (
             <table className="text-center text-sm font-light w-full">
               <thead className="border-b font-medium bg-gray-100">

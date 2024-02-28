@@ -27,7 +27,7 @@ function Order() {
 
   const orderNow = async () => {
     if (customerLatitude === null || customerLongitude === null) {
-      notify("Please select valid delivery location", "info");
+      notify("Please select and submit valid delivery location", "info");
       return;
     }
 
@@ -116,7 +116,7 @@ function Order() {
                     <p className="text-base dark:text-white leading-4 text-gray-800">
                       Shipping
                     </p>
-                    {totalAmount >= 1500 ? (
+                    {totalAmount >= limitForFreeDelivery ? (
                       <p className="text-base dark:text-green-300 leading-4 text-green-600">
                         FREE
                       </p>
@@ -126,6 +126,7 @@ function Order() {
                       </p>
                     )}
                   </div>
+                  <div className="text-xs w-full text-right font-semibold text-green-600">*Order above Rs.{limitForFreeDelivery}.00 for free delivery</div>
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <p className="text-base dark:text-white font-semibold leading-4 text-gray-800">

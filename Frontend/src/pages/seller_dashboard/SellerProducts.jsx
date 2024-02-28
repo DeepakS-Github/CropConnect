@@ -10,6 +10,7 @@ import { editProductDetails } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import TableSkeleton from "../../components/skeleton/TableSkeleton";
+import EmptyStateText from "../../components/EmptyStateText";
 
 function SellerProducts() {
   const dispatch = useDispatch();
@@ -75,6 +76,8 @@ function SellerProducts() {
         <div className="min-w-full py-2">
           {isDataFetching ? (
             <TableSkeleton />
+          ) : data.length === 0 ? (
+            <EmptyStateText text="Your seller dashboard currently does not display any products. To start selling, kindly add your products by navigating to the 'Add Product' section." />
           ) : (
             <table className="text-center text-sm font-light w-full">
               <thead className="border-b font-medium bg-gray-100">

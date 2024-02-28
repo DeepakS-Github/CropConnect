@@ -8,6 +8,7 @@ import { notify } from "../../utils/helper/notification";
 import { useNavigate } from "react-router-dom";
 import { addProductData } from "../../redux/actions";
 import FAQSellerSkeleton from "../../components/skeleton/FAQSellerSkeleton";
+import EmptyStateText from "../../components/EmptyStateText";
 
 function SellerFAQs() {
   const dispatch = useDispatch();
@@ -94,6 +95,8 @@ function SellerFAQs() {
       <h1 className="text-3xl font-medium mb-4 px-4">All FAQs</h1>
       {isDataFetching ? (
         <FAQSellerSkeleton />
+      ) : unansweredFAQ.length === 0 && answeredFAQ.length === 0 ? (
+        <EmptyStateText text="Looks like your FAQ section is empty. No questions yet! But don't worry, once users start asking about your products, you'll find them here." />
       ) : (
         <div className="px-4 mx-auto grid grid-cols-2 gap-4 my-4">
           {unansweredFAQ.map((data) => (

@@ -6,6 +6,7 @@ import { postAPI } from "../../utils/api/postRequest";
 import { getAPI } from "../../utils/api/getRequest";
 import Spinner from "../../components/Spinner";
 import ReviewsSkeleton from "../../components/skeleton/ReviewsSkeleton";
+import EmptyStateText from "../../components/EmptyStateText";
 
 function ProductReviews() {
   const productData = useSelector((state) => state.productReducer);
@@ -154,6 +155,8 @@ function ProductReviews() {
 
           {isDataFetching ? (
             <ReviewsSkeleton />
+          ) : reviewData.length === 0 ? (
+            <EmptyStateText text="Be the first to share your thoughts! This product doesn't have any reviews yet. Your feedback can help others make informed decisions. Write a review now!" />
           ) : (
             reviewData.map((item, index) => (
               <div className="w-full flex justify-start items-start flex-col bg-gray-50 p-8">

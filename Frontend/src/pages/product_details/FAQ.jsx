@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Spinner from "../../components/Spinner";
 import { getAPI } from "../../utils/api/getRequest";
 import FAQSkeleton from "../../components/skeleton/FAQSkeleton";
+import EmptyStateText from "../../components/EmptyStateText";
 
 function FAQ() {
   const [reviewData, setReviewData] = useState([]);
@@ -42,6 +43,8 @@ function FAQ() {
 
             {isDataFetching ? (
               <FAQSkeleton />
+            ) : reviewData.length === 0 ? (
+              <EmptyStateText text="No FAQs yet! Have a question about this product? Be the first to ask! Your inquiry could help others too. Start the conversation now!" />
             ) : (
               <div className="grid lg:grid-cols-3 gap-6">
                 {reviewData.map((data) => (
