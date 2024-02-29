@@ -95,8 +95,8 @@ function LoginAndSignup() {
   return (
     <section className="w-full flex flex-row h-screen">
       <div
-        className={`w-1/2 overflow-y-auto duration-300 ease-linear transition ${
-          signIn ? "" : "translate-x-full"
+        className={`w-full md:w-1/2 overflow-y-auto duration-300 ease-linear transition ${
+          signIn ? "" : "md:translate-x-full"
         }`}
       >
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -361,7 +361,7 @@ function LoginAndSignup() {
         </div>
       </div>
       <div
-        className={`w-1/2 relative duration-300 ease-linear transition  ${
+        className={`hidden md:block md:w-1/2 relative duration-300 ease-linear transition  ${
           signIn ? "" : "-translate-x-full"
         }`}
       >
