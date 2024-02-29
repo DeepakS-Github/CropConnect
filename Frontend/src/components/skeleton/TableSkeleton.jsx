@@ -4,7 +4,7 @@ function TableSkeleton({ rows = 10 }) {
   return (
     <>
       <div className="relative overflow-x-auto  w-full mx-auto rounded">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
           <tbody>
             {Array(rows)
               .fill(0)
@@ -15,7 +15,7 @@ function TableSkeleton({ rows = 10 }) {
                 >
                   <th
                     scope="row"
-                    className="px-6 py-5 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    className="px-6 py-5 font-medium text-gray-900 whitespace-nowrap"
                   ></th>
                   <td className="px-6 py-5"></td>
                   <td className="px-6 py-5"></td>

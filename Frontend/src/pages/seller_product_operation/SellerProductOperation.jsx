@@ -146,9 +146,9 @@ function SellerProductOperation() {
     <>
       <div className={`h-full w-full`}>
         <div className="pointer-events-none relative flex min-h-[calc(100%-1rem)] items-center  w-11/12 mx-auto my-12">
-          <div className="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current outline-none dark:bg-neutral-600">
-            <div className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
-              <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
+          <div className="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current outline-none ">
+            <div className="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 py-4 ">
+              <h5 className="text-xl font-medium leading-normal text-neutral-800 ">
                 {operation.charAt(0).toUpperCase() + operation.slice(1)} Product
               </h5>
               <button
@@ -171,7 +171,7 @@ function SellerProductOperation() {
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6">
                       <div className="flex items-center justify-center w-full">
-                        <label className="flex flex-col relative items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-10">
+                        <label className="flex flex-col relative items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-10">
                           {image ? (
                             <span>
                               <img
