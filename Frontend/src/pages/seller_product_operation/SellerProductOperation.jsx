@@ -137,6 +137,9 @@ function SellerProductOperation() {
           navigate("/sellerdashboard");
         }
       }
+      else{
+        setLoading(false);
+      }
     } else {
       notify("Please wait", "info");
     }

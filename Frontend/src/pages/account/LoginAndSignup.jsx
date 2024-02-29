@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loading/Loader";
 import { useDispatch } from "react-redux";
 import { addSellerData, addUserData } from "../../redux/actions";
+import { notify } from "../../utils/helper/notification";
 
 function LoginAndSignup() {
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ function LoginAndSignup() {
         console.log(userData);
         if (userData != undefined) {
           dispatch(addUserData(userData));
+          notify("User logged in successfully", "success");
+          navigate('/');
         }
       } else {
         // await postAPI(`user/signup?otp=${otp}`, {
@@ -52,6 +55,8 @@ function LoginAndSignup() {
         let sellerData = await postAPI("seller/login", { email, password });
         if (sellerData != undefined) {
           dispatch(addSellerData(sellerData));
+          navigate('/sellerdashboard');
+          notify("Seller logged in successfully", "success");
         }
       } else {
         // await postAPI(`seller/signup?otp=${otp}`, {
@@ -71,9 +76,9 @@ function LoginAndSignup() {
       }
     }
 
-    if (localStorage.getItem("userId") || localStorage.getItem("sellerId")) {
-      navigate("/");
-    }
+    // if (localStorage.getItem("userId") || localStorage.getItem("sellerId")) {
+    //   navigate("/");
+    // }
 
     setName("");
     setEmail("");

@@ -4,9 +4,9 @@ export const uploadImageToCloudinary = async (image) => {
   const data = new FormData();
   data.append("file", image);
   data.append("upload_preset", "ml_default");
-  
+
   try {
-    const response = await fetch("https://api.cloudinary.com/v1_1/kdjfowejnfewfholksds/image/upload", {
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, {
       method: "post",
       body: data,
     });
