@@ -13,7 +13,7 @@ export const cartReducer = (state = initialState, action) => {
     case INC_QTY_IN_CART:
       const productIdToIncQty = action.payload;
       const updatedCartByIncQty = state.map((item) => {
-        console.log(item);
+        // console.log(item);
         if (item._id === productIdToIncQty && item.qty!==item.stocksLeft) {
           return { ...item, qty: item.qty + 1, currentPrice: item.currentPrice + item.pricePerUnit};
         }
@@ -23,7 +23,7 @@ export const cartReducer = (state = initialState, action) => {
     case DEC_QTY_IN_CART:
       const productIdToDecQty = action.payload;
       const updatedCartByDecQty = state.map((item) => {
-        console.log(item);
+        // console.log(item);
         if (item._id === productIdToDecQty && item.qty!==item.minQty) {
           return { ...item, qty: item.qty - 1, currentPrice: item.currentPrice - item.pricePerUnit };
         }

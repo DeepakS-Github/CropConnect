@@ -12,7 +12,7 @@ export const getAPI = async (endpointURL) => {
       notify(responseData["message"], notifyType(response.status));
       throw new Error(`Request failed with status: ${response.status}`);
   }
-    console.log(responseData);
+    // console.log(responseData);
     return responseData;
   } catch (error) {
     console.log(error);

@@ -27,14 +27,14 @@ function SellerContact() {
 
   const submitFeedbackForm = async () => {
     if(userData===null){
-      console.log("e")
+      // console.log("e")
       notify("Login as user to send the feedback", "info");
       return;
     }
 
     setIsLoading(true);
     setFeedbackForm({...feedbackForm, userId: userData._id}); 
-    console.log(feedbackForm);
+    // console.log(feedbackForm);
     try {
       await postAPI("faq/add", feedbackForm);
       setIsLoading(false);

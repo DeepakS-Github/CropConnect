@@ -22,7 +22,7 @@ function SellerProductOperation() {
     (state) => state.sellerEditProductReducer
   );
 
-  console.log(productEditData);
+  // console.log(productEditData);
 
   const [renderMap, setRenderMap] = useState(false);
 
@@ -52,7 +52,7 @@ function SellerProductOperation() {
     setImageToUpload(() => uploadedImage);
     if (uploadedImage) {
       const imageUrl = URL.createObjectURL(uploadedImage);
-      console.log(imageUrl);
+      // console.log(imageUrl);
       setImage(() => imageUrl);
     }
   };
@@ -113,7 +113,7 @@ function SellerProductOperation() {
       let cloudResp = await uploadImageToCloudinary(imageToUpload);
 
 
-      console.log("cloud: ",cloudResp);
+      // console.log("cloud: ",cloudResp);
 
       if (cloudResp !== "error") {
         try {

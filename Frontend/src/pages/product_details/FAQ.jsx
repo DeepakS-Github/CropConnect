@@ -21,7 +21,7 @@ function FAQ() {
       let data = await getAPI(
         `faq/showbyproduct?productId=${productData._id}&page=${currentPage}&faq_per_page=6`
       );
-      console.log(data);
+      // console.log(data);
       if (data.length === 0) {
         setReachedEnd(true);
       }

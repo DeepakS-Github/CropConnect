@@ -61,7 +61,7 @@ function SellerFAQs() {
   const seeProduct = async (productId) => {
     let data = await getAPI(`product/getProductDataById/${productId}`);
 
-    console.log(data);
+    // console.log(data);
 
     dispatch(addProductData(data));
     navigate("/category/fruits/details");

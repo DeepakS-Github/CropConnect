@@ -30,7 +30,7 @@ function LoginAndSignup() {
     if (type === "user") {
       if (signIn === true) {
         let userData = await postAPI("user/login", { email, password });
-        console.log(userData);
+        // console.log(userData);
         if (userData != undefined) {
           dispatch(addUserData(userData));
           notify("User logged in successfully", "success");

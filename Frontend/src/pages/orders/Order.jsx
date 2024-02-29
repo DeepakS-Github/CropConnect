@@ -55,7 +55,7 @@ function Order() {
         sellerId: element.sellerId,
       };
 
-      console.log("Order data:", orderData);
+      // console.log("Order data:", orderData);
       try {
         let isSuccessfull = await postAPI("order/add", orderData);
 

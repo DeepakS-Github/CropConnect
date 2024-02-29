@@ -2,7 +2,7 @@ import { notify } from "../helper/notification";
 import { notifyType } from "../helper/notificationType";
 
 export const deleteAPI = async (endpointURL) => {
-    console.log("entered");
+    // console.log("entered");
 
 
   try {
@@ -15,7 +15,7 @@ export const deleteAPI = async (endpointURL) => {
         notify(responseData["message"], notifyType(response.status));
         throw new Error(`Request failed with status: ${response.status}`);
     }
-    console.log(responseData);
+    // console.log(responseData);
     notify(responseData["message"], notifyType(response.status));
   } catch (error) {
       notify(responseData["message"], "error");

@@ -32,16 +32,12 @@ function ProductDetails() {
       unit: productData.measuringUnit,
       currentPrice: productData.pricePerUnit*productData.minimumOrderQuantity
     }
-    console.log(store.getState());
     dispatch(addToCart(cartProductData));
-    console.log(store.getState());
     // setIsProductInCart(true);
   };
 
   const removeProductFromCart = () => {
-    console.log(store.getState());
     dispatch(removeFromCart(productData._id));
-    console.log(store.getState());
     // setIsProductInCart(false);
   }
 

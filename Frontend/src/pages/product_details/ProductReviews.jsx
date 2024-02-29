@@ -57,7 +57,6 @@ function ProductReviews() {
         reviewForm.stars != 0
       ) {
         try {
-          console.log(reviewForm);
           setIsSubmitting(true);
           await postAPI("review/add", reviewForm);
           // setReviewData([reviewForm, ...reviewData]);
