@@ -1,5 +1,5 @@
 import React from "react";
-import { addProductData } from "../redux/actions";
+import { addProductData } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

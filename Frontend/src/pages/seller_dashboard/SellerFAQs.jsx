@@ -3,12 +3,13 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { getAPI } from "../../utils/api/getRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { putAPI } from "../../utils/api/putRequest";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/loading/Spinner";
 import { notify } from "../../utils/helper/notification";
 import { useNavigate } from "react-router-dom";
 import { addProductData } from "../../redux/actions";
 import FAQSellerSkeleton from "../../components/skeleton/FAQSellerSkeleton";
-import EmptyStateText from "../../components/EmptyStateText";
+import EmptyStateText from "../../components/empty_state/EmptyStateText";
+import Heading from "../../components/heading/Heading";
 
 function SellerFAQs() {
   const dispatch = useDispatch();
@@ -92,13 +93,13 @@ function SellerFAQs() {
 
   return (
     <>
-      <h1 className="text-3xl font-medium mb-4 px-4">All FAQs</h1>
+       <Heading text={"Your FAQs"} textAlign="text-left" marginY="mb-2 md:my-4"/>
       {isDataFetching ? (
         <FAQSellerSkeleton />
       ) : unansweredFAQ.length === 0 && answeredFAQ.length === 0 ? (
         <EmptyStateText text="Looks like your FAQ section is empty. No questions yet! But don't worry, once users start asking about your products, you'll find them here." />
       ) : (
-        <div className="px-4 mx-auto grid grid-cols-2 gap-4 my-4">
+        <div className="px-4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
           {unansweredFAQ.map((data) => (
             <div className="flex flex-row gap-4 bg-gray-100 rounded p-4">
               <div className="w-8 h-8 flex justify-center">

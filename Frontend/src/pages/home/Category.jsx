@@ -1,5 +1,5 @@
 import React from "react";
-import CategoryCard from "../../components/CategoryCard";
+import CategoryCard from "../../components/home/CategoryCard";
 import { Link } from "react-router-dom";
 
 function Category() {

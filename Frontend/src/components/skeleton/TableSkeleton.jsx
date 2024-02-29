@@ -11,7 +11,7 @@ function TableSkeleton({ rows = 10 }) {
               .map((row, index) => (
                 <tr
                   key={index}
-                  className="bg-gray-300 animate-pulse border-b border-white"
+                  className="bg-gray-200 animate-pulse border-b border-white"
                 >
                   <th
                     scope="row"

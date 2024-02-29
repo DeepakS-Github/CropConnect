@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Rating from "../../components/Rating";
+import Rating from "../../components/product_details/Rating";
 import { notify } from "../../utils/helper/notification";
 import { useSelector } from "react-redux";
 import { postAPI } from "../../utils/api/postRequest";
 import { getAPI } from "../../utils/api/getRequest";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/loading/Spinner";
 import ReviewsSkeleton from "../../components/skeleton/ReviewsSkeleton";
-import EmptyStateText from "../../components/EmptyStateText";
+import EmptyStateText from "../../components/empty_state/EmptyStateText";
+import Heading from "../../components/heading/Heading";
 
 function ProductReviews() {
   const productData = useSelector((state) => state.productReducer);
@@ -96,13 +97,15 @@ function ProductReviews() {
   }, [currentPage]);
 
   return (
-    <div className="lg:w-11/12 mx-auto flex mt-6 md:mt-24 flex-wrap">
-      <div className="py-12 px-4 md:px-6 2xl:px-0 2xl:container 2xl:mx-auto flex justify-center items-center">
+    <div className="w-11/12 mx-auto flex flex-wrap">
+      <div className="w-full mx-auto flex justify-center items-center">
         <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-8">
           <div className="flex w-full justify-center items-start">
-            <h2 className="text-gray-900 text-center text-xl md:text-3xl title-font font-medium">
-              Reviews
-            </h2>
+            <Heading
+              text="Reviews"
+              marginY="my-2 md:my-4"
+              textAlign="text-center"
+            />
           </div>
 
           <form
@@ -112,9 +115,9 @@ function ProductReviews() {
               handleReviewSubmit();
             }}
           >
-            <div className="w-full flex flex-row gap-2">
+            <div className="w-full flex flex-col-reverse md:flex-row gap-2">
               <input
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-8/12 p-4"
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full md:w-8/12 p-4"
                 value={reviewForm.heading}
                 onChange={(e) =>
                   setReviewForm((prevData) => ({
@@ -124,20 +127,22 @@ function ProductReviews() {
                 }
                 placeholder="Write review heading..."
               ></input>
-              <div className="bg-gray-50 border border-gray-300 rounded-lg flex justify-center items-center w-2/12">
-                <Rating rate={rate} setRate={setRate} size="text-2xl" />
+              <div className="flex flex-row gap-2 w-full md:w-4/12">
+                <div className="bg-gray-50 border border-gray-300 rounded-lg flex justify-center items-center w-9/12">
+                  <Rating rate={rate} setRate={setRate} size="text-2xl" />
+                </div>
+                <button
+                  className="w-3/12 text-base py-2 px-4 flex flex-row justify-center items-center text-white font-medium rounded cursor-pointer uppercase bg-teal-500"
+                  type="submit"
+                >
+                  <span className="mr-1">
+                    {isSubmitting ? (
+                      <Spinner width="w-6" color="#ffffff" />
+                    ) : null}
+                  </span>
+                  Submit
+                </button>
               </div>
-              <button
-                className="w-2/12 text-base py-2 px-4 flex flex-row justify-center items-center text-white font-medium rounded cursor-pointer uppercase bg-teal-500"
-                type="submit"
-              >
-                <span className="mr-1">
-                  {isSubmitting ? (
-                    <Spinner width="w-6" color="#ffffff" />
-                  ) : null}
-                </span>
-                Submit
-              </button>
             </div>
             <textarea
               rows="6"
@@ -159,14 +164,14 @@ function ProductReviews() {
             <EmptyStateText text="Be the first to share your thoughts! This product doesn't have any reviews yet. Your feedback can help others make informed decisions. Write a review now!" />
           ) : (
             reviewData.map((item, index) => (
-              <div className="w-full flex justify-start items-start flex-col bg-gray-50 p-8">
-                <div className="flex flex-col md:flex-row justify-between w-full">
+              <div className="w-full flex justify-start items-start flex-col bg-gray-50 p-4 md:p-8">
+                <div className="flex flex-row justify-between w-full">
                   <div className="flex flex-row justify-between items-start">
                     <p className="text-xl md:text-2xl font-medium leading-normal text-teal-600">
                       {item.heading}
                     </p>
                   </div>
-                  <div className="cursor-p  ointer mt-2 md:mt-0">
+                  <div className="mt-2 md:mt-0">
                     <Rating rate={item.stars} size="text-lg" />
                   </div>
                 </div>
@@ -200,9 +205,11 @@ function ProductReviews() {
                   setCurrentPage((prevPage) => prevPage + 1);
                 }}
               >
-                <span className="mr-1">
-                  {isLoading ? <Spinner width="w-5" color="#ffffff" /> : null}
-                </span>
+                {isLoading && (
+                  <span className="mr-1">
+                    <Spinner width="w-5" color="#ffffff" />{" "}
+                  </span>
+                )}
                 Load More
               </button>
             </div>

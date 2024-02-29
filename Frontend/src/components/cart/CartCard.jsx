@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { removeFromCart, increaseProductQty, decreaseProductQty } from "../redux/actions";
+import { removeFromCart, increaseProductQty, decreaseProductQty } from "../../redux/actions";
 
 function CartCard({item}) {
 

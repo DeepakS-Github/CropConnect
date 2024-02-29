@@ -5,7 +5,8 @@ import { getAPI } from "../../utils/api/getRequest";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import TableSkeleton from "../../components/skeleton/TableSkeleton";
-import EmptyStateText from "../../components/EmptyStateText";
+import EmptyStateText from "../../components/empty_state/EmptyStateText";
+import Heading from "../../components/heading/Heading";
 
 function SellerOrderRequests() {
   const [data, setData] = useState([]);
@@ -29,13 +30,13 @@ function SellerOrderRequests() {
   return (
     <>
       {/* Table Header */}
-      <h1 className="text-3xl font-medium mb-4 px-4">All Orders</h1>
-      <div className="w-full flex items-center px-4">
-        <div className="mt-1 relative sm:w-64 xl:w-96">
+      <Heading text={"All Orders"} textAlign="text-left" marginY="mb-2 md:my-4"/>
+      <div className="w-full flex flex-col gap-2 md:flex-row items-center justify-between px-4">
+        <div className="mt-1 relative w-full  md:w-96">
           <input
             type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-            placeholder="Search for orders"
+            placeholder="Search for products"
           />
         </div>
       </div>

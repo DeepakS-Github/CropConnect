@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { postAPI } from "../../utils/api/postRequest";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../components/Loader";
+import Loader from "../../components/loading/Loader";
 import { useDispatch } from "react-redux";
 import { addSellerData, addUserData } from "../../redux/actions";
 
@@ -104,7 +104,7 @@ function LoginAndSignup() {
             <button
               className={`rounded-l-md  ${
                 signIn
-                  ? type === "user"
+                  ? type === "seller"
                     ? "bg-green-600 hover:bg-green-500 text-white"
                     : "bg-blue-600 hover:bg-blue-500 text-white"
                   : "text-black hover:bg-gray-100"
@@ -120,7 +120,7 @@ function LoginAndSignup() {
               className={`rounded-r-md  ${
                 signIn
                   ? "text-black hover:bg-gray-100"
-                  : type === "user"
+                  : type === "seller"
                   ? "bg-green-600 hover:bg-green-500 text-white"
                   : "bg-blue-600 hover:bg-blue-500 text-white"
               }  px-6 py-1.5 text-sm font-semibold leading-6 shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
@@ -134,7 +134,7 @@ function LoginAndSignup() {
               {signIn ? "Sign In" : "Sign Up"} to{" "}
               <span
                 className={`${
-                  type === "user" ? "text-green-600" : "text-blue-600"
+                  type === "seller" ? "text-green-600" : "text-blue-600"
                 }`}
               >
                 {type === "user" ? "User" : "Seller"}
@@ -215,7 +215,7 @@ function LoginAndSignup() {
                       onChange={(e) => setPhoneNo(e.target.value)}
                       {...(!signIn ? { required: true } : {})}
                       className={`block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset ${
-                        type === "user"
+                        type === "seller"
                           ? "focus:ring-green-600"
                           : "focus:ring-blue-600"
                       } sm:text-sm sm:leading-6`}
@@ -285,7 +285,7 @@ function LoginAndSignup() {
                   <button
                     type="submit"
                     className={`flex w-full justify-center rounded-md ${
-                      type === "user"
+                      type === "seller"
                         ? `bg-green-600 hover:bg-green-500 focus-visible:outline-green-600`
                         : `bg-blue-600 hover:bg-blue-500 focus-visible:outline-blue-600`
                     }  px-3 py-1.5 text-sm 
@@ -328,7 +328,7 @@ function LoginAndSignup() {
                       onChange={(e) => setOTP(e.target.value)}
                       {...(!signIn ? { required: true } : {})}
                       className={`block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset ${
-                        type === "user"
+                        type === "seller"
                           ? "focus:ring-green-600"
                           : "focus:ring-blue-600"
                       } sm:text-sm sm:leading-6`}
@@ -340,7 +340,7 @@ function LoginAndSignup() {
                   <button
                     type="submit"
                     className={`flex w-full justify-center rounded-md ${
-                      type === "user"
+                      type === "seller"
                         ? `bg-green-600 hover:bg-green-500 focus-visible:outline-green-600`
                         : `bg-blue-600 hover:bg-blue-500 focus-visible:outline-blue-600`
                     }  px-3 py-1.5 text-sm 
@@ -367,22 +367,22 @@ function LoginAndSignup() {
       >
         <div
           className={`h-full w-4 absolute left-0 ${
-            type === "user" ? "bg-green-600" : "bg-blue-600"
+            type === "seller" ? "bg-green-600" : "bg-blue-600"
           }  z-40`}
         ></div>
         <div
           className={`h-full w-4 absolute right-0 ${
-            type === "user" ? "bg-green-600" : "bg-blue-600"
+            type === "seller" ? "bg-green-600" : "bg-blue-600"
           } z-40`}
         ></div>
         <div
           className={`h-4 w-full absolute top-0 ${
-            type === "user" ? "bg-green-600" : "bg-blue-600"
+            type === "seller" ? "bg-green-600" : "bg-blue-600"
           } z-40`}
         ></div>
         <div
           className={`h-4 w-full absolute bottom-0 ${
-            type === "user" ? "bg-green-600" : "bg-blue-600"
+            type === "seller" ? "bg-green-600" : "bg-blue-600"
           } z-40`}
         ></div>
         <img

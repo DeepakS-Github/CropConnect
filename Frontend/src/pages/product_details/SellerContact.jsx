@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { postAPI } from "../../utils/api/postRequest";
 import { useSelector } from "react-redux";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/loading/Spinner";
 import { notify } from "../../utils/helper/notification";
-import LeafletMap from "../../components/LeafletMap";
+import LeafletMap from "../../components/map/LeafletMap";
 
 function SellerContact() {
   const productData = useSelector((state) => state.productReducer);
@@ -17,6 +17,7 @@ function SellerContact() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [feedbackForm, setFeedbackForm] = useState({
+    userId: userData?._id,
     name: null,
     email: null,
     question: null,
@@ -45,18 +46,18 @@ function SellerContact() {
 
   return (
     <>
-      <div className="lg:w-11/12 mx-auto flex flex-wrap">
+      <div className="w-11/12 mx-auto flex flex-wrap">
         <section className="text-gray-600 w-full body-font relative">
-          <div className="container w-full py-24 mx-auto flex sm:flex-nowrap flex-wrap">
-            <div className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 flex items-end justify-start relative">
+          <div className="w-full mx-auto flex flex-col md:flex-row gap-10">
+            <div className="w-full h-72 md:h-[560px] lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden flex md:items-end md:justify-start relative z-40">
               <LeafletMap width="w-full" height="h-full" latitude={position[0]} longitude={position[1]} showSearchBox={false}/>
             </div>
 
-            <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+            <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full">
               <h2 className="text-green-600 text-lg mb-1 font-medium title-font">
                 Contact Farmer
               </h2>
-              <p className="leading-relaxed mb-5 text-gray-600">
+              <p className="leading-relaxed mb-5 text-gray-600 text-sm md:text-base">
                 Many farmers are more than happy to discuss their farming
                 practices and answer any queries you may have about their
                 products.

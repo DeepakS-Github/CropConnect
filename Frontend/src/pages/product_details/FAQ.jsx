@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/loading/Spinner";
 import { getAPI } from "../../utils/api/getRequest";
 import FAQSkeleton from "../../components/skeleton/FAQSkeleton";
-import EmptyStateText from "../../components/EmptyStateText";
+import EmptyStateText from "../../components/empty_state/EmptyStateText";
+import Heading from "../../components/heading/Heading";
 
 function FAQ() {
   const [reviewData, setReviewData] = useState([]);
@@ -34,22 +35,24 @@ function FAQ() {
 
   return (
     <>
-      <div className="lg:w-11/12 mx-auto flex flex-wrap">
-        <div className="container mt-24 px-6 mx-auto">
+      <div className="w-11/12 mx-auto flex flex-wrap">
+        <div className="container mx-auto">
           <section className=" text-gray-900">
-            <h2 className="text-gray-900 text-center text-3xl title-font font-medium mb-12">
-              Frequently asked questions
-            </h2>
+            <Heading
+              text="Frequently asked questions"
+              marginY="mt-2 mb-4 md:my-6"
+              textAlign="text-center"
+            />
 
             {isDataFetching ? (
               <FAQSkeleton />
             ) : reviewData.length === 0 ? (
               <EmptyStateText text="No FAQs yet! Have a question about this product? Be the first to ask! Your inquiry could help others too. Start the conversation now!" />
             ) : (
-              <div className="grid lg:grid-cols-3 gap-6">
+              <div className="grid lg:grid-cols-3 gap-4 md:gap-x-6 md:gap-y-12">
                 {reviewData.map((data) => (
-                  <div className="mb-12">
-                    <p className="font-bold mb-4 text-pink-500">
+                  <div>
+                    <p className="font-bold mb-1 md:mb-4 text-pink-500">
                       {data.question}
                     </p>
                     <p className="text-gray-500">{data.answer}</p>
@@ -67,9 +70,12 @@ function FAQ() {
                     setCurrentPage((prevPage) => prevPage + 1);
                   }}
                 >
-                  <span className="mr-1">
-                    {isLoading ? <Spinner width="w-5" color="#ffffff" /> : null}
-                  </span>
+                  {isLoading && (
+                    <span className="mr-1">
+                      {" "}
+                      <Spinner width="w-5" color="#ffffff" />{" "}
+                    </span>
+                  )}
                   Load More
                 </button>
               </div>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { postAPI } from "../../utils/api/postRequest";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/loading/Spinner";
 import { useSelector } from "react-redux";
 import { notify } from "../../utils/helper/notification";
 import { uploadImageToCloudinary } from "../../utils/helper/uploadImageToCloudinary";
 import { MdCancel } from "react-icons/md";
-import LeafletMap from "../../components/LeafletMap";
+import LeafletMap from "../../components/map/LeafletMap";
 import { useParams } from "react-router-dom";
 import { putAPI } from "../../utils/api/putRequest";
 import { useNavigate } from "react-router-dom";

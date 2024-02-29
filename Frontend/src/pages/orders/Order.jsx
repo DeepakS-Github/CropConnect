@@ -1,13 +1,14 @@
 import React, { useRef } from "react";
-import OrderCartCard from "../../components/OrderCartCard";
+import OrderCartCard from "../../components/orders/OrderCartCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { postAPI } from "../../utils/api/postRequest";
 import { removeFromCart } from "../../redux/actions";
 import { notify } from "../../utils/helper/notification";
 import getCurrentDateTime from "../../utils/helper/getCurrentDateTime";
-import LeafletMap from "../../components/LeafletMap";
-import Spinner from "../../components/Spinner";
+import LeafletMap from "../../components/map/LeafletMap";
+import Spinner from "../../components/loading/Spinner";
+import Heading from "../../components/heading/Heading";
 
 function Order() {
   const dispatch = useDispatch();
@@ -83,15 +84,13 @@ function Order() {
   return (
     <>
       <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
-        <div className="flex justify-start item-start space-y-2 flex-col">
-          <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
-            Your Order
-          </h1>
-          <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
+        <div className="flex justify-start item-start space-y-1 md:space-y-2 flex-col">
+          <Heading text="Your Order" textAlign="text-left" marginY="my-0" paddingX="px-0"/>
+          <p className="text-sm md:text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
             {getCurrentDateTime()}
           </p>
         </div>
-        <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
+        <div className="mt-6 md:mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
           <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
             <div className="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
               <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">

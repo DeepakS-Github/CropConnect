@@ -4,20 +4,22 @@ import LoginAndSignup from "./pages/account/LoginAndSignup";
 import Home from "./pages/home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Product from "./pages/products/Product";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import SellerDashboard from "./pages/seller_dashboard/SellerDashboard";
 import ProductDashboard from "./pages/product_details/ProductDashboard";
 import Order from "./pages/orders/Order";
-import BingMap from "./components/BingMap";
-import LeafletMap from "./components/LeafletMap";
+import LeafletMap from "./components/map/LeafletMap";
 import SellerProductOperation from "./pages/seller_product_operation/SellerProductOperation";
 import ShowMap from "./pages/map/ShowMap";
 import { Analytics } from "@vercel/analytics/react"
+import ScrollToTop from "./components/scroll/ScrollToTop";
+
 
 function App() {
   return (
     <>
       <Router>
+        <ScrollToTop/>
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />

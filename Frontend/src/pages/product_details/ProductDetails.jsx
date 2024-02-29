@@ -6,6 +6,7 @@ import { PiSmileySadLight } from "react-icons/pi";
 import { IoBagRemoveOutline } from "react-icons/io5";
 import { addToCart, removeFromCart } from "../../redux/actions";
 import { store } from "../../redux/store";
+import Heading from "../../components/heading/Heading";
 
 function ProductDetails() {
   const dispatch = useDispatch();
@@ -57,10 +58,8 @@ function ProductDetails() {
           <h2 className="text-xs md:text-sm title-font text-gray-500 tracking-widest">
             {productData.brand}
           </h2>
-          <h1 className="text-gray-900 text-xl md:text-3xl title-font font-medium mb-1">
-            {productData.name}
-          </h1>
-          <p className="text-sm md:text-base">
+          <Heading text={productData.name} marginY="mb-2" textAlign="left" paddingX="p-0"/>
+          <p className="leading-relaxed text-sm md:text-base">
             {productData.description} It is a long established fact that a
             reader will be distracted by the readable content of a page when
             looking at its layout. The point of using Lorem Ipsum is that it has

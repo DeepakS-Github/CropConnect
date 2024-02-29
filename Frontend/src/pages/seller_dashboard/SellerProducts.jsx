@@ -3,14 +3,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getAPI } from "../../utils/api/getRequest";
 import { deleteAPI } from "../../utils/api/deleteRequest";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/loading/Spinner";
 import { notify } from "../../utils/helper/notification";
 import { useDispatch } from "react-redux";
 import { editProductDetails } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import TableSkeleton from "../../components/skeleton/TableSkeleton";
-import EmptyStateText from "../../components/EmptyStateText";
+import EmptyStateText from "../../components/empty_state/EmptyStateText";
+import Heading from "../../components/heading/Heading";
 
 function SellerProducts() {
   const dispatch = useDispatch();
@@ -56,16 +57,16 @@ function SellerProducts() {
   return (
     <>
       {/* Table Header */}
-      <h1 className="text-3xl font-medium mb-4 px-4">All Products</h1>
-      <div className="w-full flex items-center justify-between px-4">
-        <div className="mt-1 relative sm:w-64 xl:w-96">
+      <Heading text={"Your Products"} textAlign="text-left" marginY="mb-2 md:my-4"/>
+      <div className="w-full flex flex-col gap-2 md:flex-row items-center justify-between px-4">
+        <div className="mt-1 relative w-full  md:w-96">
           <input
             type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
             placeholder="Search for products"
           />
         </div>
-        <Link to="product/add">
+        <Link to="product/add" className="w-full md:w-fit text-center">
           <div className="text-md py-2 px-4 text-white rounded cursor-pointer bg-sky-700">
             <i className="fa-regular fa-plus mr-2"></i>Add Product
           </div>
