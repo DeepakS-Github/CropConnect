@@ -13,6 +13,7 @@ import SellerProductOperation from "./pages/seller_product_operation/SellerProdu
 import ShowMap from "./pages/map/ShowMap";
 import { Analytics } from "@vercel/analytics/react"
 import ScrollToTop from "./components/scroll/ScrollToTop";
+import Footer from "./components/footer/Footer";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Router>
         <ScrollToTop/>
         <Navbar />
+        <div className="min-h-screen">
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/account/:type" element={<LoginAndSignup />} />
@@ -34,7 +36,9 @@ function App() {
           <Route exact path="/orders" element={<Order/>} />
           <Route exact path="/map" element={<LeafletMap/>} />
         </Routes>
+        </div>
       </Router>
+      <Footer/>
       <Analytics/>
     </>
   );
