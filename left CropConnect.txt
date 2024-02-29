@@ -1,5 +1,5 @@
 Left
-1. Responsiveness
+1. Responsiveness - Done
 8. Add the Paypal/others for pay now functionality - Maybe not required
 9. Add the skeleton loader on different sections - Done
 10. Show no data available when there is no data in different sections - Done
