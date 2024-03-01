@@ -2,16 +2,6 @@
 
 CropConnect is a web platform designed for wholesale crop trading, connecting sellers and consumers seamlessly. Although still in development, CropConnect offers a robust set of features for both sellers and consumers in the agricultural marketplace.
 
-<div style="display: flex; justify-content: center; gap: 10px;">
-<img src="https://github.com/DeepakS-Github/CropConnect/assets/96366840/090a50fd-293f-4e37-bdf9-6fc6f8ddbf04" alt="Image 1" style="width: 45%;">
-<img src="https://github.com/DeepakS-Github/CropConnect/assets/96366840/c2e33a17-f7d1-479d-ab2a-c1254efd1ec4" alt="Image 2" style="width: 45%;">
-</div>
-
-<div style="display: flex; justify-content: center; gap: 10px;">
-<img src="https://github.com/DeepakS-Github/CropConnect/assets/96366840/9ac8c38c-9929-4f5f-91ed-8dd11a4ff37d" alt="Image 1" style="width: 45%;">
-<img src="https://github.com/DeepakS-Github/CropConnect/assets/96366840/0aa7bb88-cbe0-4374-9681-8c9f5723ca0e" alt="Image 2" style="width: 45%;">
-</div>
-
 ## Features
 
 1. **Dual Interfaces**: CropConnect provides separate interfaces for consumers and sellers, accessible through the navbar with options for SignUp and SignIn.
