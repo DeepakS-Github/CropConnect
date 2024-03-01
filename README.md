@@ -37,6 +37,7 @@ CropConnect is a web platform designed for wholesale crop trading, connecting se
 - Redux
 - Cloudinary (for image storage)
 - Leaflet (for map)
+- Unsplash
 - Other supporting technologies
 
 ## Installation
