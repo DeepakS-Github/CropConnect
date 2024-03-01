@@ -44,7 +44,7 @@ CropConnect is a web platform designed for wholesale crop trading, connecting se
 
 To run CropConnect locally, ensure you have NodeJS and MongoDB installed. Follow these steps:
 
-1. Clone the repository:
+1. **Clone the repository**:
     ```bash
     git clone <repository-url>
     cd CropConnect
