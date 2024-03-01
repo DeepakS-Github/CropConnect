@@ -12,21 +12,34 @@ function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const ref = useRef();
+  const userDropdownRef = useRef();
+  const sellerDropdownRef = useRef();
 
   const [openCart, setOpenCart] = useState(false);
 
   const userData = useSelector((state) => state.userReducer);
   const sellerData = useSelector((state) => state.sellerReducer);
 
-  const [showDropdown, setShowDropdown] = useState(0);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [showSellerDropdown, setShowSellerDropdown] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setShowDropdown(0);
+      if (
+        userDropdownRef.current &&
+        !userDropdownRef.current.contains(event.target)
+      ) {
+        setShowUserDropdown(0);
+      }
+
+      if (
+        sellerDropdownRef.current &&
+        !sellerDropdownRef.current.contains(event.target)
+      ) {
+        setShowSellerDropdown(0);
       }
     }
+
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -44,9 +57,12 @@ function Navbar() {
         </a>
         <div className="flex flex-row gap-4 md:gap-8 text-2xl md:text-3xl">
           <div
-            ref={ref}
+            ref={userDropdownRef}
             className="relative flex flex-row gap-1 justify-center items-center text-blue-700 cursor-pointer"
-            onMouseEnter={() => setShowDropdown(1)}
+            onMouseEnter={() => {
+              setShowUserDropdown(true);
+              setShowSellerDropdown(false);
+            }}
             onClick={() => {
               if (!userData) {
                 navigate("/account/user");
@@ -58,10 +74,10 @@ function Navbar() {
             {userData && (
               <div
                 className={`absolute ${
-                  showDropdown === 1 ? "block" : "hidden"
-                } top-8 right-0 z-10 font-medium bg-white rounded-lg shadow-md pl-4 pr-8 py-2 dark:bg-gray-700 dark:divide-gray-600`}
+                  showUserDropdown ? "block" : "hidden"
+                } top-8 right-0 z-10 font-medium bg-white rounded-lg shadow-md pl-1 md:pl-4 pr-2 md:pr-8 py-0 md:py-2`}
               >
-                <ul class="py-2 flex flex-col text-sm gap-2 text-gray-700 dark:text-gray-200">
+                <ul className="py-1 md:py-2 flex flex-col text-sm gap-2 text-gray-700 ">
                   <li
                     onClick={() => {
                       dispatch(addUserData(null));
@@ -69,7 +85,7 @@ function Navbar() {
                       navigate("/");
                     }}
                   >
-                    <a className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent whitespace-nowrap">
+                    <a className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  whitespace-nowrap">
                       User Logout
                     </a>
                   </li>
@@ -78,9 +94,12 @@ function Navbar() {
             )}
           </div>
           <div
-            ref={ref}
+            ref={sellerDropdownRef}
             className="relative flex flex-row gap-1 justify-center items-center text-green-700 cursor-pointer"
-            onMouseEnter={() => setShowDropdown(2)}
+            onMouseEnter={() => {
+              setShowSellerDropdown(true);
+              setShowUserDropdown(false);
+            }}
             onClick={() => {
               if (!sellerData) {
                 navigate("/account/seller");
@@ -92,16 +111,16 @@ function Navbar() {
             {sellerData && (
               <div
                 className={`absolute ${
-                  showDropdown === 2 ? "block" : "hidden"
-                } top-8 right-0 z-10 font-medium bg-white rounded-lg shadow-md pl-4 pr-8 py-2 dark:bg-gray-700 dark:divide-gray-600`}
+                  showSellerDropdown ? "block" : "hidden"
+                } top-8 right-0 z-10 font-medium bg-white rounded-lg shadow-md pl-1 md:pl-4 pr-2 md:pr-8 py-0 md:py-2`}
               >
-                <ul class="py-2 flex flex-col text-sm gap-2 text-gray-700 dark:text-gray-200">
+                <ul className="py-2 flex flex-col text-sm gap-2 text-gray-700 ">
                   <li
                     onClick={() => {
                       navigate("/sellerdashboard");
                     }}
                   >
-                    <a className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent whitespace-nowrap">
+                    <a className="block px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0  whitespace-nowrap">
                       Seller Dashboard
                     </a>
                   </li>
@@ -112,7 +131,7 @@ function Navbar() {
                       notify("Seller Logged Out", "info");
                     }}
                   >
-                    <a className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-700 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent whitespace-nowrap">
+                    <a className="block px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0  whitespace-nowrap">
                       Seller Logout
                     </a>
                   </li>
