@@ -29,14 +29,14 @@ function Navbar() {
         userDropdownRef.current &&
         !userDropdownRef.current.contains(event.target)
       ) {
-        setShowUserDropdown(0);
+        setShowUserDropdown(false);
       }
 
       if (
         sellerDropdownRef.current &&
         !sellerDropdownRef.current.contains(event.target)
       ) {
-        setShowSellerDropdown(0);
+        setShowSellerDropdown(false);
       }
     }
 
