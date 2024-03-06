@@ -10,17 +10,11 @@ function setupWebSocket(io) {
       if (
         change.operationType === "update" &&
         change.updateDescription.updatedFields &&
-        change.updateDescription.updatedFields.pricePerUnit &&
-        change.updateDescription.updatedFields.quantity && 
-        change.updateDescription.updatedFields.minimumOrderQuantity
+        change.updateDescription.updatedFields.quantity
       ) {
         socket.emit(
-          "productUpdate",
-          {
-            price: change.updateDescription.updatedFields.pricePerUnit,
-            quantity: change.updateDescription.updatedFields.quantity,
-            minQty: change.updateDescription.updatedFields.minimumOrderQuantity
-          }
+          "stockUpdate",
+          change.updateDescription.updatedFields.quantity
         );
       }
     });

@@ -14,6 +14,8 @@ router.get("/getProductData/:sellerId", productController.getProductDataBySeller
 // Get Product Data By Id
 router.get("/getProductDataById/:key", productController.getProductDataById);
 
+// Get Product Stocks By Id
+router.get("/getProductStocksById/:productId", productController.getProductStocksById);
 
 // Delete Product
 router.delete("/delete/:productId", productController.deleteProduct);

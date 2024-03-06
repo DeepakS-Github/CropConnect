@@ -8,6 +8,7 @@ import { addProductData, addToCart, removeFromCart } from "../../redux/actions";
 import { store } from "../../redux/store";
 import Heading from "../../components/heading/Heading";
 import io from "socket.io-client";
+import { getAPI } from "../../utils/api/getRequest";
 
 function ProductDetails() {
   const dispatch = useDispatch();
@@ -22,14 +23,11 @@ function ProductDetails() {
       transports: ["websocket"],
     });
 
-    socket.on("productUpdate", (data) => {
-      console.log(data);
+    socket.on("stockUpdate", (stockLeft) => {
       dispatch(
         addProductData({
           ...productData,
-          pricePerUnit: data.price,
-          quantity: data.quantity,
-          minimumOrderQuantity: data.minQty,
+          quantity: stockLeft,
         })
       );
     });
@@ -37,6 +35,22 @@ function ProductDetails() {
     return () => {
       socket.disconnect();
     };
+  }, []);
+
+  const getCurrentStocks = async () => {
+    let stocks = await getAPI(
+      `product/getProductStocksById/${productData._id}`
+    );
+    dispatch(
+      addProductData({
+        ...productData,
+        quantity: stocks.quantityLeft,
+      })
+    );
+  };
+
+  useEffect(() => {
+    getCurrentStocks();
   }, []);
 
   const addProductToCart = () => {

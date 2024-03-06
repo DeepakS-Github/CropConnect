@@ -27,6 +27,17 @@ const getProductDataByCategory = async (req, res) => {
   }
 };
 
+// Get Product Stocks By Id
+const getProductStocksById = async (req, res) => {
+  try {
+    let data = await Product.findOne({ _id: req.params.productId });
+    res.status(200).send({quantityLeft: data.quantity});
+  } catch (error) {
+    res.status(500).send("Something went wrong!");
+    console.log(error);
+  }
+}
+
 // Get Product Data By Id
 const getProductDataById = async (req, res) => {
   try {
@@ -108,5 +119,6 @@ module.exports = {
   getProductDataById,
   getProductDataBySellerId,
   deleteProduct,
-  updateProduct
+  updateProduct,
+  getProductStocksById
 };
