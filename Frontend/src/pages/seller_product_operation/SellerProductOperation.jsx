@@ -78,7 +78,7 @@ function SellerProductOperation() {
     },
     quantity: operation === "edit" ? productEditData.quantity : null,
     shelfLife: operation === "edit" ? productEditData.shelfLife : null,
-    sellerId: localStorage.getItem("sellerId"),
+    sellerId: sellerData._id,
   });
 
   useEffect(() => {

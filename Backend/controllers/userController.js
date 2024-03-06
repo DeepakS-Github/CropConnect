@@ -31,7 +31,7 @@ const login = async (req, res) => {
             return res.send({message: "User not found"});
         }
         else {
-            return res.status(200).send({message: "User login sucessful", userData: {_id:data._id, name: data.name, email: data.email, phoneNo: data.phoneNo}});
+            return res.status(200).send({message: "User login sucessful", userData: {_id:data._id, name: data.name, email: data.email, phoneNo: data.phoneNo}, isLoggedIn: true});
         }
     } catch (error) {
         console.log(error);

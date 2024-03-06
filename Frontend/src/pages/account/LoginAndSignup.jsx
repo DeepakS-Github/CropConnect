@@ -30,10 +30,9 @@ function LoginAndSignup() {
     if (type === "user") {
       if (signIn === true) {
         let userData = await postAPI("user/login", { email, password });
-        // console.log(userData);
-        if (userData != undefined) {
-          dispatch(addUserData(userData));
-          notify("User logged in successfully", "success");
+        console.log(userData);
+        if (userData.isLoggedIn) {
+          dispatch(addUserData(userData.userData));
           navigate('/');
         }
       } else {
@@ -53,10 +52,9 @@ function LoginAndSignup() {
     } else if (type === "seller") {
       if (signIn === true) {
         let sellerData = await postAPI("seller/login", { email, password });
-        if (sellerData != undefined) {
-          dispatch(addSellerData(sellerData));
+        if (sellerData.isLoggedIn) {
+          dispatch(addSellerData(sellerData.sellerData));
           navigate('/sellerdashboard');
-          notify("Seller logged in successfully", "success");
         }
       } else {
         // await postAPI(`seller/signup?otp=${otp}`, {
@@ -75,10 +73,6 @@ function LoginAndSignup() {
         });
       }
     }
-
-    // if (localStorage.getItem("userId") || localStorage.getItem("sellerId")) {
-    //   navigate("/");
-    // }
 
     setName("");
     setEmail("");

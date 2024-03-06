@@ -7,17 +7,20 @@ import { useNavigate } from "react-router-dom";
 import TableSkeleton from "../../components/skeleton/TableSkeleton";
 import EmptyStateText from "../../components/empty_state/EmptyStateText";
 import Heading from "../../components/heading/Heading";
+import { useSelector } from "react-redux";
 
 function SellerOrderRequests() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+
+  const sellerData = useSelector((state) => state.sellerReducer);
 
   const [isDataFetching, setIsDataFetching] = useState(true);
 
   // API to GET Data
   const getOrders = async () => {
     let orderedData = await getAPI(
-      `order/get/${localStorage.getItem("sellerId")}`
+      `order/get/${sellerData._id}`
     );
     setData(orderedData);
     setIsDataFetching(false);

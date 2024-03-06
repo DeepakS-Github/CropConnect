@@ -38,7 +38,7 @@ const login =  async (req, res) => {
             return res.send({message: "Seller not found"});
         }
         else {
-            return res.status(200).send({message: "Seller login successful", sellerData: data});
+            return res.status(200).send({message: "Seller login successful", sellerData: data, isLoggedIn: true});
         }
     } catch (error) {
         res.status(500).send({message: 'Something went wrong!'});

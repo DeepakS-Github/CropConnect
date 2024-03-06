@@ -7,9 +7,9 @@ const addProduct = async (req, res) => {
   try {
     let data = Product(req.body);
     console.log("----------------");
-    console.log(data);
+    // console.log(data);
     let result = await data.save({ writeConcern: { w: "majority" } });
-    console.log(result);
+    // console.log(result);
     res.status(200).send({ message: "Product Added Successfully" });
   } catch (error) {
     console.log(error);
@@ -32,7 +32,7 @@ const getProductDataById = async (req, res) => {
   try {
     let data = await Product.findOne({ _id: req.params.key });
     res.status(200).send(data);
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     res.status(500).send("Something went wrong!");
     console.log(error);
@@ -52,7 +52,7 @@ const deleteProduct = async (req, res) => {
       { _id: req.params.productId },
       { writeConcern: { w: "majority" } }
     );
-    console.log(data);
+    // console.log(data);
     res.status(200).send({ message: "Product deleted successfully" });
   } catch (error) {
     res.status(500).send({ message: "Something went wrong!" });
@@ -63,7 +63,7 @@ const deleteProduct = async (req, res) => {
 const getProductDataBySellerId = async (req, res) => {
   try {
     let data = await Product.find({ sellerId: req.params.sellerId });
-    console.log(data);
+    // console.log(data);
     res.status(200).send(data);
   } catch (error) {
     res.status(500).send({ message: "Something went wrong!" });

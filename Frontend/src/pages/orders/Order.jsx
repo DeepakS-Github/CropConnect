@@ -19,6 +19,8 @@ function Order() {
   const cartData = useSelector((state) => state.cartReducer);
   const userData = useSelector((state) => state.userReducer);
 
+  console.log("User Data:", userData);
+
   const [totalAmount, setTotalAmount] = useState(0);
 
   const [latitude, setLatitude] = useState(0);

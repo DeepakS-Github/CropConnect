@@ -4,19 +4,40 @@ import { FaLocationDot } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { PiSmileySadLight } from "react-icons/pi";
 import { IoBagRemoveOutline } from "react-icons/io5";
-import { addToCart, removeFromCart } from "../../redux/actions";
+import { addProductData, addToCart, removeFromCart } from "../../redux/actions";
 import { store } from "../../redux/store";
 import Heading from "../../components/heading/Heading";
+import io from "socket.io-client";
 
 function ProductDetails() {
   const dispatch = useDispatch();
 
   const productData = useSelector((state) => state.productReducer);
-  // console.log(productData);
 
   const cartData = useSelector((state) => state.cartReducer);
-  const isProductInCart = cartData.some(item => item._id === productData._id);
+  const isProductInCart = cartData.some((item) => item._id === productData._id);
 
+  useEffect(() => {
+    const socket = io(import.meta.env.VITE_CROPCONNECT_API, {
+      transports: ["websocket"],
+    });
+
+    socket.on("productUpdate", (data) => {
+      console.log(data);
+      dispatch(
+        addProductData({
+          ...productData,
+          pricePerUnit: data.price,
+          quantity: data.quantity,
+          minimumOrderQuantity: data.minQty,
+        })
+      );
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const addProductToCart = () => {
     let cartProductData = {
@@ -30,8 +51,8 @@ function ProductDetails() {
       stocksLeft: productData.quantity,
       pricePerUnit: productData.pricePerUnit,
       unit: productData.measuringUnit,
-      currentPrice: productData.pricePerUnit*productData.minimumOrderQuantity
-    }
+      currentPrice: productData.pricePerUnit * productData.minimumOrderQuantity,
+    };
     dispatch(addToCart(cartProductData));
     // setIsProductInCart(true);
   };
@@ -39,22 +60,26 @@ function ProductDetails() {
   const removeProductFromCart = () => {
     dispatch(removeFromCart(productData._id));
     // setIsProductInCart(false);
-  }
+  };
 
-  
   return (
     <>
       <div className="lg:w-11/12 mx-auto flex flex-wrap">
         <img
           className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
           // src={`https://source.unsplash.com/random/400x400?rice`}
-          src = {productData.image}
+          src={productData.image}
         />
         <div className="lg:w-1/2 w-full px-4 lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className="text-xs md:text-sm title-font text-gray-500 tracking-widest">
             {productData.brand}
           </h2>
-          <Heading text={productData.name} marginY="mb-2" textAlign="left" paddingX="p-0"/>
+          <Heading
+            text={productData.name}
+            marginY="mb-2"
+            textAlign="left"
+            paddingX="p-0"
+          />
           <p className="leading-relaxed text-sm md:text-base">
             {productData.description}
           </p>
@@ -74,7 +99,9 @@ function ProductDetails() {
                   <th className="px-2 md:px-6 py-2 md:py-4 font-medium text-gray-900 whitespace-nowrap">
                     Shelf Life
                   </th>
-                  <td className="px-2 md:px-6 py-2 md:py-4 ">{productData.shelfLife}</td>
+                  <td className="px-2 md:px-6 py-2 md:py-4 ">
+                    {productData.shelfLife}
+                  </td>
                 </tr>
               </tbody>
             </table>

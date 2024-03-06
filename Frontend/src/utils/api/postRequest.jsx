@@ -11,19 +11,12 @@ export const postAPI = async (endpointURL, data) => {
       body: JSON.stringify(data),
     });
     const responseData = await response.json();
-    if(responseData["userData"]){
-      localStorage.setItem("userId", responseData["userId"]);
-      return responseData["userData"];
-    }
-    if(responseData["sellerData"]){
-      localStorage.setItem("sellerId", responseData["sellerData"]["_id"]);
-      return responseData["sellerData"];
-    }
+    // console.log(responseData);
     notify(responseData["message"], notifyType(response.status));
-    return true;
+    return responseData;
   } catch (error) {
     notify(error, "error");
-    return false;
+    // return false;
   }
 };
 

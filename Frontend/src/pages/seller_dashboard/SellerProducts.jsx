@@ -5,7 +5,7 @@ import { getAPI } from "../../utils/api/getRequest";
 import { deleteAPI } from "../../utils/api/deleteRequest";
 import Spinner from "../../components/loading/Spinner";
 import { notify } from "../../utils/helper/notification";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editProductDetails } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,8 @@ import Heading from "../../components/heading/Heading";
 function SellerProducts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const sellerData = useSelector((state) => state.sellerReducer);
 
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -43,7 +45,7 @@ function SellerProducts() {
   // API to GET Data
   const getProducts = async () => {
     let productData = await getAPI(
-      `product/getProductData/${localStorage.getItem("sellerId")}`
+      `product/getProductData/${sellerData._id}`
     );
     setData(productData);
     setIsDataFetching(false);
