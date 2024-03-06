@@ -92,3 +92,6 @@ By following these steps, you'll have the CropConnect application running locall
 ## Contribution
 
 CropConnect welcomes contributions from the community. Feel free to open issues or submit pull requests to help improve the platform.
+
+
+**If you find this project helpful, we'd appreciate it if you could give it a star ⭐.**
