@@ -10,7 +10,7 @@ https://crop-connect-lime.vercel.app/
 
 1. **Dual Interfaces**: CropConnect provides separate interfaces for consumers and sellers, accessible through the navbar with options for SignUp and SignIn.
 
-### Seller Side
+***Seller Side***
 
 2. **Product Management**: Sellers can easily add products, including images, details, location via map selection, current stocks, minimum order quantity restrictions, etc. which can be edited and deleted further.
 
@@ -18,7 +18,7 @@ https://crop-connect-lime.vercel.app/
 
 4. **FAQ Section**: Sellers can address common inquiries about their products through a dedicated FAQ section visible to consumers.
 
-### Consumer Side
+***Consumer Side***
 
 5. **User-Friendly Consumer Interface**: Consumers can browse various categories and products conveniently from the homepage.
 
@@ -32,6 +32,8 @@ https://crop-connect-lime.vercel.app/
 
 10. **Seamless Checkout**: The checkout process allows users to review orders, including delivery charges, select delivery locations, and place orders securely.
 
+11. **Real-Time Stock Updates (WebSocket)**: Implemented WebSocket functionality to provide real-time stock updates. Users can see live changes in stock availability without needing to reload the page. *Please note that this feature may not be visible on the deployed website (deployed on Vercel) as Vercel does not support WebSocket connections. However, if the project is run locally, real-time updates can be seen.*
+
 ## Technologies Used
 
 - MongoDB
@@ -40,6 +42,7 @@ https://crop-connect-lime.vercel.app/
 - ReactJS
 - Redux
 - Tailwind CSS
+- Websocket (socket.io)
 - Cloudinary (for image storage)
 - Leaflet (for map)
 - Unsplash
