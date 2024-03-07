@@ -32,6 +32,8 @@ https://crop-connect-lime.vercel.app/
 
 10. **Seamless Checkout**: The checkout process allows users to review orders, including delivery charges, select delivery locations, and place orders securely.
 
+11. **Real-Time Stock Updates (WebSocket)**: Implemented WebSocket functionality to provide real-time stock updates. Users can see live changes in stock availability without needing to reload the page. *Please note that this feature may not be visible on the deployed website (deployed on Vercel) as Vercel does not support WebSocket connections. However, if the project is run locally, real-time updates can be seen.*
+
 ## Technologies Used
 
 - MongoDB
@@ -40,6 +42,7 @@ https://crop-connect-lime.vercel.app/
 - ReactJS
 - Redux
 - Tailwind CSS
+- Websocket (socket.io)
 - Cloudinary (for image storage)
 - Leaflet (for map)
 - Unsplash
