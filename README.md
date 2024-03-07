@@ -10,7 +10,7 @@ https://crop-connect-lime.vercel.app/
 
 1. **Dual Interfaces**: CropConnect provides separate interfaces for consumers and sellers, accessible through the navbar with options for SignUp and SignIn.
 
-### Seller Side
+***Seller Side***
 
 2. **Product Management**: Sellers can easily add products, including images, details, location via map selection, current stocks, minimum order quantity restrictions, etc. which can be edited and deleted further.
 
@@ -18,7 +18,7 @@ https://crop-connect-lime.vercel.app/
 
 4. **FAQ Section**: Sellers can address common inquiries about their products through a dedicated FAQ section visible to consumers.
 
-### Consumer Side
+***Consumer Side***
 
 5. **User-Friendly Consumer Interface**: Consumers can browse various categories and products conveniently from the homepage.
 
