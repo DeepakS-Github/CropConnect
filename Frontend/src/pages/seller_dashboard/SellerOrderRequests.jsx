@@ -33,7 +33,7 @@ function SellerOrderRequests() {
   return (
     <>
       {/* Table Header */}
-      <Heading text={"All Orders"} textAlign="text-left" marginY="mb-2 md:my-4"/>
+      <Heading text={"All Orders"} textAlign="text-left"/>
       <div className="w-full flex flex-col gap-2 md:flex-row items-center justify-between px-4">
         <div className="mt-1 relative w-full  md:w-96">
           <input
@@ -98,7 +98,7 @@ function SellerOrderRequests() {
                   >
                     <td className="px-6 py-4 font-medium">{index + 1}</td>
                     <td className="px-6 py-2">
-                      <img src={item.image} className="w-24 h-24" alt="Image" />
+                      <img src={item.image} alt="Image" />
                     </td>
                     <td className="px-6 py-4">{item.name}</td>
                     <td className="px-6 py-4">{item.date}</td>

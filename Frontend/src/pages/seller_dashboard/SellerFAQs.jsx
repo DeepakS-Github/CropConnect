@@ -93,7 +93,7 @@ function SellerFAQs() {
 
   return (
     <>
-       <Heading text={"Your FAQs"} textAlign="text-left" marginY="mb-2 md:my-4"/>
+       <Heading text={"Your FAQs"} textAlign="text-left"/>
       {isDataFetching ? (
         <FAQSellerSkeleton />
       ) : unansweredFAQ.length === 0 && answeredFAQ.length === 0 ? (

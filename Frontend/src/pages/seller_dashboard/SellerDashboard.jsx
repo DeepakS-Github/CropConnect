@@ -1,71 +1,80 @@
 import React, { useState } from "react";
+import NavItem from "../../components/seller_dashboard/NavItem";
+import { FaProductHunt } from "react-icons/fa6";
+import { PiShoppingBagOpenFill } from "react-icons/pi";
+import { FaQq } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 import SellerProducts from "./SellerProducts";
 import SellerOrderRequests from "./SellerOrderRequests";
 import SellerFAQs from "./SellerFAQs";
-import Heading from "../../components/heading/Heading";
+import { TbLogout2 } from "react-icons/tb";
+import { addSellerData } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
+import { notify } from "../../utils/helper/notification";
+import { useDispatch } from "react-redux";
+import SellerOverview from "./SellerOverview";
 
-function SellerDashboard() {
-  const [category, setCategory] = useState(1);
+
+const links = [
+  {
+    text: "Dashboard",
+    icon: <MdDashboard />,
+    renderComponent: <SellerOverview />,
+  },
+  {
+    text: "Your Products",
+    icon: <FaProductHunt />,
+    renderComponent: <SellerProducts />,
+  },
+  {
+    text: "Your Orders",
+    icon: <PiShoppingBagOpenFill />,
+    renderComponent: <SellerOrderRequests />,
+  },
+  {
+    text: "Your FAQs",
+    icon: <FaQq />,
+    renderComponent: <SellerFAQs />,
+  },
+];
+
+const NewSellerDashboard = () => {
+  const navigate = useNavigate();
+const dispatch = useDispatch();
+
+  const [selected, setSelected] = useState(0);
+  
 
   return (
-    <>
-      {/* Banner Section */}
-
-      <div>
-        <section className="overflow-hidden">
-          <div className="relative overflow-hidden bg-no-repeat bg-cover h-[300px] md:h-[500px] bg-[url('https://source.unsplash.com/random/?Farms,Fruits,Vegetables')] bg-center">
-            <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed bg-black bg-opacity-75">
-              <div className="flex justify-center items-center h-full">
-                <div className="text-center text-white px-6 md:px-12">
-                  <h1 className="text-3xl md:text-6xl xl:text-7xl font-bold tracking-tight">
-                    The best offer on the market <br />
-                    <span>for your business</span>
-                  </h1>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-         
-        </section>
+    <div className="w-full flex flex-row h-[calc(100vh-50px)]">
+      <div className="w-2/12 shadow-sm bg-gray-100 flex justify-between  py-4 px-2 flex-col">
+        <div className="flex flex-col gap-2">
+          {links.map((link, index) => (
+            <NavItem
+              text={link.text}
+              icon={link.icon}
+              isSelected={selected === index}
+              onClick={() => setSelected(index)}
+            />
+          ))}
+        </div>
+        <div className="border-t-2 border-gray-50">
+          <NavItem
+            text="Logout"
+            icon={<TbLogout2 />}
+            onClick={() => {
+              dispatch(addSellerData(null));
+              navigate("/");
+              notify("Seller Logged Out", "info");
+            }}
+          />
+        </div>
       </div>
-
-      <Heading text={"Overview"}/>
-
-      {/* Categories */}
-      <div className="grid md:grid-cols-3 gap-2 md:gap-24 w-11/12 mb-12 md:my-12 mx-auto">
-        <span
-          className={`${
-            category === 1 ? "bg-gray-200 shadow" : "bg-gray-100"
-          } cursor-pointer text-base md:text-xl font-semibold rounded py-2 md:py-4 text-center`}
-          onClick={() => setCategory(1)}
-        >
-          Your Products
-        </span>
-        <span
-          className={`${
-            category === 2 ? "bg-gray-200 shadow" : "bg-gray-100"
-          } cursor-pointer text-base md:text-xl font-semibold rounded py-2 md:py-4 text-center`}
-          onClick={() => setCategory(2)}
-        >
-          Order Requests
-        </span>
-        <span
-          className={`${
-            category === 3 ? "bg-gray-200 shadow" : "bg-gray-100"
-          } cursor-pointer text-base md:text-xl font-semibold rounded py-2 md:py-4 text-center`}
-          onClick={() => setCategory(3)}
-        >
-          Your FAQs
-        </span>
+      <div className="w-10/12 overflow-auto">
+        {links[selected].renderComponent}
       </div>
-
-      {category === 1 && <SellerProducts />}
-      {category === 2 && <SellerOrderRequests />}
-      {category === 3 && <SellerFAQs/>}
-    </>
+    </div>
   );
-}
+};
 
-export default SellerDashboard;
+export default NewSellerDashboard;

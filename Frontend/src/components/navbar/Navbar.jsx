@@ -48,7 +48,7 @@ function Navbar() {
 
   return (
     <nav className="bg-white border-gray-200 shadow">
-      <div className="flex flex-wrap items-center justify-between mx-auto px-4 md:px-12 py-2 md:py-4">
+      <div className="flex flex-wrap items-center justify-between mx-auto px-4 md:px-12 h-12">
         <a href="/" className="flex items-center">
           <span className="text-xl md:text-2xl font-medium whitespace-nowrap">
             <span className="text-red-500 font-bold">C</span>rop

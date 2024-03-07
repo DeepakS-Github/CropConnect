@@ -59,7 +59,7 @@ function SellerProducts() {
   return (
     <>
       {/* Table Header */}
-      <Heading text={"Your Products"} textAlign="text-left" marginY="mb-2 md:my-4"/>
+      <Heading text={"Your Products"} textAlign="text-left"/>
       <div className="w-full flex flex-col gap-2 md:flex-row items-center justify-between px-4">
         <div className="mt-1 relative w-full  md:w-96">
           <input
