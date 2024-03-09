@@ -62,6 +62,9 @@ function SellerOrderRequests() {
                     Image
                   </th>
                   <th scope="col" className="px-6 whitespace-nowrap py-4">
+                  Category
+                  </th>
+                  <th scope="col" className="px-6 whitespace-nowrap py-4">
                     Product Name
                   </th>
                   <th scope="col" className="px-6 whitespace-nowrap py-4">
@@ -100,6 +103,7 @@ function SellerOrderRequests() {
                     <td className="px-6 py-2">
                       <img src={item.image} alt="Image" />
                     </td>
+                    <td className="px-6 py-4">{item.category}</td>
                     <td className="px-6 py-4">{item.name}</td>
                     <td className="px-6 py-4">{item.date}</td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">

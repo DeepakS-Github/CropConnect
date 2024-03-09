@@ -59,6 +59,7 @@ function ProductDetails() {
       sellerId: productData.sellerId,
       image: productData.image,
       name: productData.name,
+      category: productData.category,
       qty: productData.minimumOrderQuantity,
       brand: productData.brand,
       minQty: productData.minimumOrderQuantity,
