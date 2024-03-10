@@ -51,6 +51,7 @@ const dispatch = useDispatch();
         <div className="flex flex-col gap-2">
           {links.map((link, index) => (
             <NavItem
+            key={index}
               text={link.text}
               icon={link.icon}
               isSelected={selected === index}
