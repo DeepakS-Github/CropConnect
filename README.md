@@ -12,27 +12,29 @@ https://crop-connect-lime.vercel.app/
 
 ***Seller Side***
 
-2. **Product Management**: Sellers can easily add products, including images, details, location via map selection, current stocks, minimum order quantity restrictions, etc. which can be edited and deleted further.
+2. **Visualizing Sales Data**: Incorporated Recharts (graphs) into the project, which has allowed to create insightful visualisations of sales data.
 
-3. **Order Management**: Sellers have access to a dashboard displaying order requests, including order location coordinates on a map.
+3. **Product Management**: Sellers can easily add products, including images, details, location via map selection, current stocks, minimum order quantity restrictions, etc. which can be edited and deleted further.
 
-4. **FAQ Section**: Sellers can address common inquiries about their products through a dedicated FAQ section visible to consumers.
+4. **Order Management**: Sellers have access to a dashboard displaying order requests, including order location coordinates on a map.
+
+5. **FAQ Section**: Sellers can address common inquiries about their products through a dedicated FAQ section visible to consumers.
 
 ***Consumer Side***
 
-5. **User-Friendly Consumer Interface**: Consumers can browse various categories and products conveniently from the homepage.
+6. **User-Friendly Consumer Interface**: Consumers can browse various categories and products conveniently from the homepage.
 
-6. **Detailed Product Dashboard**: Product details, including stock availability and minimum order quantity, are displayed prominently. Users can add products to their cart directly from the dashboard.
+7. **Detailed Product Dashboard**: Product details, including stock availability and minimum order quantity, are displayed prominently. Users can add products to their cart directly from the dashboard.
 
-7. **Review System**: Users can leave reviews for products, enhancing transparency and trust.
+8. **Review System**: Users can leave reviews for products, enhancing transparency and trust.
 
-8. **Contact Farmer Form**: A contact form allows users to inquire about products directly, with answered queries becoming part of the FAQ section. It also has map which shows the product location.
+9. **Contact Farmer Form**: A contact form allows users to inquire about products directly, with answered queries becoming part of the FAQ section. It also has map which shows the product location.
 
-9. **Dynamic Cart Functionality**: Users can manage product quantities in the cart, with limitations based on minimum order quantities and available stock.
+10. **Dynamic Cart Functionality**: Users can manage product quantities in the cart, with limitations based on minimum order quantities and available stock.
 
-10. **Seamless Checkout**: The checkout process allows users to review orders, including delivery charges, select delivery locations, and place orders securely.
+11. **Seamless Checkout**: The checkout process allows users to review orders, including delivery charges, select delivery locations, and place orders securely.
 
-11. **Real-Time Stock Updates (WebSocket)**: Implemented WebSocket functionality to provide real-time stock updates. Users can see live changes in stock availability without needing to reload the page. *Please note that this feature may not be visible on the deployed website (deployed on Vercel) as Vercel does not support WebSocket connections. However, if the project is run locally, real-time updates can be seen.*
+12. **Real-Time Stock Updates (WebSocket)**: Implemented WebSocket functionality to provide real-time stock updates. Users can see live changes in stock availability without needing to reload the page. *Please note that this feature may not be visible on the deployed website (deployed on Vercel) as Vercel does not support WebSocket connections. However, if the project is run locally, real-time updates can be seen.*
 
 ## Technologies Used
 
@@ -45,7 +47,8 @@ https://crop-connect-lime.vercel.app/
 - Websocket (socket.io)
 - Cloudinary (for image storage)
 - Leaflet (for map)
-- Unsplash
+- Unsplash (for images)
+- Recharts (for graphs)
 - Other supporting technologies
 
 ## Installation
