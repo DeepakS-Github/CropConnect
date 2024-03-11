@@ -33,7 +33,7 @@ function SellerOverview() {
       {isDataFetching ? (
         <GraphSkeleton noOfBoxes={2} />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pb-4 px-4">
           <AreaGraph
             title="Date v/s Sales"
             lineData={dateVsSales}
