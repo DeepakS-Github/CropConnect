@@ -4,7 +4,7 @@ import BoxSkeleton from "./BoxSkeleton";
 const GraphSkeleton = ({ noOfBoxes = 4 }) => {
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4 px-4">
         {Array(noOfBoxes)
           .fill(0)
           .map((box, index) => (
