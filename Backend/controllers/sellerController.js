@@ -10,7 +10,7 @@ const signup = async (req, res) => {
         let data = Seller(req.body);
         let result = await data.save({ writeConcern: { w: 'majority' } });
         console.log(result);
-        sendMail(req.body.email, "Seller account created", req.body.name, "Welcome to CropConnect");
+        // sendMail(req.body.email, "Seller account created", req.body.name, "Welcome to CropConnect");
         return res.status(200).send({message: "Seller account created"});
     } catch (error) {
         if(error.code===11000){

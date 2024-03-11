@@ -6,4 +6,4 @@ Left
 11. Fix the OTP functionality
 12. Add the socket io in stocks left, minimum order qty, price - Done (stocks left only, no need in others)
 13. Improve the login and signup functionality from both backend and frontend
-14. Redesign the seller dashboard (with added graphs)
+14. Redesign the seller dashboard (with added graphs) - Done
