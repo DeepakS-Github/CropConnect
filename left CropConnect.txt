@@ -7,3 +7,9 @@ Left
 12. Add the socket io in stocks left, minimum order qty, price - Done (stocks left only, no need in others)
 13. Improve the login and signup functionality from both backend and frontend
 14. Redesign the seller dashboard (with added graphs) - Done
+15. Add the order history api and UI for consumer
+16. Incorporate Gemini AI for AI stuffs.
+17. Implement Redis or Node Cache whichever better and possible for api optimization.
+18. Add the product filteration in the product dashboard.
+19. Add the pagination in products, etc.
+20. Show only the products to the consumer that are near to that particular consumer.
