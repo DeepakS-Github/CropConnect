@@ -20,7 +20,7 @@ https://crop-connect-lime.vercel.app/
 
 5. **FAQ Section**: Sellers can address common inquiries about their products through a dedicated FAQ section visible to consumers.
 
-6. **CropSense AI**: Powered by Gemini AI, used to predict the crops according to the given parmeters"
+6. **CropSense AI**: Powered by Gemini AI, used to predict the crops according to the given parmeters.
 
 ***Consumer Side***
 
