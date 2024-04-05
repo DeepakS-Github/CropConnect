@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { notify } from "../../utils/helper/notification";
 import { useDispatch } from "react-redux";
 import SellerOverview from "./SellerOverview";
+import { SiGooglebard } from "react-icons/si";
+import CropSenseAI from "./CropSenseAI";
 
 
 const links = [
@@ -36,6 +38,11 @@ const links = [
     icon: <FaQq />,
     renderComponent: <SellerFAQs />,
   },
+  {
+    text: "CropSense AI",
+    icon: <SiGooglebard />, 
+    renderComponent: <CropSenseAI />,
+  }
 ];
 
 const NewSellerDashboard = () => {

@@ -1,7 +1,7 @@
 import { notify } from "../helper/notification";
 import { notifyType } from "../helper/notificationType";
 
-export const postAPI = async (endpointURL, data) => {
+export const postAPI = async (endpointURL, data, showToast=true) => {
   try {
     const response = await fetch(`${import.meta.env.VITE_CROPCONNECT_API}${endpointURL}`, {
       method: "POST",
@@ -12,7 +12,9 @@ export const postAPI = async (endpointURL, data) => {
     });
     const responseData = await response.json();
     // console.log(responseData);
-    notify(responseData["message"], notifyType(response.status));
+    if(showToast){
+      notify(responseData["message"], notifyType(response.status));
+    }
     return responseData;
   } catch (error) {
     notify(error, "error");

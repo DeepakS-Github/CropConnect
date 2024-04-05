@@ -16,6 +16,7 @@ const otp = require("./routes/otp");
 const order = require("./routes/order");
 const faq = require("./routes/faq");
 const graph = require("./routes/graph.js")
+const ai = require("./routes/ai.js")
 
 const PORT = 8080;
 const app = express();
@@ -37,7 +38,8 @@ app.use("/cart", cart);
 app.use("/otp", otp);
 app.use("/order", order);
 app.use("/faq", faq);
-app.use("/graph", graph)
+app.use("/graph", graph);
+app.use("/ai", ai);
 
 
 server.listen(PORT, () => {
