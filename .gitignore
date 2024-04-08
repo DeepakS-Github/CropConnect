@@ -1,11 +1,11 @@
 # Ignore env files
-Frontend/.env
-Backend/.env
+client/.env
+server/.env
 
 # Ignore node_modules
-Frontend/node_modules/
-Backend/node_modules/
+client/node_modules/
+server/node_modules/
 
 # Ignore package-lock.json
-Frontend/package-lock.json
-Backend/package-lock.json
+client/package-lock.json
+server/package-lock.json
