@@ -20,21 +20,23 @@ https://crop-connect-lime.vercel.app/
 
 5. **FAQ Section**: Sellers can address common inquiries about their products through a dedicated FAQ section visible to consumers.
 
+6. **CropSense AI**: Powered by Gemini AI, used to predict the crops according to the given parmeters.
+
 ***Consumer Side***
 
-6. **User-Friendly Consumer Interface**: Consumers can browse various categories and products conveniently from the homepage.
+7. **User-Friendly Consumer Interface**: Consumers can browse various categories and products conveniently from the homepage.
 
-7. **Detailed Product Dashboard**: Product details, including stock availability and minimum order quantity, are displayed prominently. Users can add products to their cart directly from the dashboard.
+8. **Detailed Product Dashboard**: Product details, including stock availability and minimum order quantity, are displayed prominently. Users can add products to their cart directly from the dashboard.
 
-8. **Review System**: Users can leave reviews for products, enhancing transparency and trust.
+9. **Review System**: Users can leave reviews for products, enhancing transparency and trust.
 
-9. **Contact Farmer Form**: A contact form allows users to inquire about products directly, with answered queries becoming part of the FAQ section. It also has map which shows the product location.
+10. **Contact Farmer Form**: A contact form allows users to inquire about products directly, with answered queries becoming part of the FAQ section. It also has map which shows the product location.
 
-10. **Dynamic Cart Functionality**: Users can manage product quantities in the cart, with limitations based on minimum order quantities and available stock.
+11. **Dynamic Cart Functionality**: Users can manage product quantities in the cart, with limitations based on minimum order quantities and available stock.
 
-11. **Seamless Checkout**: The checkout process allows users to review orders, including delivery charges, select delivery locations, and place orders securely.
+12. **Seamless Checkout**: The checkout process allows users to review orders, including delivery charges, select delivery locations, and place orders securely.
 
-12. **Real-Time Stock Updates (WebSocket)**: Implemented WebSocket functionality to provide real-time stock updates. Users can see live changes in stock availability without needing to reload the page. *Please note that this feature may not be visible on the deployed website (deployed on Vercel) as Vercel does not support WebSocket connections. However, if the project is run locally, real-time updates can be seen.*
+13. **Real-Time Stock Updates (WebSocket)**: Implemented WebSocket functionality to provide real-time stock updates. Users can see live changes in stock availability without needing to reload the page. *Please note that this feature may not be visible on the deployed website (deployed on Vercel) as Vercel does not support WebSocket connections. However, if the project is run locally, real-time updates can be seen.*
 
 ## Technologies Used
 
@@ -49,6 +51,7 @@ https://crop-connect-lime.vercel.app/
 - Leaflet (for map)
 - Unsplash (for images)
 - Recharts (for graphs)
+- Gemini AI
 - Other supporting technologies
 
 ## Installation
@@ -83,6 +86,7 @@ To run CropConnect locally, ensure you have NodeJS and MongoDB installed. Follow
     - Add your MongoDB URL to the `.env` file:
         ```plaintext
         MONGO_DB_URL = {your mongodb url}
+        GEMINI_API_KEY = {your gemini api key}
         ```
     - To run the Backend:
         ```bash
