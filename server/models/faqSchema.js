@@ -21,15 +21,18 @@ const faqSchema = new mongoose.Schema({
     },
     productId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'products'
     },
     sellerId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'sellers'
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'users'
     },
     date: {
         type: Date,

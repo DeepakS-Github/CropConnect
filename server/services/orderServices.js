@@ -1,4 +1,4 @@
-const { formatDate } = require("../services/helper/formatDate");
+const { formatDate } = require("../helper/formatDate");
 const productCategory = require("../constants/productCategory");
 
 const getDateVsSales = (orders) => {

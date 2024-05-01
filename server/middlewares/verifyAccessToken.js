@@ -1,0 +1,31 @@
+const jwt = require("jsonwebtoken");
+
+const verifyAccessToken = async (req, res, next) => {
+  let access_token =  req.headers.authorization;
+
+  if (!access_token) {
+    return res.status(401).send({ message: "Access token is required" });
+  }
+
+  access_token = access_token.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(access_token, process.env.JWT_SECRET);
+
+    // This id can be seller or user id depending on the token
+    req.id = decoded.id;
+
+    next();
+  } catch (error) {
+    // console.log(error);
+
+    if (error.name === "TokenExpiredError") {
+      return res.status(403).send({ message: "Token expired" });
+    }
+
+    return res.status(403).send({ message: "Invalid token" });
+  }
+};
+
+
+module.exports = verifyAccessToken;

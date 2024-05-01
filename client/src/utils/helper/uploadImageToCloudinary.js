@@ -26,3 +26,4 @@ export const uploadImageToCloudinary = async (image) => {
     return "error";
   }
 };
+

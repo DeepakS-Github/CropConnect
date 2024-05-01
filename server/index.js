@@ -7,8 +7,6 @@ require("dotenv").config();
 
 const { setupWebSocket } = require("./services/setupWebSocket");
 
-const user = require("./routes/user");
-const seller = require("./routes/seller");
 const product = require("./routes/product");
 const review = require("./routes/review");
 const cart = require("./routes/cart");
@@ -17,11 +15,17 @@ const order = require("./routes/order");
 const faq = require("./routes/faq");
 const graph = require("./routes/graph.js")
 const ai = require("./routes/ai.js")
+const auth = require("./routes/auth");
 
 const PORT = 8080;
 const app = express();
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: ["https://localhost:5173", "https://crop-connect-lime.vercel.app"],
+    credentials: true
+  }
+));
 
 app.use(express.json());
 
@@ -30,8 +34,13 @@ const io = new Server(server);
 
 setupWebSocket(io);
 
-app.use("/user", user);
-app.use("/seller", seller);
+// Health Check
+app.get("/", (req, res) => {
+  res.send("CropConnect Server is running");
+});
+
+// Routes
+app.use("/auth", auth);
 app.use("/product", product);
 app.use("/review", review);
 app.use("/cart", cart);

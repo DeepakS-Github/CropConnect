@@ -52,10 +52,10 @@ function LoginAndSignup() {
     } else if (type === "seller") {
       if (signIn === true) {
         let sellerData = await postAPI("seller/login", { email, password });
-        if (sellerData.isLoggedIn) {
-          dispatch(addSellerData(sellerData.sellerData));
-          navigate('/sellerdashboard');
-        }
+        // if (sellerData.isLoggedIn) {
+        //   dispatch(addSellerData(sellerData.sellerData));
+        //   navigate('/sellerdashboard');
+        // }
       } else {
         // await postAPI(`seller/signup?otp=${otp}`, {
         //   name,

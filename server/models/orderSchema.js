@@ -3,6 +3,7 @@ const orderSchema = new mongoose.Schema({
   productId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: "products",
   },
   image: {
     type: String,
@@ -53,6 +54,7 @@ const orderSchema = new mongoose.Schema({
   sellerId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: "sellers",
   },
   date: {
     type: Date,

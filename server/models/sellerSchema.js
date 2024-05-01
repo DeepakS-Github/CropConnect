@@ -23,11 +23,20 @@ const sellerSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    verificationToken: {
+        type: String,
+    },
+    verificationTokenExpiry: {
+        type: Date,
+    },
     date: {
         type: Date,
         default: Date.now
     }
-    
 })
 
 

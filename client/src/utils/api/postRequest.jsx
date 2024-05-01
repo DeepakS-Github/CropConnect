@@ -8,6 +8,7 @@ export const postAPI = async (endpointURL, data, showToast=true) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(data),
     });
     const responseData = await response.json();
