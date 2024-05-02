@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import Cart from "../../pages/cart/Cart";
 import { useDispatch, useSelector } from "react-redux";
 import { addSellerData, addUserData } from "../../redux/actions";
 import { FaUserCircle } from "react-icons/fa";
 import { SiSellfy } from "react-icons/si";
 import { notify } from "../../utils/helper/notification";
+import Cart from "../../pages/cart";
 
 function Navbar() {
   const dispatch = useDispatch();

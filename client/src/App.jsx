@@ -1,19 +1,19 @@
 // import './App.css'
 import React from "react";
-import LoginAndSignup from "./pages/account/LoginAndSignup";
-import Home from "./pages/home/Home";
+import LoginAndSignup from "./pages/account";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Product from "./pages/products/Product";
+import Product from "./pages/products";
 import Navbar from "./components/navbar/Navbar";
-import SellerDashboard from "./pages/seller_dashboard/SellerDashboard";
-import ProductDashboard from "./pages/product_details/ProductDashboard";
-import Order from "./pages/orders/Order";
+import SellerDashboard from "./pages/seller_dashboard";
+import ProductDashboard from "./pages/product_details";
+import Order from "./pages/orders";
 import LeafletMap from "./components/map/LeafletMap";
-import SellerProductOperation from "./pages/seller_product_operation/SellerProductOperation";
-import ShowMap from "./pages/map/ShowMap";
+import SellerProductOperation from "./pages/seller_product_operation";
+import ShowMap from "./pages/map";
 import { Analytics } from "@vercel/analytics/react"
 import ScrollToTop from "./components/scroll/ScrollToTop";
 import Footer from "./components/footer/Footer";
+import Home from "./pages/home";
 
 
 function App() {
