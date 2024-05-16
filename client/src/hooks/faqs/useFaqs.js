@@ -7,7 +7,7 @@ const useFaqs = () => {
 
   const getFaqs = async (productId, page, faq_per_page = 6) => {
     const faqs = await sendRequest(
-      `${GET_PRODUCT_FAQS}/${productId}?page=${page}&faq_per_page=${faq_per_page}`
+      GET_PRODUCT_FAQS(productId, page, faq_per_page)
     );
     return faqs;
   };

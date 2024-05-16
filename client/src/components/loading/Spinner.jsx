@@ -6,7 +6,7 @@ function Spinner({color, width}) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="none"
-      className={`${width} animate-spin`}
+      className={`${width} animate-spin mr-2`}
     >
       <path
         opacity="0.2"

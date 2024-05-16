@@ -129,9 +129,7 @@ function SellerContact() {
                   type="submit"
                 >
                   {isLoading ? (
-                    <span className="mr-1">
                       <Spinner width="w-5" color="#ffffff" />
-                    </span>
                   ) : null}
                   Send
                 </button>

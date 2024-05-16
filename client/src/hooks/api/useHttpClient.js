@@ -24,6 +24,7 @@ const useHttpClient = () => {
         headers,
       });
       console.log("URL RESPONSE", url, " ", response);
+      if (showToast) notify(response.data.message, "success");
       return response.data;
     } catch (error) {
       console.log(error);

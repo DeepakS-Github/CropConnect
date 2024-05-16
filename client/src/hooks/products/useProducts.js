@@ -14,14 +14,14 @@ const useProducts = () => {
 
   const getProductsByCategory = async (category) => {
     const products = await sendRequest(
-      GET_PRODUCTS_BY_CATEGORY + "/" + category
+      GET_PRODUCTS_BY_CATEGORY(category)
     );
     return products;
   };
 
   const getProductUserDashboardData = async (productId) => {
     const dashProductData = await sendRequest(
-      GET_PRODUCT_DASHBOARD_DATA + "/" + productId
+      GET_PRODUCT_DASHBOARD_DATA(productId)
     );
 
     dispatch(

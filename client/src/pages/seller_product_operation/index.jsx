@@ -161,9 +161,7 @@ function SellerProductOperation() {
                 }}
               >
                 {loading ? (
-                  <span className="mr-1">
                     <Spinner width="w-5" color="#ffffff" />
-                  </span>
                 ) : null}
                 <span>{operation.toUpperCase()}</span>
               </button>

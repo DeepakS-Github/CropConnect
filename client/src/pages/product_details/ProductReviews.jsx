@@ -203,9 +203,7 @@ function ProductReviews() {
                 }}
               >
                 {isLoading && (
-                  <span className="mr-1">
-                    <Spinner width="w-5" color="#ffffff" />{" "}
-                  </span>
+                    <Spinner width="w-5" color="#ffffff" />
                 )}
                 Load More
               </button>

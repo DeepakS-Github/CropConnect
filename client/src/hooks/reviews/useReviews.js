@@ -7,7 +7,7 @@ const useReviews = () => {
 
   const getReviews = async (productId, page, review_per_page = 2) => {
     let reviews = await sendRequest(
-      `${GET_PRODUCT_REVIEWS}/${productId}?page=${page}&review_per_page=${review_per_page}`
+      GET_PRODUCT_REVIEWS(productId, page, review_per_page)
     );
     return reviews;
   };

@@ -204,10 +204,7 @@ function Order() {
                     }}
                   >
                     {isPaymentInitiated && (
-                      <span className="mr-2">
-                        {" "}
-                        <Spinner width="w-6" color="#ffffff" />{" "}
-                      </span>
+                        <Spinner width="w-6" color="#ffffff" />
                     )}
                     Pay Now
                   </button>

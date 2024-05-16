@@ -133,10 +133,7 @@ const CropSenseAI = () => {
                       }}
                     >
                       {isLoading && (
-                        <span className="mr-1">
-                          {" "}
                           <Spinner width="w-5" color="#ffffff" />
-                        </span>
                       )}
                       Predict Crops
                     </div>
