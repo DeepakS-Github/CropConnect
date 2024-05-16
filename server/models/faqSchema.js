@@ -1,46 +1,37 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const faqSchema = new mongoose.Schema({
-    name: {
-        type: String, 
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-    },
-    question: {
-        type: String, 
-        required: true
-    },
-    answer: {
-        type: String
-    },
-    isAnswered: {
-        type: Boolean,
-        default: false
-    },
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'products'
-    },
-    sellerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'sellers'
-    },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'users'
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
-})
+  question: {
+    type: String,
+    required: true,
+  },
+  answer: {
+    type: String,
+  },
+  isAnswered: {
+    type: Boolean,
+    default: false,
+  },
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "products",
+  },
+  sellerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "sellers",
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "users",
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
+faqSchema.index({ productId: 1, sellerId: 1, userId: 1 }, { unique: true });
 
-faqSchema.index({ productId: 1, sellerId: 1 });
-
-module.exports = mongoose.model('faqs',faqSchema);
+module.exports = mongoose.model("faqs", faqSchema);

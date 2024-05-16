@@ -5,36 +5,13 @@ const orderSchema = new mongoose.Schema({
     required: true,
     ref: "products",
   },
-  image: {
-    type: String,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
-  },
-  category: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  measuringUnit: {
-    type: String,
-    required: true,
+    ref: "users"
   },
   orderQty: {
     type: Number,
-    required: true,
-  },
-  customerName: {
-    type: String,
-    required: true,
-  },
-  customerPhoneNo: {
-    type: Number,
-    required: true,
-  },
-  customerEmail: {
-    type: String,
     required: true,
   },
   orderLocation: {
@@ -46,10 +23,6 @@ const orderSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
-  },
-  totalPrice: {
-    type: Number,
-    required: true,
   },
   sellerId: {
     type: mongoose.Schema.Types.ObjectId,

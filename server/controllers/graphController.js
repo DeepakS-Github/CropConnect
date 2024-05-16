@@ -4,7 +4,7 @@ const orderServices = require("../services/orderServices");
 
 const getGraphData = async (req, res) => {
   try {
-    let orders = await Order.find({ sellerId: req.params.sellerId });
+    let orders = await Order.find({ sellerId: req.sellerId }).lean();
     const dateVsSales = orderServices.getDateVsSales(orders);
     const categoryVsSales = orderServices.getCategoriesVsSales(orders);
     res

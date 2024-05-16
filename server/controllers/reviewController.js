@@ -4,9 +4,9 @@ const Product = require("../models/productSchema");
 // Add Review
 const addReview = async (req, res) => {
   try {
-    req.body.userId = req.id;
+    req.body.userId = req.userId;
     let data = Review(req.body);
-    let result = await data.save({ writeConcern: { w: "majority" } });
+    let result = await data.save();
     console.log(result);
     return res.status(200).send({ message: "Review successfully posted" });
   } catch (error) {
@@ -30,33 +30,22 @@ const addReview = async (req, res) => {
 // Get Paginated Review
 const getPaginatedReview = async (req, res) => {
   try {
-    const reviewPerPage = req.query.per_page;
-    const data = await Review.find({ productId: req.query.productId });
-    const page = parseInt(req.query.page) || 1;
-    const startIndex = (page - 1) * reviewPerPage;
-    const endIndex = page * reviewPerPage;
-    const reviewForPage = data.slice(startIndex, endIndex);
-    return res.status(200).send(reviewForPage);
+    const review_per_page = req.query.review_per_page;
+    const page = req.query.page;
+    
+    let skip = (page - 1) * review_per_page;
+
+    let data = await Review.find({
+      productId: req.params.productId,
+    }).sort({ date: -1 }).skip(skip).limit(review_per_page).lean();
+
+    res.status(200).send(data);
   } catch (error) {
     console.log(error);
-    return res.status(500).send({ message: "Something went wrong!" });
+    res.status(500).send({ message: "Something went wrong!" });
   }
 };
 
-// Get Review+
-const getReview = async (req, res) => {
-  try {
-    let data = await Review.find({ productId: req.params.productid });
-    if (!data) {
-      res.status(404);
-      res.send("review not found");
-    } else {
-      res.status(200).send(data);
-    }
-  } catch (error) {
-    res.status(500).send("Something went wrong!");
-  }
-};
 
 
 // Below one is slower, (by using ref) -> also removed the ref from productSchema
@@ -81,6 +70,5 @@ const getReview = async (req, res) => {
 
 module.exports = {
   addReview,
-  getReview,
   getPaginatedReview,
 };

@@ -1,14 +1,15 @@
 const Product = require("../models/productSchema");
 const Review = require("../models/reviewSchema");
-const Cart = require("../models/cartSchema");
 
 // Add Product
 const addProduct = async (req, res) => {
   try {
+    console.log(req.sellerId);
+    req.body.sellerId = req.sellerId;
+
     let data = Product(req.body);
-    console.log("----------------");
     // console.log(data);
-    let result = await data.save({ writeConcern: { w: "majority" } });
+    let result = await data.save();
     // console.log(result);
     res.status(200).send({ message: "Product Added Successfully" });
   } catch (error) {
@@ -20,29 +21,58 @@ const addProduct = async (req, res) => {
 // Get Product Data By Category
 const getProductDataByCategory = async (req, res) => {
   try {
-    let data = await Product.find({ category: req.params.category });
+    let data = await Product.find({ category: req.params.category })
+      .select("name image brand measuringUnit pricePerUnit minimumOrderQuantity location")
+      .lean();
     res.status(200).send(data);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Something went wrong!" });
   }
 };
 
+
+// Get Product Dashboard Data
+const getProductDashboardData = async (req, res) => {
+  try {
+    let data = await Product.findById(req.params.productId).select("sellerId shelfLife quantity description").lean();
+    res.status(200).send(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Something went wrong!" });
+  }
+};
+
+
+
 // Get Product Stocks By Id
 const getProductStocksById = async (req, res) => {
   try {
-    let data = await Product.findOne({ _id: req.params.productId });
-    res.status(200).send({quantityLeft: data.quantity});
+    let productQty = await Product.findById(req.params.productId)
+      .select("quantity")
+      .lean();
+
+    if (!productQty) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+
+    res.status(200).send({ quantityLeft: productQty.quantity });
   } catch (error) {
     res.status(500).send("Something went wrong!");
     console.log(error);
   }
-}
+};
 
 // Get Product Data By Id
 const getProductDataById = async (req, res) => {
   try {
-    let data = await Product.findOne({ _id: req.params.key });
-    res.status(200).send(data);
+    let product = await Product.findById(req.params.productId).lean();
+
+    if (!product) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+
+    res.status(200).send(product);
     // console.log(data);
   } catch (error) {
     res.status(500).send("Something went wrong!");
@@ -50,19 +80,25 @@ const getProductDataById = async (req, res) => {
   }
 };
 
+
+
 // Delete Product Data By Id
 const deleteProduct = async (req, res) => {
   try {
-    // Find and delete product data from other collections
-    await Promise.all([
-      Cart.deleteMany({ productId: req.params.productId }),
-      Review.deleteMany({ productId: req.params.productId }),
-    ]);
 
-    let data = await Product.deleteOne(
-      { _id: req.params.productId },
-      { writeConcern: { w: "majority" } }
-    );
+    const sellerId = req.sellerId;
+
+    let product = await Product.findById(req.params.productId);
+
+    if (!product) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+
+    if(product.sellerId != sellerId){
+      return res.status(403).send({ message: "You are not authorized to delete this product" });
+    }
+
+    await Product.findByIdAndDelete(req.params.productId);
     // console.log(data);
     res.status(200).send({ message: "Product deleted successfully" });
   } catch (error) {
@@ -73,7 +109,7 @@ const deleteProduct = async (req, res) => {
 // Get Seller Dashboard Data
 const getProductDataBySellerId = async (req, res) => {
   try {
-    let data = await Product.find({ sellerId: req.params.sellerId });
+    let data = await Product.find({ sellerId: req.sellerId }).lean();
     // console.log(data);
     res.status(200).send(data);
   } catch (error) {
@@ -84,25 +120,72 @@ const getProductDataBySellerId = async (req, res) => {
 // Update Product
 const updateProduct = async (req, res) => {
   try {
-    let data = await Product.updateOne(
-      { _id: req.params.productId },
-      {
-        $set: {
-          image: req.body.image,
-          name: req.body.name,
-          category: req.body.category,
-          description: req.body.description,
-          pricePerUnit: req.body.pricePerUnit,
-          measuringUnit: req.body.measuringUnit,
-          minimumOrderQuantity: req.body.minimumOrderQuantity,
-          "location.latitude": req.body.location.latitude,
-          "location.longitude": req.body.location.longitude,
-          quantity: req.body.quantity,
-          shelfLife: req.body.shelfLife,
-        },
-      },
-      { writeConcern: { w: "majority" } }
-    );
+    const sellerId = req.sellerId;
+    console.log(sellerId);
+
+    let product = await Product.findById(req.params.productId);
+
+    if (!product) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+
+    if (product.sellerId != sellerId) {
+      return res
+        .status(403)
+        .send({ message: "You are not authorized to update this product" });
+    }
+    const updatedFields = {};
+
+    const { image, name, category, description, pricePerUnit, measuringUnit, minimumOrderQuantity, location, quantity, shelfLife } = req.body;
+
+    if (image && image !== product.image) {
+      updatedFields.image = image;
+    }
+    if (name && name !== product.name) {
+      updatedFields.name = name;
+    }
+    if (category && category !== product.category) {
+      updatedFields.category = category;
+    }
+    if (description && description !== product.description) {
+      updatedFields.description = description;
+    }
+    if (pricePerUnit && pricePerUnit !== product.pricePerUnit) {
+      updatedFields.pricePerUnit = pricePerUnit;
+    }
+    if (measuringUnit && measuringUnit !== product.measuringUnit) {
+      updatedFields.measuringUnit = measuringUnit;
+    }
+    if (minimumOrderQuantity && minimumOrderQuantity !== product.minimumOrderQuantity) {
+      updatedFields.minimumOrderQuantity = minimumOrderQuantity;
+    }
+    if (
+      location && location.latitude && location.longitude &&
+      location.latitude !== product.location.latitude
+    ) {
+      updatedFields["location.latitude"] = location.latitude;
+    }
+    if (
+      location && location.latitude && location.longitude &&
+      location.longitude !== product.location.longitude
+    ) {
+      updatedFields["location.longitude"] = location.longitude;
+    }
+    if (quantity && quantity !== product.quantity) {
+      updatedFields.quantity = quantity;
+    }
+    if (shelfLife && shelfLife !== product.shelfLife) {
+      updatedFields.shelfLife = shelfLife;
+    }
+
+    console.log("Updated Fields: ", updatedFields)
+
+    if (Object.keys(updatedFields).length === 0) {
+      return res.status(400).send({ message: "No fields to update" });
+    }
+
+
+    await Product.findByIdAndUpdate(req.params.productId, updatedFields);
 
     res.status(200).send({
       message: "Product Updated Successfully",
@@ -120,5 +203,6 @@ module.exports = {
   getProductDataBySellerId,
   deleteProduct,
   updateProduct,
-  getProductStocksById
+  getProductStocksById,
+  getProductDashboardData
 };

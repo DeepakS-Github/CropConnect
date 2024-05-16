@@ -41,15 +41,16 @@ const authModelSelector = (type, res) => {
   }
 };
 
-const generateAccessToken = (id) => {
-  const access_token = jwt.sign({ id }, process.env.JWT_SECRET, {
+const generateAccessToken = (type, id) => {
+  const access_token = jwt.sign({ [type]: id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
+
   return access_token;
 };
 
 module.exports = {
   saveAndSendVerficationToken,
   authModelSelector,
-  generateAccessToken
+  generateAccessToken,
 };

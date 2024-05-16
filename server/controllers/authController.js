@@ -20,7 +20,7 @@ const signup = async (req, res) => {
     let salt = await bcrypt.genSalt(8);
     data.password = await bcrypt.hash(data.password, salt);
 
-    let result = await data.save({ writeConcern: { w: "majority" } });
+    let result = await data.save();
     const isMailSentSuccessful = await saveAndSendVerficationToken(
       result._id.toString(),
       type
@@ -100,7 +100,7 @@ const login = async (req, res) => {
         }
       }
 
-      setCookie(res, `${type}_access_token`, generateAccessToken(data._id.toString()));
+      setCookie(res, `${type}_access_token`, generateAccessToken(type, data._id.toString()));
 
       return res.status(200).send({
         message: `${capitalizeFirstLetter(type)} login successful`,

@@ -9,8 +9,6 @@ const { setupWebSocket } = require("./services/setupWebSocket");
 
 const product = require("./routes/product");
 const review = require("./routes/review");
-const cart = require("./routes/cart");
-const otp = require("./routes/otp");
 const order = require("./routes/order");
 const faq = require("./routes/faq");
 const graph = require("./routes/graph.js")
@@ -41,12 +39,10 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/auth", auth);
-app.use("/product", product);
-app.use("/review", review);
-app.use("/cart", cart);
-app.use("/otp", otp);
+app.use("/products", product);
+app.use("/reviews", review);
 app.use("/order", order);
-app.use("/faq", faq);
+app.use("/faqs", faq);
 app.use("/graph", graph);
 app.use("/ai", ai);
 
