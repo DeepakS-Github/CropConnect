@@ -17,3 +17,4 @@ Left
 22. Add lazy loading on images
 23. Modify the products api to first not fetch the product description, stocks left and shelf life, fetch it when user navigates to particular product page
 24. Improve client side code by custom hooks for api handeling
+25. add share product button

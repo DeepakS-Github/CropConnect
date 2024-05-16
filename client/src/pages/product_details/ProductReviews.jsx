@@ -8,10 +8,13 @@ import Spinner from "../../components/loading/Spinner";
 import ReviewsSkeleton from "../../components/skeleton/ReviewsSkeleton";
 import EmptyStateText from "../../components/empty_state/EmptyStateText";
 import Heading from "../../components/heading/Heading";
+import useReviews from "../../hooks/reviews/useReviews";
 
 function ProductReviews() {
   const productData = useSelector((state) => state.productReducer);
   const userData = useSelector((state) => state.userReducer);
+
+  const { getReviews, isLoading } = useReviews();
 
   const [rate, setRate] = useState(0);
 
@@ -26,8 +29,7 @@ function ProductReviews() {
   const [reviewData, setReviewData] = useState([]);
   const [reachedEnd, setReachedEnd] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDataFetching, setIsDataFetching] = useState(true);
+  const [isReviewFirstTimeLoading, setIsReviewFirstTimeLoading] = useState(true);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -80,16 +82,12 @@ function ProductReviews() {
 
   useEffect(() => {
     const getReview = async () => {
-      setIsLoading(true);
-      let data = await getAPI(
-        `review/get?page=${currentPage}&per_page=2&productId=${productData._id}`
-      );
+      let data = await getReviews(productData._id, currentPage);
       if (data.length === 0) {
         setReachedEnd(true);
       }
       setReviewData([...reviewData, ...data]);
-      setIsLoading(false);
-      setIsDataFetching(false);
+      setIsReviewFirstTimeLoading(false);
     };
 
     getReview();
@@ -157,13 +155,13 @@ function ProductReviews() {
             ></textarea>
           </form>
 
-          {isDataFetching ? (
+          {isReviewFirstTimeLoading ? (
             <ReviewsSkeleton />
           ) : reviewData.length === 0 ? (
             <EmptyStateText text="Be the first to share your thoughts! This product doesn't have any reviews yet. Your feedback can help others make informed decisions. Write a review now!" />
           ) : (
             reviewData.map((item, index) => (
-              <div className="w-full flex justify-start items-start flex-col bg-gray-50 p-4 md:p-8">
+              <div key={index} className="w-full flex justify-start items-start flex-col bg-gray-50 p-4 md:p-8">
                 <div className="flex flex-row justify-between w-full">
                   <div className="flex flex-row justify-between items-start">
                     <p className="text-xl md:text-2xl font-medium leading-normal text-teal-600">

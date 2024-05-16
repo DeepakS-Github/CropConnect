@@ -7,74 +7,62 @@ import { IoBagRemoveOutline } from "react-icons/io5";
 import { addProductData, addToCart, removeFromCart } from "../../redux/actions";
 import { store } from "../../redux/store";
 import Heading from "../../components/heading/Heading";
-import io from "socket.io-client";
-import { getAPI } from "../../utils/api/getRequest";
+import useProducts from "../../hooks/products/useProducts";
+import useStockUpdateSocket from "../../hooks/socket/useStockUpdateSocket";
 
 function ProductDetails() {
   const dispatch = useDispatch();
 
   const productData = useSelector((state) => state.productReducer);
-
   const cartData = useSelector((state) => state.cartReducer);
-  const isProductInCart = cartData.some((item) => item._id === productData._id);
+  
+  const { getProductUserDashboardData } = useProducts();
 
-  useEffect(() => {
-    const socket = io(import.meta.env.VITE_CROPCONNECT_API, {
-      transports: ["websocket"],
+  const [productDashboardData, setProductDashboardData] = useState(productData);
+  useStockUpdateSocket(setProductDashboardData);
+  
+
+  const isProductInCart = cartData.some(
+    (item) => item._id === productDashboardData._id
+  );
+  
+
+  const fetchProductDashboardData = async () => {
+    let data = await getProductUserDashboardData(productData._id);
+    setProductDashboardData((prevData) => {
+      return {
+        ...prevData,
+        ...data,
+      };
     });
-
-    socket.on("stockUpdate", (stockLeft) => {
-      dispatch(
-        addProductData({
-          ...productData,
-          quantity: stockLeft,
-        })
-      );
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  const getCurrentStocks = async () => {
-    let stocks = await getAPI(
-      `product/getProductStocksById/${productData._id}`
-    );
-    dispatch(
-      addProductData({
-        ...productData,
-        quantity: stocks.quantityLeft,
-      })
-    );
   };
 
   useEffect(() => {
-    getCurrentStocks();
+    fetchProductDashboardData();
   }, []);
 
   const addProductToCart = () => {
     let cartProductData = {
-      _id: productData._id,
-      sellerId: productData.sellerId,
-      image: productData.image,
-      name: productData.name,
-      category: productData.category,
-      qty: productData.minimumOrderQuantity,
-      brand: productData.brand,
-      minQty: productData.minimumOrderQuantity,
-      stocksLeft: productData.quantity,
-      pricePerUnit: productData.pricePerUnit,
-      unit: productData.measuringUnit,
-      currentPrice: productData.pricePerUnit * productData.minimumOrderQuantity,
+      _id: productDashboardData._id,
+      sellerId: productDashboardData.sellerId,
+      image: productDashboardData.image,
+      name: productDashboardData.name,
+      category: productDashboardData.category,
+      qty: productDashboardData.minimumOrderQuantity,
+      brand: productDashboardData.brand,
+      minQty: productDashboardData.minimumOrderQuantity,
+      stocksLeft: productDashboardData.quantity,
+      pricePerUnit: productDashboardData.pricePerUnit,
+      unit: productDashboardData.measuringUnit,
+      currentPrice:
+        productDashboardData.pricePerUnit *
+        productDashboardData.minimumOrderQuantity,
     };
     dispatch(addToCart(cartProductData));
-    // setIsProductInCart(true);
   };
 
   const removeProductFromCart = () => {
-    dispatch(removeFromCart(productData._id));
-    // setIsProductInCart(false);
+    dispatch(removeFromCart(productDashboardData._id));
   };
 
   return (
@@ -83,20 +71,20 @@ function ProductDetails() {
         <img
           className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
           // src={`https://source.unsplash.com/random/400x400?rice`}
-          src={productData.image}
+          src={productDashboardData.image}
         />
         <div className="lg:w-1/2 w-full px-4 lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className="text-xs md:text-sm title-font text-gray-500 tracking-widest">
-            {productData.brand}
+            {productDashboardData.brand}
           </h2>
           <Heading
-            text={productData.name}
+            text={productDashboardData.name}
             marginY="mb-2"
             textAlign="left"
             paddingX="p-0"
           />
           <p className="leading-relaxed text-sm md:text-base">
-            {productData.description}
+            {productDashboardData.description}
           </p>
 
           <div className="relative overflow-x-auto my-6">
@@ -107,7 +95,8 @@ function ProductDetails() {
                     Stocks Left
                   </th>
                   <td className="px-2 md:px-6 py-2 md:py-4 ">
-                    {productData.quantity} {productData.measuringUnit}
+                    {productDashboardData.quantity}{" "}
+                    {productDashboardData.measuringUnit}
                   </td>
                 </tr>
                 <tr className="bg-white border-b">
@@ -115,7 +104,7 @@ function ProductDetails() {
                     Shelf Life
                   </th>
                   <td className="px-2 md:px-6 py-2 md:py-4 ">
-                    {productData.shelfLife}
+                    {productDashboardData.shelfLife}
                   </td>
                 </tr>
               </tbody>
@@ -125,17 +114,20 @@ function ProductDetails() {
           <div className="flex justify-between flex-col md:flex-row">
             <div>
               <div className="text-green-600 font-medium text-sm md:text-base">
-                Minimum Order Quantity: {productData.minimumOrderQuantity}{" "}
-                {productData.measuringUnit}
+                Minimum Order Quantity:{" "}
+                {productDashboardData.minimumOrderQuantity}{" "}
+                {productDashboardData.measuringUnit}
               </div>
               <div className="flex justify-between">
                 <h2 className="text-2xl md:text-4xl text-left mb-1 font-medium">
-                  Rs. {productData.pricePerUnit}/{productData.measuringUnit}
+                  Rs. {productDashboardData.pricePerUnit}/
+                  {productDashboardData.measuringUnit}
                 </h2>
               </div>
             </div>
 
-            {productData.minimumOrderQuantity <= productData.quantity ? (
+            {productDashboardData.minimumOrderQuantity <=
+            productDashboardData.quantity ? (
               <button
                 className={`flex mb-2 md:mb-4 mt-4 md:mt-2  text-white ${
                   isProductInCart

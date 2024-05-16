@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@vercel/analytics": "^1.2.2",
+    "axios": "^1.6.8",
     "leaflet": "^1.9.4",
     "leaflet-geosearch": "^3.11.0",
     "react": "^18.2.0",
