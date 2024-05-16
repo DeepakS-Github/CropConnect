@@ -2,9 +2,9 @@ import React from "react";
 
 const SideImage = ({ type }) => {
   return (
-    <div className="hidden md:block relative w-1/2">
-      <div className="absolute inset-0 z-10 bg-black text-gray-200 bg-opacity-50  text-2xl font-semibold flex items-end justify-end">
-        <p className="pb-16 pr-12">
+    <div className="block relative w-full md:w-1/2 h-48 md:h-full">
+      <div className="absolute inset-0 z-10 bg-black text-gray-200 bg-opacity-50 text-lg  md:text-xl lg:text-2xl font-semibold flex items-end justify-end">
+        <p className="pl-6 pb-8 md:pb-16 pr-12">
           {type === "seller"
             ? "Unlock Opportunities, Harvest Success with CropConnect"
             : "Farm-Fresh Delights Await – Start Exploring Today!"}

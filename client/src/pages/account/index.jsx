@@ -12,12 +12,15 @@ function LoginAndSignup() {
   const [isSignInForm, setIsSignInForm] = useState(true);
 
   return (
-    <section className="flex flex-row  md:h-screen">
+    <section className="flex flex-col-reverse md:flex-row  md:h-screen">
       <SideImage type={type} />
       <div className="flex flex-col w-full lg:w-1/2 items-center justify-center px-6 py-8 lg:py-0">
-        <div className="p-6 space-y-4 md:space-y-6 sm:p-8 w-full">
+        <div className="lg:p-6 space-y-4 md:space-y-6 sm:p-8 w-full">
           <FormHeading type={type} isSignInForm={isSignInForm} />
-          <form className="space-y-4 md:space-y-6 w-3/5 mx-auto">
+          <form className="space-y-4 md:space-y-6 w-full lg:w-3/5 mx-auto" onSubmit={(e)=>{
+            e.preventDefault();
+            console.log("submitting")
+          }}>
             {/* For Sign Up */}
 
             {!isSignInForm && (

@@ -23,7 +23,7 @@ function App() {
       <Router>
         <ScrollToTop/>
         <Navbar />
-        <div className="min-h-[calc(100vh-50px)]">
+        <div className="min-h-[calc(100vh-120px)] md:min-h-[calc(100vh-50px)]">
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/account/:type" element={<LoginAndSignup />} />
