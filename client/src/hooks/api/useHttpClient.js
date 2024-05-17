@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { notify } from "../../utils/helper/notification";
+import { notifyType } from "../../utils/helper/notificationType";
 
 
 axios.defaults.baseURL = import.meta.env.VITE_CROPCONNECT_API;
@@ -28,7 +29,7 @@ const useHttpClient = () => {
       return response.data;
     } catch (error) {
       console.log(error);
-      if (showToast) notify(error.response.data.message, "error");
+      if (showToast) notify(error.response.data.message, notifyType(error.response.status));
       throw error;
     } finally {
       setIsLoading(false);
