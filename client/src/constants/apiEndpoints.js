@@ -11,4 +11,5 @@ export const GET_PRODUCT_FAQS = (productId, page, faq_per_page) => `/faqs/produc
 // Auth 
 export const SIGNUP = (type) => `/auth/${type}/signup`;
 export const LOGIN = (type) => `/auth/${type}/login`;
+export const VERIFY = (type, token) => `/auth/${type}/verify/${token}`;
 

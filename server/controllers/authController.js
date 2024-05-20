@@ -7,12 +7,10 @@ const {
 const { setCookie } = require("../services/cookieServices");
 const bcrypt = require("bcryptjs");
 
-
 // SignUp
 const signup = async (req, res) => {
   let type = req.params.type.toLowerCase();
   try {
-
     let Model = authModelSelector(type, res);
 
     let data = Model(req.body);
@@ -58,7 +56,6 @@ const signup = async (req, res) => {
   }
 };
 
-
 // Login
 const login = async (req, res) => {
   try {
@@ -100,7 +97,11 @@ const login = async (req, res) => {
         }
       }
 
-      setCookie(res, `${type}_access_token`, generateAccessToken(type, data._id.toString()));
+      setCookie(
+        res,
+        `${type}_access_token`,
+        generateAccessToken(type, data._id.toString())
+      );
 
       return res.status(200).send({
         message: `${capitalizeFirstLetter(type)} login successful`,
@@ -112,21 +113,24 @@ const login = async (req, res) => {
   }
 };
 
-
-
 const verifyToken = async (req, res) => {
   try {
-    const verificationToken = decodeURIComponent(req.params.token);
+    const verificationToken = decodeURIComponent(req.params.token).toString();
     const type = req.params.type.toLowerCase();
 
     let Model = authModelSelector(type, res);
 
+    if (!Model) return res.status(400).send({ message: "Invalid type" });
+
     const data = await Model.findOne({
       verificationToken: verificationToken,
-    });
+    }).select("isVerified verificationTokenExpiry");
+
+    if (data?.isVerified)
+      return res.status(409).send({ message: "Account already verified" });
 
     if (!data) {
-      return res.status(401).send({ message: "Invalid token" });
+      return res.status(404).send({ message: "Invalid token" });
     }
 
     const isTokenExpired = data.verificationTokenExpiry < Date.now();
@@ -135,6 +139,12 @@ const verifyToken = async (req, res) => {
     }
 
     await Model.findByIdAndUpdate(data._id, { isVerified: true });
+
+    setCookie(
+      res,
+      `${type}_access_token`,
+      generateAccessToken(type, data._id.toString())
+    );
 
     return res.status(200).send({ message: "Account verified successfully" });
   } catch (error) {

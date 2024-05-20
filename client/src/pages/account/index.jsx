@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import InputTag from "../../components/input/InputTag";
 import SubmitButton from "../../components/button/SubmitButton";
@@ -6,12 +6,15 @@ import FormSwitch from "../../components/account/FormSwitch";
 import SideImage from "../../components/account/SideImage";
 import FormHeading from "../../components/account/FormHeading";
 import useEmailAuth from "../../hooks/auth/useEmailAuth";
+import { useCookies } from "react-cookie";
 
 function LoginAndSignup() {
   const { type } = useParams();
+  const [cookies, setCookie] = useCookies();
 
   const [isSignInForm, setIsSignInForm] = useState(true);
-  const {isLoading, handleSignup, handleLogin} = useEmailAuth();
+  const { isLoading, handleSignup, handleLogin } = useEmailAuth();
+  
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +30,7 @@ function LoginAndSignup() {
     } else {
       handleSignup(type, formData);
     }
-  }
+  };
 
   return (
     <section className="flex flex-col-reverse md:flex-row  md:h-screen">

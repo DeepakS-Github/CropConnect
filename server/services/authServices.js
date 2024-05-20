@@ -6,7 +6,7 @@ const User = require("../models/userSchema");
 const capitalizeFirstLetter = require("../helper/capitalizeFirstLetter");
 
 const saveAndSendVerficationToken = async (id, type) => {
-  var salt = await bcrypt.genSalt(8);
+  var salt = await bcrypt.genSalt(0);
   var verificationToken = await bcrypt.hash(id, salt);
 
   let Model = authModelSelector(type);
@@ -16,11 +16,11 @@ const saveAndSendVerficationToken = async (id, type) => {
   data.verificationToken = verificationToken;
   data.verificationTokenExpiry = Date.now() + 3600000;
 
+  const encodedToken = encodeURIComponent(verificationToken);
+
   await data.save();
 
-  const verificationTokenLink = `https://localhost:5173/${type}/verify/${encodeURIComponent(
-    verificationToken
-  )}`;
+  const verificationTokenLink = `https://localhost:5173/${type}/verify/${encodedToken}`;
 
   const mailRes = await sendMail(
     data.email,

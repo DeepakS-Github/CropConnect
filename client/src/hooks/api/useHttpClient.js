@@ -3,7 +3,6 @@ import axios from "axios";
 import { notify } from "../../utils/helper/notification";
 import { notifyType } from "../../utils/helper/notificationType";
 
-
 axios.defaults.baseURL = import.meta.env.VITE_CROPCONNECT_API;
 
 const useHttpClient = () => {
@@ -14,7 +13,8 @@ const useHttpClient = () => {
     method = "GET",
     body = null,
     headers = {},
-    showToast = true
+    showToast = true,
+    withCredentials = false
   ) => {
     setIsLoading(true);
     try {
@@ -23,13 +23,15 @@ const useHttpClient = () => {
         method,
         data: body,
         headers,
+        withCredentials,
       });
       console.log("URL RESPONSE", url, " ", response);
       if (showToast) notify(response.data.message, "success");
-      return response.data;
+      return response;
     } catch (error) {
       console.log(error);
-      if (showToast) notify(error.response.data.message, notifyType(error.response.status));
+      if (showToast)
+        notify(error.response.data.message, notifyType(error.response.status));
       throw error;
     } finally {
       setIsLoading(false);

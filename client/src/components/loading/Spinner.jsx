@@ -1,12 +1,12 @@
 import React from "react";
 
-function Spinner({color, width}) {
+function Spinner({color, width, marginRight="mr-2"}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="none"
-      className={`${width} animate-spin mr-2`}
+      className={`${width} animate-spin ${marginRight}`}
     >
       <path
         opacity="0.2"
