@@ -6,11 +6,9 @@ import FormSwitch from "../../components/account/FormSwitch";
 import SideImage from "../../components/account/SideImage";
 import FormHeading from "../../components/account/FormHeading";
 import useEmailAuth from "../../hooks/auth/useEmailAuth";
-import { useCookies } from "react-cookie";
 
 function LoginAndSignup() {
   const { type } = useParams();
-  const [cookies, setCookie] = useCookies();
 
   const [isSignInForm, setIsSignInForm] = useState(true);
   const { isLoading, handleSignup, handleLogin } = useEmailAuth();

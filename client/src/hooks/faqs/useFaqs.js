@@ -6,10 +6,14 @@ const useFaqs = () => {
   const { sendRequest, isLoading } = useHttpClient();
 
   const getFaqs = async (productId, page, faq_per_page = 6) => {
-    const faqs = await sendRequest(
-      GET_PRODUCT_FAQS(productId, page, faq_per_page)
-    );
-    return faqs.data;
+    try {
+      const faqs = await sendRequest(
+        GET_PRODUCT_FAQS(productId, page, faq_per_page)
+      );
+      return faqs.data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return { getFaqs, isLoading };

@@ -12,14 +12,12 @@ import useReviews from "../../hooks/reviews/useReviews";
 
 function ProductReviews() {
   const productData = useSelector((state) => state.productReducer);
-  const userData = useSelector((state) => state.userReducer);
 
-  const { getReviews, isLoading } = useReviews();
+  const { getReviews, addReview, isLoading } = useReviews();
 
   const [rate, setRate] = useState(0);
 
   const [reviewForm, setReviewForm] = useState({
-    userId: userData ? userData._id : null,
     productId: productData._id,
     stars: rate,
     heading: "",
@@ -29,56 +27,24 @@ function ProductReviews() {
   const [reviewData, setReviewData] = useState([]);
   const [reachedEnd, setReachedEnd] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isReviewFirstTimeLoading, setIsReviewFirstTimeLoading] = useState(true);
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleReviewSubmit = () => {
-    if (userData === null) {
-      notify("Please login as a user first", "info");
-      return;
-    }
-
-    if (reviewForm.heading === "" || reviewForm.description === "") {
-      notify("Please fill the review form correctly!", "info");
-      return;
-    }
-    if (rate === 0) {
-      notify("Please select the stars of the product", "notify");
-      return;
-    }
-
-    setReviewForm((prevData) => ({ ...prevData, stars: rate }));
-  };
+  const [isReviewFirstTimeLoading, setIsReviewFirstTimeLoading] =
+    useState(true);
 
   useEffect(() => {
-    const postData = async () => {
-      if (
-        reviewForm.heading !== null &&
-        reviewForm.description !== null &&
-        reviewForm.stars != 0
-      ) {
-        try {
-          setIsSubmitting(true);
-          await postAPI("review/add", reviewForm);
-          // setReviewData([reviewForm, ...reviewData]);
-          setRate(0);
-          setReviewForm({
-            ...reviewForm,
-            stars: 0,
-            heading: "",
-            description: "",
-          });
-          setIsSubmitting(false);
-        } catch (error) {
-          // Handle error if the API call fails
-          console.error("Error posting review:", error);
-        }
-      }
-    };
+    setReviewForm((prevData) => ({ ...prevData, stars: rate }));
+  }, [rate]);
 
-    postData();
-  }, [reviewForm]);
+  const handleReviewSubmit = async () => {
+    const isSuccess = await addReview(reviewForm);
+    if (isSuccess) {
+      setRate(0);
+      setReviewForm((prevData) => ({
+        ...prevData,
+        heading: "",
+        description: "",
+      }));
+    }
+  };
 
   useEffect(() => {
     const getReview = async () => {
@@ -133,9 +99,7 @@ function ProductReviews() {
                   type="submit"
                 >
                   <span className="mr-1">
-                    {isSubmitting ? (
-                      <Spinner width="w-6" color="#ffffff" />
-                    ) : null}
+                    {isLoading ? <Spinner width="w-6" color="#ffffff" /> : null}
                   </span>
                   Submit
                 </button>
@@ -161,7 +125,10 @@ function ProductReviews() {
             <EmptyStateText text="Be the first to share your thoughts! This product doesn't have any reviews yet. Your feedback can help others make informed decisions. Write a review now!" />
           ) : (
             reviewData.map((item, index) => (
-              <div key={index} className="w-full flex justify-start items-start flex-col bg-gray-50 p-4 md:p-8">
+              <div
+                key={index}
+                className="w-full flex justify-start items-start flex-col bg-gray-50 p-4 md:p-8"
+              >
                 <div className="flex flex-row justify-between w-full">
                   <div className="flex flex-row justify-between items-start">
                     <p className="text-xl md:text-2xl font-medium leading-normal text-teal-600">
@@ -202,9 +169,7 @@ function ProductReviews() {
                   setCurrentPage((prevPage) => prevPage + 1);
                 }}
               >
-                {isLoading && (
-                    <Spinner width="w-5" color="#ffffff" />
-                )}
+                {isLoading && <Spinner width="w-5" color="#ffffff" />}
                 Load More
               </button>
             </div>

@@ -13,31 +13,37 @@ const useProducts = () => {
   const productData = useSelector((state) => state.productReducer);
 
   const getProductsByCategory = async (category) => {
-    const products = await sendRequest(
-      GET_PRODUCTS_BY_CATEGORY(category)
-    );
-    return products.data;
+    try {
+      const products = await sendRequest(GET_PRODUCTS_BY_CATEGORY(category));
+      return products.data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getProductUserDashboardData = async (productId) => {
-    const dashProductData = await sendRequest(
-      GET_PRODUCT_DASHBOARD_DATA(productId)
-    );
+    try {
+      const dashProductData = await sendRequest(
+        GET_PRODUCT_DASHBOARD_DATA(productId)
+      );
 
-    dispatch(
-      addProductData({
-        ...productData,
-        sellerId: dashProductData.data.sellerId
-      })
-    );
+      dispatch(
+        addProductData({
+          ...productData,
+          sellerId: dashProductData.data.sellerId,
+        })
+      );
 
-    return dashProductData.data;
+      return dashProductData.data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return {
     getProductsByCategory,
     getProductUserDashboardData,
-    isLoading
+    isLoading,
   };
 };
 
