@@ -5,6 +5,7 @@ const Product = require("../models/productSchema");
 const addReview = async (req, res) => {
   try {
     req.body.userId = req.userId;
+    req.body.productId = req.params.productId;
     let data = Review(req.body);
     let result = await data.save();
     console.log(result);
@@ -22,7 +23,7 @@ const addReview = async (req, res) => {
       });
     } else {
       console.log(error);
-      res.status(500).send({message: "Something went wrong!"});
+      res.status(500).send({ message: "Something went wrong!" });
     }
   }
 };
@@ -32,12 +33,16 @@ const getPaginatedReview = async (req, res) => {
   try {
     const review_per_page = req.query.review_per_page;
     const page = req.query.page;
-    
+
     let skip = (page - 1) * review_per_page;
 
     let data = await Review.find({
       productId: req.params.productId,
-    }).sort({ date: -1 }).skip(skip).limit(review_per_page).lean();
+    })
+      .sort({ date: -1 })
+      .skip(skip)
+      .limit(review_per_page)
+      .lean();
 
     res.status(200).send(data);
   } catch (error) {
@@ -45,8 +50,6 @@ const getPaginatedReview = async (req, res) => {
     res.status(500).send({ message: "Something went wrong!" });
   }
 };
-
-
 
 // Below one is slower, (by using ref) -> also removed the ref from productSchema
 // const getReviewUsingRef = async (req, res) => {

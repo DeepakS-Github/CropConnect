@@ -4,6 +4,7 @@ const FAQ = require("../models/faqSchema");
 const addFAQ = async (req, res) => {
   try {
     req.body.userId = req.userId;
+    req.body.productId = req.params.productId;
 
     let data = FAQ(req.body);
     let result = await data.save();

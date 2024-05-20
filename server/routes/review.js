@@ -4,7 +4,7 @@ const reviewController = require('../controllers/reviewController');
 const verifyAccessToken = require('../middlewares/verifyAccessToken');
 
 // Add Review
-router.post("/", verifyAccessToken, reviewController.addReview);
+router.post("/:productId", verifyAccessToken, reviewController.addReview);
 
 // Get Paginated Review
 router.get("/:productId", reviewController.getPaginatedReview);

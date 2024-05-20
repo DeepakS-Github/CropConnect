@@ -20,7 +20,7 @@ const useReviews = () => {
     }
   };
 
-  const addReview = async (reviewData) => {
+  const addReview = async (productId, reviewData) => {
     if (reviewData.heading === "" || reviewData.description === "") {
       notify("Please fill the review form correctly!", "info");
       return false;
@@ -33,7 +33,7 @@ const useReviews = () => {
     try {
       await sendAuthorizedRequest(
         "user",
-        ADD_PRODUCT_REVIEW,
+        ADD_PRODUCT_REVIEW(productId),
         "POST",
         reviewData
       );

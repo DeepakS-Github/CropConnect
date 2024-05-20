@@ -18,7 +18,6 @@ function ProductReviews() {
   const [rate, setRate] = useState(0);
 
   const [reviewForm, setReviewForm] = useState({
-    productId: productData._id,
     stars: rate,
     heading: "",
     description: "",
@@ -35,7 +34,7 @@ function ProductReviews() {
   }, [rate]);
 
   const handleReviewSubmit = async () => {
-    const isSuccess = await addReview(reviewForm);
+    const isSuccess = await addReview(productData._id, reviewForm);
     if (isSuccess) {
       setRate(0);
       setReviewForm((prevData) => ({
