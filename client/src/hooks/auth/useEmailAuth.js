@@ -1,8 +1,10 @@
 import React from "react";
 import useHttpClient from "../api/useHttpClient";
 import { LOGIN, SIGNUP, VERIFY } from "../../constants/apiEndpoints";
+import { useNavigate } from "react-router-dom";
 
 const useEmailAuth = () => {
+  const navigate = useNavigate();
   const { sendRequest, isLoading } = useHttpClient();
 
   const handleSignup = async (type, formData) => {
@@ -16,6 +18,7 @@ const useEmailAuth = () => {
   const handleLogin = async (type, formData) => {
     try {
       await sendRequest(LOGIN(type), "POST", formData, null, true, true);
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
