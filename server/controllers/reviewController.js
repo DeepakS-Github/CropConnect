@@ -22,7 +22,7 @@ const addReview = async (req, res) => {
       });
     } else {
       console.log(error);
-      res.status(500).send("Something went wrong!");
+      res.status(500).send({message: "Something went wrong!"});
     }
   }
 };
