@@ -9,7 +9,7 @@ const useReviews = () => {
     let reviews = await sendRequest(
       GET_PRODUCT_REVIEWS(productId, page, review_per_page)
     );
-    return reviews;
+    return reviews.data;
   };
 
   return { getReviews, isLoading };

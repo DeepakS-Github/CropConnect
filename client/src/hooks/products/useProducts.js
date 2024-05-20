@@ -16,7 +16,7 @@ const useProducts = () => {
     const products = await sendRequest(
       GET_PRODUCTS_BY_CATEGORY(category)
     );
-    return products;
+    return products.data;
   };
 
   const getProductUserDashboardData = async (productId) => {
@@ -27,11 +27,11 @@ const useProducts = () => {
     dispatch(
       addProductData({
         ...productData,
-        sellerId: dashProductData.sellerId
+        sellerId: dashProductData.data.sellerId
       })
     );
 
-    return dashProductData;
+    return dashProductData.data;
   };
 
   return {

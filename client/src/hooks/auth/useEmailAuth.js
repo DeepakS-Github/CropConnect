@@ -34,7 +34,6 @@ const useEmailAuth = () => {
         false,
         true
       );
-      console.log(resp.status);
       return resp.status;
     } catch (error) {
       console.log(error);

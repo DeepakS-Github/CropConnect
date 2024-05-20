@@ -9,7 +9,7 @@ const useFaqs = () => {
     const faqs = await sendRequest(
       GET_PRODUCT_FAQS(productId, page, faq_per_page)
     );
-    return faqs;
+    return faqs.data;
   };
 
   return { getFaqs, isLoading };
