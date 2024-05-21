@@ -18,7 +18,9 @@ const verifyAccessToken = async (req, res, next) => {
     } else if (decoded.seller) {
       req.sellerId = decoded.seller;
     } else {
-      return res.status(403).send({ message: "Invalid token" });
+      return res
+        .status(403)
+        .send({ message: "Invalid token, please login again" });
     }
 
     next();
@@ -26,10 +28,12 @@ const verifyAccessToken = async (req, res, next) => {
     // console.log(error);
 
     if (error.name === "TokenExpiredError") {
-      return res.status(403).send({ message: "Token expired" });
+      return res
+        .status(403)
+        .send({ message: "Token expired, please login again" });
     }
 
-    return res.status(403).send({ message: "Invalid token" });
+    return res.status(403).send({ message: "Invalid token, please login again" });
   }
 };
 
