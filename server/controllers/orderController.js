@@ -4,14 +4,24 @@ const { decreaseProductStocks } = require("../services/productServices");
 // Add Order
 const addOrder = async (req, res) => {
   try {
-    req.body.userId = req.userId;
-    req.body.productId = req.params.productId;
+    const orders = req.body;
+    const userId = req.userId;
+    
+    // Check orders variable is an array
+    if (!Array.isArray(orders)) {
+      return res.status(400).send({ message: "Invalid orders data" });
+    }
 
-    let data = Order(req.body);
-    let result = await data.save();
-    console.log(result);
-    await decreaseProductStocks(data.productId, data.orderQty);
-    res.status(200).send({ message: `Order successfully received` });
+    for (const order of orders) {
+      order.userId = userId;
+
+      let data = Order(order);
+      let result = await data.save();
+      console.log(result);
+      await decreaseProductStocks(data.productId, data.orderQty);
+    }
+
+    res.status(200).send({ message: `All orders successfully received` });
   } catch (error) {
     res.status(500).send("Something went wrong!");
     console.log(error);
@@ -26,7 +36,8 @@ const showOrdersBySeller = async (req, res) => {
         path: "productId",
         select: "image category name measuringUnit pricePerUnit",
       })
-      .populate({ path: "userId", select: "name email phoneNo" }).lean();
+      .populate({ path: "userId", select: "name email phoneNo" })
+      .lean();
 
     data = data.map((order) => {
       const totalPrice = order.orderQty * order.productId.pricePerUnit;

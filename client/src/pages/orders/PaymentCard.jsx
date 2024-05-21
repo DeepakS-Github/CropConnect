@@ -4,8 +4,13 @@ import { useSelector } from "react-redux";
 import Spinner from "../../components/loading/Spinner";
 import { notify } from "../../utils/helper/notification";
 
-
-const PaymentCard = ({ totalAmount, limitForFreeDelivery, deliveryCharge, customerLatitude, customerLongitude }) => {
+const PaymentCard = ({
+  totalAmount,
+  limitForFreeDelivery,
+  deliveryCharge,
+  customerLatitude,
+  customerLongitude,
+}) => {
   const cartData = useSelector((state) => state.cartReducer);
 
   const { orderProduct, isLoading: isPaymentInitiated } = useOrder();
@@ -16,8 +21,9 @@ const PaymentCard = ({ totalAmount, limitForFreeDelivery, deliveryCharge, custom
       return;
     }
 
+    const orderData = [];
     for (const element of cartData) {
-      const orderData = {
+      orderData.push({
         productId: element._id,
         orderQty: element.qty,
         orderLocation: {
@@ -25,12 +31,12 @@ const PaymentCard = ({ totalAmount, limitForFreeDelivery, deliveryCharge, custom
           longitude: customerLongitude,
         },
         sellerId: element.sellerId,
-      };
-
-      console.log("Order data:", orderData);
-
-      orderProduct(element._id, orderData);
+      });
     }
+
+    // console.log("Order data:", orderData);
+
+    orderProduct(orderData);
   };
 
   return (

@@ -17,5 +17,5 @@ export const VERIFY = (type, token) => `/auth/${type}/verify/${token}`;
 
 
 // Orders
-export const ORDER_PRODUCT = (productId) => `/order/${productId}`;
+export const ORDER_PRODUCT = `/order`;
 
