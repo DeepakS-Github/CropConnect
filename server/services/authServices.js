@@ -5,7 +5,7 @@ const Seller = require("../models/sellerSchema");
 const User = require("../models/userSchema");
 const capitalizeFirstLetter = require("../helper/capitalizeFirstLetter");
 
-const saveAndSendVerficationToken = async (id, type) => {
+const saveAndSendVerficationToken = async (id, type, origin) => {
   var salt = await bcrypt.genSalt(0);
   var verificationToken = await bcrypt.hash(id, salt);
 
@@ -20,7 +20,7 @@ const saveAndSendVerficationToken = async (id, type) => {
 
   await data.save();
 
-  const verificationTokenLink = `https://localhost:5173/${type}/verify/${encodedToken}`;
+  const verificationTokenLink = `${origin}/${type}/verify/${encodedToken}`;
 
   const mailRes = await sendMail(
     data.email,

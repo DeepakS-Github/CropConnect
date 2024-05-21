@@ -21,7 +21,8 @@ const signup = async (req, res) => {
     let result = await data.save();
     const isMailSentSuccessful = await saveAndSendVerficationToken(
       result._id.toString(),
-      type
+      type,
+      req.get('Origin')
     );
     if (isMailSentSuccessful) {
       return res.status(200).send({
@@ -38,7 +39,7 @@ const signup = async (req, res) => {
     }
   } catch (error) {
     if (error.code === 11000) {
-      if (error.keyPattern.email || error.keyPattern.phoneNo) {
+      if (error.keyPattern.email || error.keyPattern.contact) {
         return res.status(400).send({
           message: `${capitalizeFirstLetter(
             type
