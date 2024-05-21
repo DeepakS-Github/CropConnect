@@ -8,7 +8,7 @@ export const ADD_PRODUCT_REVIEW = (productId) => `/reviews/${productId}`;
 
 // Product FAQs
 export const GET_PRODUCT_FAQS = (productId, page, faq_per_page) => `/faqs/product/${productId}?page=${page}&faq_per_page=${faq_per_page}`;
-export const ADD_PRODUCT_FAQ = `/faqs`;
+export const ADD_PRODUCT_FAQ = (productId) => `/faqs/${productId}`;
 
 // Auth 
 export const SIGNUP = (type) => `/auth/${type}/signup`;

@@ -1,9 +1,12 @@
 import React from "react";
 import useHttpClient from "../api/useHttpClient";
-import { GET_PRODUCT_FAQS } from "../../constants/apiEndpoints";
+import {
+  ADD_PRODUCT_FAQ,
+  GET_PRODUCT_FAQS,
+} from "../../constants/apiEndpoints";
 
 const useFaqs = () => {
-  const { sendRequest, isLoading } = useHttpClient();
+  const { sendRequest, sendAuthorizedRequest, isLoading } = useHttpClient();
 
   const getFaqs = async (productId, page, faq_per_page = 6) => {
     try {
@@ -16,7 +19,22 @@ const useFaqs = () => {
     }
   };
 
-  return { getFaqs, isLoading };
+  const addFaq = async (productId, faqData) => {
+    try {
+      await sendAuthorizedRequest(
+        "user",
+        ADD_PRODUCT_FAQ(productId),
+        "POST",
+        faqData
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  return { getFaqs, addFaq, isLoading };
 };
 
 export default useFaqs;

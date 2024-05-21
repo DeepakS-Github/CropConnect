@@ -4,7 +4,7 @@ const faqController = require('../controllers/faqController');
 const verifyAccessToken = require('../middlewares/verifyAccessToken');
 
 // Add FAQ
-router.post("/", verifyAccessToken, faqController.addFAQ);
+router.post("/:productId", verifyAccessToken, faqController.addFAQ);
 
 // Show Paginated FAQ by Product
 router.get("/product/:productId", faqController.showFAQsbyProduct);
