@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FaLocationDot } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { PiSmileySadLight } from "react-icons/pi";
 import { IoBagRemoveOutline } from "react-icons/io5";
-import { addProductData, addToCart, removeFromCart } from "../../redux/actions";
-import { store } from "../../redux/store";
+import { addToCart, removeFromCart } from "../../redux/actions";
 import Heading from "../../components/heading/Heading";
 import useProducts from "../../hooks/products/useProducts";
 import useStockUpdateSocket from "../../hooks/socket/useStockUpdateSocket";
+import TextSkeleton from "../../components/skeleton/TextSkeleton";
+import { CiNoWaitingSign } from "react-icons/ci";
 
 function ProductDetails() {
   const dispatch = useDispatch();
 
   const productData = useSelector((state) => state.productReducer);
   const cartData = useSelector((state) => state.cartReducer);
-  
-  const { getProductUserDashboardData } = useProducts();
+
+  const { getProductUserDashboardData, isLoading } = useProducts();
 
   const [productDashboardData, setProductDashboardData] = useState(productData);
   useStockUpdateSocket(setProductDashboardData);
-  
 
   const isProductInCart = cartData.some(
     (item) => item._id === productDashboardData._id
   );
-  
 
   const fetchProductDashboardData = async () => {
     let data = await getProductUserDashboardData(productData._id);
@@ -84,7 +82,11 @@ function ProductDetails() {
             paddingX="p-0"
           />
           <p className="leading-relaxed text-sm md:text-base">
-            {productDashboardData.description}
+            {isLoading ? (
+              <TextSkeleton noOfRows={12} />
+            ) : (
+              productDashboardData.description
+            )}
           </p>
 
           <div className="relative overflow-x-auto my-6">
@@ -95,8 +97,11 @@ function ProductDetails() {
                     Stocks Left
                   </th>
                   <td className="px-2 md:px-6 py-2 md:py-4 ">
-                    {productDashboardData.quantity}{" "}
-                    {productDashboardData.measuringUnit}
+                    {isLoading ? (
+                      <TextSkeleton noOfRows={1} />
+                    ) : (
+                      `${productDashboardData.quantity} ${productDashboardData.measuringUnit}`
+                    )}
                   </td>
                 </tr>
                 <tr className="bg-white border-b">
@@ -104,7 +109,11 @@ function ProductDetails() {
                     Shelf Life
                   </th>
                   <td className="px-2 md:px-6 py-2 md:py-4 ">
-                    {productDashboardData.shelfLife}
+                    {isLoading ? (
+                      <TextSkeleton noOfRows={1} />
+                    ) : (
+                      productDashboardData.shelfLife
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -158,10 +167,17 @@ function ProductDetails() {
             ) : (
               <button className="flex mb-4 mt-1  text-white bg-orange-600 border-0 py-4 px-12 focus:outline-none rounded">
                 {" "}
-                <span className="flex items-center text-lg h-full w-full justify-center">
-                  <PiSmileySadLight className=" text-3xl mr-2" />
-                  Out of Stock
-                </span>
+                {isLoading ? (
+                  <span className="flex items-center text-lg h-full w-full justify-center">
+                    <CiNoWaitingSign className=" text-3xl mr-2" />
+                    Please Wait
+                  </span>
+                ) : (
+                  <span className="flex items-center text-lg h-full w-full justify-center">
+                    <PiSmileySadLight className=" text-3xl mr-2" />
+                    Out of Stock
+                  </span>
+                )}
               </button>
             )}
           </div>
