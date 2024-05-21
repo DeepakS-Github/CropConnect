@@ -26,12 +26,6 @@ function OrderCartCard({item}) {
               </span>{" "}
               {item.minQty}{item.unit}
             </p>
-            <p className="text-sm  leading-none text-gray-800">
-              <span className=" text-gray-300">
-                Current Stock:{" "}
-              </span>{" "}
-              {item.stocksLeft}{item.unit}
-            </p>
           </div>
         </div>
         <div className="flex justify-between space-x-8 items-start w-full">

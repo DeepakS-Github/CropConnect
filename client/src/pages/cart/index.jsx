@@ -8,7 +8,6 @@ function Cart({ setOpenCart }) {
   const navigate = useNavigate();
 
   const cartData = useSelector((state) => state.cartReducer);
-  const userData = useSelector((state) => state.userReducer);
 
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -64,11 +63,13 @@ function Cart({ setOpenCart }) {
 
                     <div className="mt-8">
                       <div className="flow-root">
-                        <ul role="list" className="-my-6 divide-y divide-gray-200">
+                        <ul
+                          role="list"
+                          className="-my-6 divide-y divide-gray-200"
+                        >
                           {cartData.map((item, index) => (
                             <CartCard item={item} key={index} />
                           ))}
-                          {/* <!-- More products... --> */}
                         </ul>
                       </div>
                     </div>
@@ -83,20 +84,21 @@ function Cart({ setOpenCart }) {
                       Shipping and taxes calculated at checkout.
                     </p>
                     <div className="mt-6">
-                        <span className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 cursor-pointer" onClick={()=>{
-                          if(cartData.length===0){
-                            notify("Please add some products to cart first","info")
+                      <span
+                        className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 cursor-pointer"
+                        onClick={() => {
+                          if (cartData.length === 0) {
+                            notify(
+                              "Please add some products to cart first",
+                              "info"
+                            );
                           }
-                          else if(userData){
-                            navigate('/orders');
-                            setOpenCart(false);
-                          }
-                          else{
-                            notify("Please login as user first","info")
-                          }
-                        }}>
-                          Checkout
-                        </span>
+                          navigate("/orders");
+                          setOpenCart(false);
+                        }}
+                      >
+                        Checkout
+                      </span>
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>

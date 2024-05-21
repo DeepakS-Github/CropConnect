@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { postAPI } from "../../utils/api/postRequest";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/loading/Spinner";
-import { notify } from "../../utils/helper/notification";
 import LeafletMap from "../../components/map/LeafletMap";
 import useFaqs from "../../hooks/faqs/useFaqs";
 

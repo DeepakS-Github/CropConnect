@@ -5,6 +5,7 @@ const { decreaseProductStocks } = require("../services/productServices");
 const addOrder = async (req, res) => {
   try {
     req.body.userId = req.userId;
+    req.body.productId = req.params.productId;
 
     let data = Order(req.body);
     let result = await data.save();
