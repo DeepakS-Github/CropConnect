@@ -31,7 +31,7 @@ function FAQ() {
 
   return (
     <>
-      <div className="w-11/12 mx-auto flex flex-wrap">
+      <div className="w-11/12 mx-auto flex flex-wrap pb-12">
         <div className="container mx-auto">
           <section className=" text-gray-900">
             <Heading
