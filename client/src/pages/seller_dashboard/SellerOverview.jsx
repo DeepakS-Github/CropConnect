@@ -7,19 +7,19 @@ import { useSelector } from "react-redux";
 import AreaGraph from "../../components/graphs/AreaGraph";
 import BarGraph from "../../components/graphs/BarGraph";
 import GraphSkeleton from "../../components/skeleton/GraphSkeleton";
+import useGraph from "../../hooks/graph/useGraph";
+import EmptyStateText from "../../components/empty_state/EmptyStateText";
 
 function SellerOverview() {
-  const sellerData = useSelector((state) => state.sellerReducer);
+  const { visualizeSalesData, isLoading } = useGraph();
 
   const [dateVsSales, setDateVsSales] = useState([]);
   const [categoryVsSales, setCategoryVsSales] = useState([]);
-  const [isDataFetching, setIsDataFetching] = useState(true);
 
   const visualizeData = async () => {
-    let graphData = await getAPI(`graph/visualize/${sellerData._id}`);
+    let graphData = await visualizeSalesData();
     setDateVsSales(graphData.dateVsSales);
     setCategoryVsSales(graphData.categoryVsSales);
-    setIsDataFetching(false);
   };
 
   useEffect(() => {
@@ -30,8 +30,10 @@ function SellerOverview() {
     <>
       {/* Table Header */}
       <Heading text={"Visualize Your Sales"} textAlign="text-left" />
-      {isDataFetching ? (
+      {isLoading ? (
         <GraphSkeleton noOfBoxes={2} />
+      ) : dateVsSales.length === 0 ? (
+        <EmptyStateText text="No orders have been placed. Check back soon!" />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pb-4 px-4">
           <AreaGraph

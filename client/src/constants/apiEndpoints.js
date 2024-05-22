@@ -30,3 +30,10 @@ export const CROP_PREDICTOR = (
   rainfall
 ) =>
   `/ai/crops?soil=${soil}&altitude=${altitude}&temperature=${temperature}&humidity=${humidity}&rainfall=${rainfall}`;
+
+
+// Seller Graphs
+export const GRAPH = `/graph`;
+
+// Seller Orders
+export const GET_SELLER_ORDERS = `/order`

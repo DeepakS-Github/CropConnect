@@ -1,29 +1,23 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getAPI } from "../../utils/api/getRequest";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import TableSkeleton from "../../components/skeleton/TableSkeleton";
 import EmptyStateText from "../../components/empty_state/EmptyStateText";
 import Heading from "../../components/heading/Heading";
-import { useSelector } from "react-redux";
+import useOrder from "../../hooks/orders/useOrder";
 
 function SellerOrderRequests() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  const sellerData = useSelector((state) => state.sellerReducer);
-
-  const [isDataFetching, setIsDataFetching] = useState(true);
+  const { getSellerOrders, isLoading } = useOrder();
 
   // API to GET Data
   const getOrders = async () => {
-    let orderedData = await getAPI(
-      `order/get/${sellerData._id}`
-    );
+    let orderedData = await getSellerOrders();
     setData(orderedData);
-    setIsDataFetching(false);
   };
 
   useEffect(() => {
@@ -33,7 +27,7 @@ function SellerOrderRequests() {
   return (
     <>
       {/* Table Header */}
-      <Heading text={"All Orders"} textAlign="text-left"/>
+      <Heading text={"All Orders"} textAlign="text-left" />
       <div className="w-full flex flex-col gap-2 md:flex-row items-center justify-between px-4">
         <div className="mt-1 relative w-full  md:w-96">
           <input
@@ -47,7 +41,7 @@ function SellerOrderRequests() {
       {/* Table */}
       <div className="flex flex-col overflow-x-auto w-full">
         <div className="min-w-full py-2">
-          {isDataFetching ? (
+          {isLoading ? (
             <TableSkeleton />
           ) : data.length === 0 ? (
             <EmptyStateText text="It seems like your order request queue is currently empty. No worries, though! Keep an eye out for incoming orders—they'll pop up right here in your dashboard." />
@@ -62,7 +56,7 @@ function SellerOrderRequests() {
                     Image
                   </th>
                   <th scope="col" className="px-6 whitespace-nowrap py-4">
-                  Category
+                    Category
                   </th>
                   <th scope="col" className="px-6 whitespace-nowrap py-4">
                     Product Name

@@ -1,6 +1,6 @@
 import React from "react";
 import useHttpClient from "../api/useHttpClient";
-import { ORDER_PRODUCT } from "../../constants/apiEndpoints";
+import { GET_SELLER_ORDERS, ORDER_PRODUCT } from "../../constants/apiEndpoints";
 import { removeFromCart } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
@@ -21,7 +21,16 @@ const useOrder = () => {
     }
   };
 
-  return { orderProduct, isLoading };
+  const getSellerOrders = async () => {
+    try {
+      const res = await sendAuthorizedRequest("seller", GET_SELLER_ORDERS, "GET");
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { orderProduct, getSellerOrders, isLoading };
 };
 
 export default useOrder;

@@ -59,7 +59,7 @@ const useHttpClient = () => {
       return;
     }
 
-    await sendRequest(
+    return await sendRequest(
       url,
       method,
       body,
