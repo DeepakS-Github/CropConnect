@@ -13,7 +13,7 @@ router.get("/category/:category", productController.getProductDataByCategory);
 router.get("/dashboard/:productId", productController.getProductDashboardData);
 
 // Get Seller Dashboard Products Data
-router.get("/getProductData", verifyAccessToken, productController.getProductDataBySellerId);
+router.get("/seller", verifyAccessToken, productController.getProductDataBySellerId);
 
 // Get Product Data By Id
 router.get("/getProductDataById/:productId", productController.getProductDataById);

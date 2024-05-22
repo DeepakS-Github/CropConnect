@@ -46,19 +46,23 @@ const ansFAQ = async (req, res) => {
   }
 };
 
-
 // Show Paginated FAQs by Product ID
 const showFAQsbyProduct = async (req, res) => {
   try {
     let page = req.query.page;
     let faq_per_page = req.query.faq_per_page;
-    
+
     let skip = (page - 1) * faq_per_page;
 
     let data = await FAQ.find({
       productId: req.params.productId,
       isAnswered: true,
-    }).sort({ date: -1 }).skip(skip).limit(faq_per_page).select("question answer").lean();
+    })
+      .sort({ date: -1 })
+      .skip(skip)
+      .limit(faq_per_page)
+      .select("question answer")
+      .lean();
     res.status(200).send(data);
   } catch (error) {
     res.status(500).send({ message: "Something went wrong!" });
@@ -66,14 +70,18 @@ const showFAQsbyProduct = async (req, res) => {
   }
 };
 
-
 // Show FAQs by Seller ID
 const showFAQsbySeller = async (req, res) => {
   try {
+    let sellerId = req.sellerId;
+
     let data = await FAQ.find({
-      sellerId: req.sellerId,
+      sellerId: sellerId,
       isAnswered: req.query.isAnswered,
-    }).sort({ date: -1 }).selected("question answer").lean();
+    })
+      .sort({ date: -1 })
+      .select("question answer")
+      .lean();
     res.status(200).send(data);
   } catch (error) {
     res.status(500).send({ message: "Something went wrong!" });

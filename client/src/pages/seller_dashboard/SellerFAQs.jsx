@@ -10,12 +10,15 @@ import { addProductData } from "../../redux/actions";
 import FAQSellerSkeleton from "../../components/skeleton/FAQSellerSkeleton";
 import EmptyStateText from "../../components/empty_state/EmptyStateText";
 import Heading from "../../components/heading/Heading";
+import useFaqs from "../../hooks/faqs/useFaqs";
 
 function SellerFAQs() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const sellerData = useSelector((state) => state.sellerReducer);
+
+  const {getSellerFAQs, isLoading} = useFaqs();
 
   const [openFAQ, setOpenFAQ] = useState(null);
   const [answer, setAnswer] = useState("");
@@ -58,26 +61,13 @@ function SellerFAQs() {
     }
   };
 
-  const seeProduct = async (productId) => {
-    let data = await getAPI(`product/getProductDataById/${productId}`);
-
-    // console.log(data);
-
-    dispatch(addProductData(data));
-    navigate("/category/fruits/details");
-  };
-
   const getUnansweredFAQs = async () => {
-    let data = await getAPI(
-      `faq/showbyseller?sellerId=${sellerData._id}&isAnswered=false`
-    );
+    let data = await getSellerFAQs(false);
     setUnansweredFAQ(data);
   };
 
   const getAnsweredFAQs = async () => {
-    let data = await getAPI(
-      `faq/showbyseller?sellerId=${sellerData._id}&isAnswered=true`
-    );
+    let data = await getSellerFAQs(true);
     setAnsweredFAQ(data);
   };
 
@@ -118,7 +108,7 @@ function SellerFAQs() {
                   <button
                     className="text-xs flex justify-center items-center text-red-600 px-[6px] py-[1px] border border-red-600 rounded-full"
                     onClick={() => {
-                      seeProduct(data.productId);
+                      // seeProduct(data.productId);
                     }}
                   >
                     See Product
@@ -168,7 +158,7 @@ function SellerFAQs() {
                   <button
                     className="text-xs flex justify-center items-center text-green-700 px-[6px] py-[1px] border border-green-700 rounded-full"
                     onClick={() => {
-                      seeProduct(data.productId);
+                      // seeProduct(data.productId);
                     }}
                   >
                     See Product

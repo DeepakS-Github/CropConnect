@@ -12,6 +12,7 @@ function Navbar() {
   const [cookies, setCookie] = useCookies([
     "user_access_token",
     "seller_access_token",
+    "brandName"
   ]);
 
   const userDropdownRef = useRef();
@@ -126,6 +127,8 @@ function Navbar() {
                   <li
                     onClick={() => {
                       setCookie("seller_access_token", "", {expires: new Date(0) });
+                      setCookie("brandName", "", {expires: new Date(0) });
+
                       navigate("/");
                       notify("Seller Logged Out", "info");
                     }}

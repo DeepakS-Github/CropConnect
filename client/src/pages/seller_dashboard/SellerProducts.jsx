@@ -12,10 +12,15 @@ import { useNavigate } from "react-router-dom";
 import TableSkeleton from "../../components/skeleton/TableSkeleton";
 import EmptyStateText from "../../components/empty_state/EmptyStateText";
 import Heading from "../../components/heading/Heading";
+import useProducts from "../../hooks/products/useProducts";
+
 
 function SellerProducts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+
+  const { getSellerProducts, isLoading } = useProducts();
 
   const sellerData = useSelector((state) => state.sellerReducer);
 
@@ -44,9 +49,7 @@ function SellerProducts() {
 
   // API to GET Data
   const getProducts = async () => {
-    let productData = await getAPI(
-      `product/getProductData/${sellerData._id}`
-    );
+    let productData = await getSellerProducts();
     setData(productData);
     setIsDataFetching(false);
   };
@@ -59,7 +62,7 @@ function SellerProducts() {
   return (
     <>
       {/* Table Header */}
-      <Heading text={"Your Products"} textAlign="text-left"/>
+      <Heading text={"Your Products"} textAlign="text-left" />
       <div className="w-full flex flex-col gap-2 md:flex-row items-center justify-between px-4">
         <div className="mt-1 relative w-full  md:w-96">
           <input

@@ -3,6 +3,7 @@ import useHttpClient from "../api/useHttpClient";
 import {
   ADD_PRODUCT_FAQ,
   GET_PRODUCT_FAQS,
+  GET_SELLER_FAQS,
 } from "../../constants/apiEndpoints";
 
 const useFaqs = () => {
@@ -34,7 +35,20 @@ const useFaqs = () => {
     }
   };
 
-  return { getFaqs, addFaq, isLoading };
+  const getSellerFAQs = async (isAnswered) => {
+    try {
+      const faqs = await sendAuthorizedRequest(
+        "seller",
+        GET_SELLER_FAQS(isAnswered),
+        "GET"
+      );
+      return faqs.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { getFaqs, addFaq, getSellerFAQs, isLoading };
 };
 
 export default useFaqs;

@@ -22,7 +22,7 @@ const signup = async (req, res) => {
     const isMailSentSuccessful = await saveAndSendVerficationToken(
       result._id.toString(),
       type,
-      req.get('Origin')
+      req.get("Origin")
     );
     if (isMailSentSuccessful) {
       return res.status(200).send({
@@ -66,7 +66,9 @@ const login = async (req, res) => {
 
     let Model = authModelSelector(type, res);
 
-    let data = await Model.findOne({ email });
+    let data = await Model.findOne({ email }).select(
+      `password isVerified ${type === "seller" && "brandName"}`
+    );
 
     if (!data) {
       res.status(404);
@@ -104,6 +106,10 @@ const login = async (req, res) => {
         generateAccessToken(type, data._id.toString())
       );
 
+      if (type === "seller") {
+        setCookie(res, "brandName", data.brandName);
+      }
+
       return res.status(200).send({
         message: `${capitalizeFirstLetter(type)} login successful`,
       });
@@ -125,7 +131,9 @@ const verifyToken = async (req, res) => {
 
     const data = await Model.findOne({
       verificationToken: verificationToken,
-    }).select("isVerified verificationTokenExpiry");
+    }).select(
+      `isVerified verificationTokenExpiry ${type === "seller" && "brandName"}`
+    );
 
     if (data?.isVerified)
       return res.status(409).send({ message: "Account already verified" });
@@ -146,6 +154,10 @@ const verifyToken = async (req, res) => {
       `${type}_access_token`,
       generateAccessToken(type, data._id.toString())
     );
+
+    if (type === "seller") {
+      setCookie(res, "brandName", data.brandName);
+    }
 
     return res.status(200).send({ message: "Account verified successfully" });
   } catch (error) {

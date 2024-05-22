@@ -18,3 +18,6 @@ Left
 23. Modify the products api to first not fetch the product description, stocks left and shelf life, fetch it when user navigates to particular product page
 24. Improve client side code by custom hooks for api handeling
 25. add share product button
+
+
+there is some problem when mail is coming somewhere else, it is not saving the cookies after redirecting.

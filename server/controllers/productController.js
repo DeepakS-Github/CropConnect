@@ -4,12 +4,11 @@ const Review = require("../models/reviewSchema");
 // Add Product
 const addProduct = async (req, res) => {
   try {
-    console.log(req.sellerId);
     req.body.sellerId = req.sellerId;
 
     let data = Product(req.body);
     // console.log(data);
-    let result = await data.save();
+    await data.save();
     // console.log(result);
     res.status(200).send({ message: "Product Added Successfully" });
   } catch (error) {
