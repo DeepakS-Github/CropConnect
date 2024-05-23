@@ -39,9 +39,11 @@ const showOrdersBySeller = async (req, res) => {
       .populate({ path: "userId", select: "name email phoneNo" })
       .lean();
 
+    console.log(data);
+
     data = data.map((order) => {
       const totalPrice = order.orderQty * order.productId.pricePerUnit;
-      return { ...order.toObject(), totalAmount: totalPrice };
+      return { ...order, totalAmount: totalPrice };
     });
 
     res.status(200).send(data);
