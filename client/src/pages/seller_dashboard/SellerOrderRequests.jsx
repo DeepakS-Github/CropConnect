@@ -95,22 +95,22 @@ function SellerOrderRequests() {
                   >
                     <td className="px-6 py-4 font-medium">{index + 1}</td>
                     <td className="px-6 py-2">
-                      <img src={item.image} alt="Image" />
+                      <img src={item.productId.image} alt="Image" />
                     </td>
-                    <td className="px-6 py-4">{item.category}</td>
-                    <td className="px-6 py-4">{item.name}</td>
+                    <td className="px-6 py-4">{item.productId.category}</td>
+                    <td className="px-6 py-4">{item.productId.name}</td>
                     <td className="px-6 py-4">{item.date}</td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                      {item.customerName}
+                      {item.userId.name}
                     </td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                      {item.customerPhoneNo}
+                      {item.userId.contact}
                     </td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                      {item.customerEmail}
+                      {item.userId.email}
                     </td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                      {item.orderQty} {item.measuringUnit}
+                      {item.orderQty} {item.productId.measuringUnit}
                     </td>
                     <td
                       className=" px-6 py-4 max-w-sm cursor-pointer font-medium text-sky-700 hover:underline whitespace-nowrap"
@@ -124,7 +124,7 @@ function SellerOrderRequests() {
                       {item.orderLocation.longitude.toFixed(4)}
                     </td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
-                      Rs.{item.totalPrice}
+                      Rs.{item.totalAmount}
                     </td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal text-yellow-500 font-medium">
                       <span className="flex justify-center items-center">
