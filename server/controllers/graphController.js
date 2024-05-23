@@ -4,7 +4,10 @@ const orderServices = require("../services/orderServices");
 
 const getGraphData = async (req, res) => {
   try {
-    let orders = await Order.find({ sellerId: req.sellerId }).lean();
+    let orders = await Order.find({ sellerId: req.sellerId }).select("-sellerId -orderLocation -userId").populate({
+      path: "productId",
+      select: "category pricePerUnit",
+    }).lean();
     const dateVsSales = orderServices.getDateVsSales(orders);
     const categoryVsSales = orderServices.getCategoriesVsSales(orders);
     res
