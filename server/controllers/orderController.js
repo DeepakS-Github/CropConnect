@@ -36,7 +36,7 @@ const showOrdersBySeller = async (req, res) => {
         path: "productId",
         select: "image category name measuringUnit pricePerUnit",
       })
-      .populate({ path: "userId", select: "name email phoneNo" })
+      .populate({ path: "userId", select: "name email contact" })
       .lean();
 
     console.log(data);
