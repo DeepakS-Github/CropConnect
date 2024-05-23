@@ -18,7 +18,11 @@ const auth = require("./routes/auth");
 const PORT = 8080;
 const app = express();
 
-app.use(cors());
+app.use(cors([
+  "https://localhost:5173",
+  "https://cropconnect.lime.vercel.app",
+  // add other or fix this before another commit
+]));
 
 app.use(express.json());
 

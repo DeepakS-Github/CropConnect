@@ -13,13 +13,16 @@ function SellerContact() {
     productData.location.longitude,
   ];
 
+
   const [feedbackForm, setFeedbackForm] = useState({
     question: null,
-    sellerId: productData.sellerId,
   });
 
   const submitFeedbackForm = async () => {
-    const isSuccess = await addFaq(productData._id, feedbackForm);
+    const isSuccess = await addFaq(productData._id, {
+      ...feedbackForm,
+      sellerId: productData.sellerId,
+    });
     if (isSuccess) {
       setFeedbackForm((prev) => ({ ...prev, question: null }));
     }
@@ -65,6 +68,7 @@ function SellerContact() {
                   <textarea
                     name="message"
                     className="w-full bg-white rounded border border-gray-300 focus:border-green-600 focus:ring-2 focus:ring-green-50 h-40 md:h-64 text-base outline-none text-gray-700 py-2 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                    value={feedbackForm.question}
                     placeholder="Type your message here..."
                     required
                     onChange={(e) => {
