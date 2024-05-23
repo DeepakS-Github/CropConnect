@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { postAPI } from "../../utils/api/postRequest";
 import Spinner from "../../components/loading/Spinner";
 import { useSelector } from "react-redux";
 import { notify } from "../../utils/helper/notification";
@@ -15,7 +14,7 @@ function SellerProductOperation() {
   const { operation } = useParams();
   const [cookies] = useCookies(["brandName"]);
 
-  const { updateProduct, addProduct, isLoading: loading } = useProducts();
+  const { updateProduct, addProduct, isLoading, setIsLoading } = useProducts();
 
   const productEditData = useSelector(
     (state) => state.sellerEditProductReducer
@@ -88,7 +87,9 @@ function SellerProductOperation() {
       return;
     }
 
-    if (!loading) {
+    setIsLoading(true);
+
+    if (!isLoading) {
       // Todo: if the image is same in edit, do not use cloudinary, make separate hook for cloudinary
       let cloudResp = await uploadImageToCloudinary(imageToUpload);
 
@@ -131,7 +132,7 @@ function SellerProductOperation() {
                 className="text-base py-2 px-6 flex flex-row justify-center items-center text-white font-medium rounded-full cursor-pointer uppercase bg-sky-700"
                 type="submit"
               >
-                {loading ? <Spinner width="w-5" color="#ffffff" /> : null}
+                {isLoading ? <Spinner width="w-5" color="#ffffff" /> : null}
                 <span>{operation.toUpperCase()}</span>
               </button>
             </div>

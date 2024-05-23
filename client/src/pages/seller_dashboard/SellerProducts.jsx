@@ -20,9 +20,7 @@ function SellerProducts() {
   const navigate = useNavigate();
   
 
-  const { getSellerProducts, isLoading } = useProducts();
-
-  const sellerData = useSelector((state) => state.sellerReducer);
+  const { getSellerProducts, deleteProduct } = useProducts();
 
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -38,7 +36,7 @@ function SellerProducts() {
     if (!isDeleting) {
       setIndexOfProduct(index);
       setIsDeleting(true);
-      await deleteAPI(`product/delete/${productId}`);
+      await deleteProduct(productId);
       setIsDataUpdated(true);
       setIndexOfProduct(-1);
       setIsDeleting(false);

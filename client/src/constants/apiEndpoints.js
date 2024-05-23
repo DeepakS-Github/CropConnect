@@ -5,6 +5,7 @@ export const GET_PRODUCT_DASHBOARD_DATA = (productId) =>
 export const GET_SELLER_PRODUCTS = `/products/seller`;
 export const UPDATE_PRODUCT = (productId) => `/products/${productId}`;
 export const ADD_PRODUCT = `/products`;
+export const DELETE_PRODUCT = (productId) => `/products/${productId}`;
 
 // Product Reviews
 export const GET_PRODUCT_REVIEWS = (productId, page, review_per_page) =>

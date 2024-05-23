@@ -2,6 +2,7 @@ import React from "react";
 import useHttpClient from "../api/useHttpClient";
 import {
   ADD_PRODUCT,
+  DELETE_PRODUCT,
   GET_PRODUCTS_BY_CATEGORY,
   GET_PRODUCT_DASHBOARD_DATA,
   GET_SELLER_PRODUCTS,
@@ -11,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProductData } from "../../redux/actions";
 
 const useProducts = () => {
-  const { sendRequest, sendAuthorizedRequest, isLoading } = useHttpClient();
+  const { sendRequest, sendAuthorizedRequest, isLoading, setIsLoading } = useHttpClient();
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.productReducer);
 
@@ -77,13 +78,25 @@ const useProducts = () => {
     }
   };
 
+
+  const deleteProduct = async (productId) => {
+    try {
+      await sendAuthorizedRequest("seller", DELETE_PRODUCT(productId), "DELETE");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   return {
     getProductsByCategory,
     getProductUserDashboardData,
     getSellerProducts,
     updateProduct,
     addProduct,
+    deleteProduct,
     isLoading,
+    setIsLoading,
   };
 };
 
