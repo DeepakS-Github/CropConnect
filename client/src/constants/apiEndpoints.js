@@ -18,6 +18,7 @@ export const GET_PRODUCT_FAQS = (productId, page, faq_per_page) =>
 export const ADD_PRODUCT_FAQ = (productId) => `/faqs/${productId}`;
 export const GET_SELLER_FAQS = (isAnswered) =>
   `/faqs/showbyseller?isAnswered=${isAnswered}`;
+export const ANSWER_FAQ = (faqId) => `/faqs/${faqId}`;
 
 // Auth
 export const SIGNUP = (type) => `/auth/${type}/signup`;

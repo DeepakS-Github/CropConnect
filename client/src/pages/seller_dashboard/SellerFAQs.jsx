@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { getAPI } from "../../utils/api/getRequest";
 import { useDispatch, useSelector } from "react-redux";
-import { putAPI } from "../../utils/api/putRequest";
 import Spinner from "../../components/loading/Spinner";
-import { notify } from "../../utils/helper/notification";
 import { useNavigate } from "react-router-dom";
-import { addProductData } from "../../redux/actions";
 import FAQSellerSkeleton from "../../components/skeleton/FAQSellerSkeleton";
 import EmptyStateText from "../../components/empty_state/EmptyStateText";
 import Heading from "../../components/heading/Heading";
 import useFaqs from "../../hooks/faqs/useFaqs";
 
 function SellerFAQs() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const sellerData = useSelector((state) => state.sellerReducer);
-
-  const {getSellerFAQs, isLoading} = useFaqs();
+  const { getSellerFAQs, ansFAQ, isLoading } = useFaqs();
 
   const [openFAQ, setOpenFAQ] = useState(null);
   const [answer, setAnswer] = useState("");
@@ -31,34 +23,22 @@ function SellerFAQs() {
 
   const submitAnswer = async (faqId) => {
     setLoading(true);
-    if (answer === "") {
-      notify("Please answer something", "warn");
-      setLoading(false);
-      return;
-    }
-    try {
-      let statusCode = await putAPI(`faq/ansfaq/${faqId}`, {
-        answer: answer,
+
+    let isSuccess = await ansFAQ(faqId, answer);
+    if (isSuccess) {
+      let faq;
+      unansweredFAQ.map((data, index) => {
+        if (data._id === faqId) {
+          faq = data;
+          faq["answer"] = answer;
+          unansweredFAQ.splice(index, 1);
+        }
       });
-      if (statusCode === 200) {
-        let faq;
-        unansweredFAQ.map((data, index) => {
-          if (data._id === faqId) {
-            faq = data;
-            faq["answer"] = answer;
-            unansweredFAQ.splice(index, 1);
-          }
-        });
-        setAnsweredFAQ([...answeredFAQ, faq]);
-        setOpenFAQ(null);
-        setAnswer("");
-      }
-      setLoading(false);
-    } catch (error) {
-      // Handle error if the API call fails
-      console.error("Error posting data:", error);
-      setLoading(false);
+      setAnsweredFAQ([...answeredFAQ, faq]);
+      setOpenFAQ(null);
+      setAnswer("");
     }
+    setLoading(false);
   };
 
   const getUnansweredFAQs = async () => {
@@ -83,15 +63,15 @@ function SellerFAQs() {
 
   return (
     <>
-       <Heading text={"Your FAQs"} textAlign="text-left"/>
+      <Heading text={"Your FAQs"} textAlign="text-left" />
       {isDataFetching ? (
         <FAQSellerSkeleton />
       ) : unansweredFAQ.length === 0 && answeredFAQ.length === 0 ? (
         <EmptyStateText text="Looks like your FAQ section is empty. No questions yet! But don't worry, once users start asking about your products, you'll find them here." />
       ) : (
         <div className="px-4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-          {unansweredFAQ.map((data) => (
-            <div className="flex flex-row gap-4 bg-gray-100 rounded p-4">
+          {unansweredFAQ.map((data, index) => (
+            <div key={index} className="flex flex-row gap-4 bg-gray-100 rounded p-4">
               <div className="w-8 h-8 flex justify-center">
                 <MdOutlineKeyboardArrowDown
                   className={`text-3xl cursor-pointer text-red-700 p-[1px] bg-red-200 rounded-sm ${
@@ -131,9 +111,7 @@ function SellerFAQs() {
                       submitAnswer(data._id);
                     }}
                   >
-                    {loading && (
-                        <Spinner width="w-5" color="#ffffff" />
-                    )}
+                    {loading && <Spinner width="w-5" color="#ffffff" />}
                     Submit
                   </button>
                 </span>
