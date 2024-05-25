@@ -1,11 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getAPI } from "../../utils/api/getRequest";
-import { deleteAPI } from "../../utils/api/deleteRequest";
 import Spinner from "../../components/loading/Spinner";
 import { notify } from "../../utils/helper/notification";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editProductDetails } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

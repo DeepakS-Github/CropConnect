@@ -1,14 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import OrderCartCard from "../../components/orders/OrderCartCard";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { postAPI } from "../../utils/api/postRequest";
-import { removeFromCart } from "../../redux/actions";
-import { notify } from "../../utils/helper/notification";
 import getCurrentDateTime from "../../utils/helper/getCurrentDateTime";
-import Spinner from "../../components/loading/Spinner";
 import Heading from "../../components/heading/Heading";
-import useOrder from "../../hooks/orders/useOrder";
 import CustomerLocationSelector from "./CustomerLocationSelector";
 import OrderSummary from "./OrderSummary";
 import PaymentCard from "./PaymentCard";

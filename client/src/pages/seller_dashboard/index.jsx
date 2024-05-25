@@ -8,13 +8,12 @@ import SellerProducts from "./SellerProducts";
 import SellerOrderRequests from "./SellerOrderRequests";
 import SellerFAQs from "./SellerFAQs";
 import { TbLogout2 } from "react-icons/tb";
-import { addSellerData } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../utils/helper/notification";
-import { useDispatch } from "react-redux";
 import SellerOverview from "./SellerOverview";
 import { SiGooglebard } from "react-icons/si";
 import CropSenseAI from "./CropSenseAI";
+import {useCookies} from "react-cookie";
 
 
 const links = [
@@ -47,7 +46,7 @@ const links = [
 
 const NewSellerDashboard = () => {
   const navigate = useNavigate();
-const dispatch = useDispatch();
+  const [cookies, setCookie] = useCookies(["seller_access_token", "brandName"]);
 
   const [selected, setSelected] = useState(0);
   
@@ -71,7 +70,9 @@ const dispatch = useDispatch();
             text="Logout"
             icon={<TbLogout2 />}
             onClick={() => {
-              dispatch(addSellerData(null));
+              setCookie("seller_access_token", "", {expires: new Date(0) });
+              setCookie("brandName", "", {expires: new Date(0) });
+
               navigate("/");
               notify("Seller Logged Out", "info");
             }}
