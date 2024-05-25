@@ -27,7 +27,6 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/account/:type" element={<LoginAndSignup />} />
             <Route exact path="/:type/verify/:token" element={<Verify />} />
-            <Route exact path="/products" element={<Product />} />
             <Route
               exact
               path="/sellerdashboard"

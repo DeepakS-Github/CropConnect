@@ -30,7 +30,6 @@ function ProductCard({ data }) {
             BRAND: {data.brand}
           </h2>
           <p className="mb-1 text-sm md:text-base text-red-500 font-semibold">
-            <i className="fa-solid fa-indian-rupee-sign text-red-500 mr-1"></i>
             Rs.{data.pricePerUnit}/{data.measuringUnit}
           </p>
           <h2 className="text-xs title-font font-medium text-gray-400 mb-2">
