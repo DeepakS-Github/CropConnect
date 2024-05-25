@@ -1,15 +1,34 @@
 const Product = require("../models/productSchema");
 const Review = require("../models/reviewSchema");
+const { uploadImageToCloudinary } = require("../services/cloudinaryServices");
 
 // Add Product
 const addProduct = async (req, res) => {
   try {
     req.body.sellerId = req.sellerId;
 
-    let data = Product(req.body);
-    // console.log(data);
-    await data.save();
-    // console.log(result);
+    const uploadedImage = req.file;
+
+    console.log(uploadedImage);
+
+    if (!uploadedImage) {
+      return res.status(400).json({ message: "No image uploaded" });
+    }
+
+    try {
+      let cloudRes = await uploadImageToCloudinary(uploadedImage.buffer);
+      req.body.image = cloudRes.secure_url;
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message:
+          "There was a problem communicating with Cloudinary during the image upload.",
+      });
+    }
+
+    let product = Product(req.body);
+    await product.save();
+
     res.status(200).send({ message: "Product Added Successfully" });
   } catch (error) {
     console.log(error);
@@ -21,7 +40,9 @@ const addProduct = async (req, res) => {
 const getProductDataByCategory = async (req, res) => {
   try {
     let data = await Product.find({ category: req.params.category })
-      .select("name image brand measuringUnit pricePerUnit minimumOrderQuantity location")
+      .select(
+        "name image brand measuringUnit pricePerUnit minimumOrderQuantity location"
+      )
       .lean();
     res.status(200).send(data);
   } catch (error) {
@@ -30,19 +51,18 @@ const getProductDataByCategory = async (req, res) => {
   }
 };
 
-
 // Get Product Dashboard Data
 const getProductDashboardData = async (req, res) => {
   try {
-    let data = await Product.findById(req.params.productId).select("sellerId shelfLife quantity description").lean();
+    let data = await Product.findById(req.params.productId)
+      .select("sellerId shelfLife quantity description")
+      .lean();
     res.status(200).send(data);
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Something went wrong!" });
   }
 };
-
-
 
 // Get Product Stocks By Id
 const getProductStocksById = async (req, res) => {
@@ -79,12 +99,9 @@ const getProductDataById = async (req, res) => {
   }
 };
 
-
-
 // Delete Product Data By Id
 const deleteProduct = async (req, res) => {
   try {
-
     const sellerId = req.sellerId;
 
     let product = await Product.findById(req.params.productId);
@@ -93,8 +110,10 @@ const deleteProduct = async (req, res) => {
       return res.status(404).send({ message: "Product not found" });
     }
 
-    if(product.sellerId != sellerId){
-      return res.status(403).send({ message: "You are not authorized to delete this product" });
+    if (product.sellerId != sellerId) {
+      return res
+        .status(403)
+        .send({ message: "You are not authorized to delete this product" });
     }
 
     await Product.findByIdAndDelete(req.params.productId);
@@ -122,6 +141,23 @@ const updateProduct = async (req, res) => {
     const sellerId = req.sellerId;
     console.log(sellerId);
 
+    const uploadedImage = req.file;
+
+    console.log(uploadedImage);
+
+    if (uploadedImage) {
+      try {
+        let cloudRes = await uploadImageToCloudinary(uploadedImage.buffer);
+        req.body.image = cloudRes.secure_url;
+      } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          message:
+            "There was a problem communicating with Cloudinary during the image upload.",
+        });
+      }
+    }
+
     let product = await Product.findById(req.params.productId);
 
     if (!product) {
@@ -135,7 +171,18 @@ const updateProduct = async (req, res) => {
     }
     const updatedFields = {};
 
-    const { image, name, category, description, pricePerUnit, measuringUnit, minimumOrderQuantity, location, quantity, shelfLife } = req.body;
+    const {
+      image,
+      name,
+      category,
+      description,
+      pricePerUnit,
+      measuringUnit,
+      minimumOrderQuantity,
+      location,
+      quantity,
+      shelfLife,
+    } = req.body;
 
     if (image && image !== product.image) {
       updatedFields.image = image;
@@ -155,17 +202,24 @@ const updateProduct = async (req, res) => {
     if (measuringUnit && measuringUnit !== product.measuringUnit) {
       updatedFields.measuringUnit = measuringUnit;
     }
-    if (minimumOrderQuantity && minimumOrderQuantity !== product.minimumOrderQuantity) {
+    if (
+      minimumOrderQuantity &&
+      minimumOrderQuantity !== product.minimumOrderQuantity
+    ) {
       updatedFields.minimumOrderQuantity = minimumOrderQuantity;
     }
     if (
-      location && location.latitude && location.longitude &&
+      location &&
+      location.latitude &&
+      location.longitude &&
       location.latitude !== product.location.latitude
     ) {
       updatedFields["location.latitude"] = location.latitude;
     }
     if (
-      location && location.latitude && location.longitude &&
+      location &&
+      location.latitude &&
+      location.longitude &&
       location.longitude !== product.location.longitude
     ) {
       updatedFields["location.longitude"] = location.longitude;
@@ -177,12 +231,11 @@ const updateProduct = async (req, res) => {
       updatedFields.shelfLife = shelfLife;
     }
 
-    console.log("Updated Fields: ", updatedFields)
+    console.log("Updated Fields: ", updatedFields);
 
     if (Object.keys(updatedFields).length === 0) {
       return res.status(400).send({ message: "No fields to update" });
     }
-
 
     await Product.findByIdAndUpdate(req.params.productId, updatedFields);
 
@@ -203,5 +256,5 @@ module.exports = {
   deleteProduct,
   updateProduct,
   getProductStocksById,
-  getProductDashboardData
+  getProductDashboardData,
 };
