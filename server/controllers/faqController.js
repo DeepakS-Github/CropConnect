@@ -80,7 +80,7 @@ const showFAQsbySeller = async (req, res) => {
       isAnswered: req.query.isAnswered,
     })
       .sort({ date: -1 })
-      .select("question answer")
+      .select("question answer productId")
       .lean();
     res.status(200).send(data);
   } catch (error) {

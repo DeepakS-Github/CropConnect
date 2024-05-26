@@ -18,7 +18,7 @@ function FAQ() {
 
   useEffect(() => {
     const getReview = async () => {
-      let data = await getFaqs(productData._id, currentPage);
+      let data = await getFaqs(productData?._id, currentPage);
       if (data.length === 0) {
         setReachedEnd(true);
       }

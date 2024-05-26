@@ -41,7 +41,7 @@ const getProductDataByCategory = async (req, res) => {
   try {
     let data = await Product.find({ category: req.params.category })
       .select(
-        "name image brand measuringUnit pricePerUnit minimumOrderQuantity location"
+        "name image brand measuringUnit pricePerUnit minimumOrderQuantity location sellerId"
       )
       .lean();
     res.status(200).send(data);
@@ -55,7 +55,7 @@ const getProductDataByCategory = async (req, res) => {
 const getProductDashboardData = async (req, res) => {
   try {
     let data = await Product.findById(req.params.productId)
-      .select("sellerId shelfLife quantity description")
+      .select("shelfLife quantity description")
       .lean();
     res.status(200).send(data);
   } catch (error) {
@@ -248,6 +248,26 @@ const updateProduct = async (req, res) => {
   }
 };
 
+const getMainProductDataById = async (req, res) => {
+  try {
+    let product = await Product.findById(req.params.productId)
+      .select(
+        "name image brand measuringUnit pricePerUnit minimumOrderQuantity location sellerId"
+      )
+      .lean();
+
+    if (!product) {
+      return res.status(404).send({ message: "Product not found" });
+    }
+
+    res.status(200).send(product);
+    // console.log(data);
+  } catch (error) {
+    res.status(500).send("Something went wrong!");
+    console.log(error);
+  }
+};
+
 module.exports = {
   addProduct,
   getProductDataByCategory,
@@ -257,4 +277,5 @@ module.exports = {
   updateProduct,
   getProductStocksById,
   getProductDashboardData,
+  getMainProductDataById,
 };

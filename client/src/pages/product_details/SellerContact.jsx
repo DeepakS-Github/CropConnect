@@ -9,8 +9,8 @@ function SellerContact() {
   const { addFaq, isLoading } = useFaqs();
 
   const position = [
-    productData.location.latitude,
-    productData.location.longitude,
+    productData?.location?.latitude,
+    productData?.location?.longitude,
   ];
 
 
@@ -19,9 +19,9 @@ function SellerContact() {
   });
 
   const submitFeedbackForm = async () => {
-    const isSuccess = await addFaq(productData._id, {
+    const isSuccess = await addFaq(productData?._id, {
       ...feedbackForm,
-      sellerId: productData.sellerId,
+      sellerId: productData?.sellerId,
     });
     if (isSuccess) {
       setFeedbackForm((prev) => ({ ...prev, question: null }));

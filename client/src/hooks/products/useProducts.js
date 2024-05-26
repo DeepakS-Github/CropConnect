@@ -3,6 +3,7 @@ import useHttpClient from "../api/useHttpClient";
 import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
+  GET_MAIN_PRODUCT_DASHBOARD_DATA,
   GET_PRODUCTS_BY_CATEGORY,
   GET_PRODUCT_DASHBOARD_DATA,
   GET_SELLER_PRODUCTS,
@@ -32,12 +33,12 @@ const useProducts = () => {
         GET_PRODUCT_DASHBOARD_DATA(productId)
       );
 
-      dispatch(
-        addProductData({
-          ...productData,
-          sellerId: dashProductData.data.sellerId,
-        })
-      );
+      // dispatch(
+      //   addProductData({
+      //     ...productData,
+      //     sellerId: dashProductData.data.sellerId,
+      //   })
+      // );
 
       return dashProductData.data;
     } catch (error) {
@@ -96,6 +97,25 @@ const useProducts = () => {
     }
   };
 
+  const getMainProductData = async (productId) => {
+    try {
+      const dashMainProductData = await sendRequest(
+        GET_MAIN_PRODUCT_DASHBOARD_DATA(productId)
+      );
+
+      console.log(dashMainProductData.data);
+
+      dispatch(
+        addProductData({
+          ...productData,
+          ...dashMainProductData.data,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     getProductsByCategory,
     getProductUserDashboardData,
@@ -103,6 +123,7 @@ const useProducts = () => {
     updateProduct,
     addProduct,
     deleteProduct,
+    getMainProductData,
     isLoading,
     setIsLoading,
   };

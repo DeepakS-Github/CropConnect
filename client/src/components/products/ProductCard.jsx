@@ -4,17 +4,21 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function ProductCard({ data }) {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const goToDetailsPage = () => {
     dispatch(addProductData(data));
-    navigate('details');
-  }
+    navigate(`details/${data._id}`);
+  };
 
   return (
-    <div className="w-full cursor-pointer" onClick={()=>{goToDetailsPage()}}>
+    <div
+      className="w-full cursor-pointer"
+      onClick={() => {
+        goToDetailsPage();
+      }}
+    >
       <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
         <img
           className="lg:h-48 h-28 w-full object-cover object-center"

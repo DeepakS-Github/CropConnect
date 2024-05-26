@@ -45,7 +45,7 @@ function App() {
             <Route exact path="/category/:type" element={<Product />} />
             <Route
               exact
-              path="/category/:type/details"
+              path="/category/:type/details/:productId"
               element={<ProductDashboard />}
             />
             <Route exact path="/orders" element={<Order />} />

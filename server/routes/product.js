@@ -53,4 +53,8 @@ router.put(
   productController.updateProduct
 );
 
+// Get main product data by id 
+router.get("/mainProductData/:productId", productController.getMainProductDataById);
+
+
 module.exports = router;
