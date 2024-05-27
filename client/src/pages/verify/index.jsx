@@ -124,7 +124,7 @@ const Verify = () => {
           </div>
         </div>
       </div>{" "}
-      <div className="relative w-full z-0 h-full bg-blue-200 bg-[url('https://source.unsplash.com/JgOeRuGD_Y4')] bg-cover shadow"></div>
+      <div className="relative w-full z-0 h-full bg-blue-200 bg-[url('/images/verify-bg/verify.webp')] bg-cover shadow"></div>
     </section>
   );
 };

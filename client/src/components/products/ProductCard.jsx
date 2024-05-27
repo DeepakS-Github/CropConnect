@@ -22,7 +22,6 @@ function ProductCard({ data }) {
       <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
         <img
           className="lg:h-48 h-28 w-full object-cover object-center"
-          // src={"https://source.unsplash.com/random/?rice"}
           src={data.image}
           alt="product"
         />
