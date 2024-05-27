@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Spinner from "../../components/loading/Spinner";
 import { useSelector } from "react-redux";
 import { notify } from "../../utils/helper/notification";
-import { uploadImageToCloudinary } from "../../utils/helper/uploadImageToCloudinary";
 import { MdCancel } from "react-icons/md";
 import LeafletMap from "../../components/map/LeafletMap";
 import { useParams } from "react-router-dom";
@@ -22,14 +21,6 @@ function SellerProductOperation() {
 
   const [renderMap, setRenderMap] = useState(false);
 
-  const [image, setImage] = useState(
-    operation === "edit" ? productEditData.image : null
-  );
-
-  const [imageToUpload, setImageToUpload] = useState(
-    operation === "edit" ? productEditData.image : null
-  );
-
   const [lat, setLat] = useState(0);
   const [long, setLong] = useState(0);
 
@@ -40,15 +31,6 @@ function SellerProductOperation() {
       setRenderMap(true);
     }
   }, [productEditData]);
-
-  const handleImageUpload = async (e) => {
-    const uploadedImage = e.target.files[0];
-    setImageToUpload(() => uploadedImage);
-    if (uploadedImage) {
-      const imageUrl = URL.createObjectURL(uploadedImage);
-      setImage(() => imageUrl);
-    }
-  };
 
   const [formData, setFormData] = useState({
     image: operation === "edit" ? productEditData.image : null,
@@ -77,7 +59,7 @@ function SellerProductOperation() {
   }, [lat, long]);
 
   const handleSubmit = async () => {
-    if (!image) {
+    if (!formData.image) {
       notify("Please upload product image", "info");
       return;
     }
@@ -89,28 +71,13 @@ function SellerProductOperation() {
 
     setIsLoading(true);
 
-    if (!isLoading) {
-      // Todo: if the image is same in edit, do not use cloudinary, make separate hook for cloudinary
-      let cloudResp = await uploadImageToCloudinary(imageToUpload);
-
-      console.log("cloud: ", cloudResp);
-
-      if (cloudResp !== "error") {
-        if (operation === "add") {
-          await addProduct({
-            ...formData,
-            image: cloudResp,
-          });
-        } else {
-          await updateProduct(productEditData._id, {
-            ...formData,
-            image: cloudResp,
-          });
-        }
-      }
+    if (operation === "add") {
+      await addProduct(formData);
     } else {
-      notify("Please wait", "info");
+      await updateProduct(productEditData._id, formData);
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -142,17 +109,24 @@ function SellerProductOperation() {
                   <div className="col-span-6">
                     <div className="flex items-center justify-center w-full">
                       <label className="flex flex-col relative items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-10">
-                        {image ? (
+                        {formData.image ? (
                           <span>
                             <img
-                              src={image}
+                              src={
+                                typeof formData.image === "string"
+                                  ? formData.image
+                                  : URL.createObjectURL(formData.image)
+                              }
                               className="w-full h-full bg-blue-300"
                             />
                             <MdCancel
                               className="text-4xl absolute top-0 right-0 translate-x-[50%] -translate-y-[50%]"
                               onClick={(e) => {
                                 e.preventDefault();
-                                setImage(null);
+                                setFormData({
+                                  ...formData,
+                                  image: null,
+                                });
                               }}
                             />
                           </span>
@@ -187,8 +161,15 @@ function SellerProductOperation() {
 
                         <input
                           type="file"
+                          accept="image/*"
                           className="hidden"
-                          onChange={(e) => handleImageUpload(e)}
+                          onChange={(e) => {
+                            const uploadedImage = e.target.files[0];
+                            setFormData({
+                              ...formData,
+                              image: uploadedImage,
+                            });
+                          }}
                         />
                       </label>
                     </div>

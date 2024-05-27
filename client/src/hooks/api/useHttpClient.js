@@ -51,12 +51,12 @@ const useHttpClient = () => {
   ) => {
     if (requestType === "user" && !cookies.user_access_token) {
       notify("Please login as user to continue", "info");
-      return;
+      return false;
     }
 
     if (requestType === "seller" && !cookies.seller_access_token) {
       notify("Please login as seller to continue", "info");
-      return;
+      return false;
     }
 
     return await sendRequest(

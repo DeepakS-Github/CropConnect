@@ -11,10 +11,17 @@ const useOrder = () => {
 
   const orderProduct = async (orderData) => {
     try {
-      await sendAuthorizedRequest("user", ORDER_PRODUCT, "POST", orderData);
+      let res = await sendAuthorizedRequest(
+        "user",
+        ORDER_PRODUCT,
+        "POST",
+        orderData
+      );
 
-      for (const item of orderData) {
-        dispatch(removeFromCart(item.productId));
+      if (res !== false) {
+        for (const item of orderData) {
+          dispatch(removeFromCart(item.productId));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -23,7 +30,11 @@ const useOrder = () => {
 
   const getSellerOrders = async () => {
     try {
-      const res = await sendAuthorizedRequest("seller", GET_SELLER_ORDERS, "GET");
+      const res = await sendAuthorizedRequest(
+        "seller",
+        GET_SELLER_ORDERS,
+        "GET"
+      );
       return res.data;
     } catch (error) {
       console.log(error);

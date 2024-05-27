@@ -8,7 +8,7 @@ https://crop-connect-lime.vercel.app/
 
 ## Features
 
-1. **Dual Interfaces**: CropConnect provides separate interfaces for consumers and sellers, accessible through the navbar with options for SignUp and SignIn.
+1. **Dual Interfaces**: CropConnect provides separate interfaces for consumers and sellers, accessible through the navbar with options for SignUp and SignIn including email verification for the created account.
 
 ***Seller Side***
 
@@ -67,12 +67,10 @@ To run CropConnect locally, ensure you have NodeJS and MongoDB installed. Follow
 2. **Frontend Setup**:
     - Navigate to the CropConnect Frontend folder.
     - Create a `.env` file in the root directory of the Frontend folder.
-    - Add the following environment variables to the `.env` file:
+    - Add the following environment variables to the client `.env` file:
         ```plaintext
         VITE_CROPCONNECT_API = "https://cropconnect-backend.vercel.app/" 
         # Replace if you want to run the Backend local server to https://localhost:8080/
-        
-        VITE_CLOUDINARY_CLOUD_NAME = {your cloudinary cloud name}
         ```
     - To run the Frontend:
         ```bash
@@ -83,10 +81,16 @@ To run CropConnect locally, ensure you have NodeJS and MongoDB installed. Follow
 3. **Backend Setup**:
     - Navigate to the CropConnect Backend folder.
     - Create a `.env` file in the root directory of the Backend folder.
-    - Add your MongoDB URL to the `.env` file:
+    - Add the following environment variables to the server `.env` file:
         ```plaintext
         MONGO_DB_URL = {your mongodb url}
         GEMINI_API_KEY = {your gemini api key}
+        GMAIL_ID = {your gmail id}
+        APP_PASSWORD = {your google account app password}
+        JWT_SECRET = {jwt secret}
+        CLOUDINARY_CLOUD_NAME = {cloudinary clound name}
+        CLOUDINARY_API_KEY = {cloudinary api key}
+        CLOUDINARY_API_SECRET = {cloudinary api secret}
         ```
     - To run the Backend:
         ```bash

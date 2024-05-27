@@ -31,7 +31,7 @@ const Verify = () => {
   useEffect(() => {
     let time = timeLeft;
     if (port === 200 || port === 409) {
-      setInterval(() => {
+      const intervalId = setInterval(() => {
         if (time === 0) {
           navigate(`/`);
           clearInterval(intervalId);

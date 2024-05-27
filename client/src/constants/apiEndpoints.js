@@ -6,6 +6,7 @@ export const GET_SELLER_PRODUCTS = `/products/seller`;
 export const UPDATE_PRODUCT = (productId) => `/products/${productId}`;
 export const ADD_PRODUCT = `/products`;
 export const DELETE_PRODUCT = (productId) => `/products/${productId}`;
+export const GET_MAIN_PRODUCT_DASHBOARD_DATA = (productId) => `/products/mainProductData/${productId}`;
 
 // Product Reviews
 export const GET_PRODUCT_REVIEWS = (productId, page, review_per_page) =>
@@ -18,6 +19,7 @@ export const GET_PRODUCT_FAQS = (productId, page, faq_per_page) =>
 export const ADD_PRODUCT_FAQ = (productId) => `/faqs/${productId}`;
 export const GET_SELLER_FAQS = (isAnswered) =>
   `/faqs/showbyseller?isAnswered=${isAnswered}`;
+export const ANSWER_FAQ = (faqId) => `/faqs/${faqId}`;
 
 // Auth
 export const SIGNUP = (type) => `/auth/${type}/signup`;

@@ -22,7 +22,7 @@ function ProductReviews() {
 
   useEffect(() => {
     const getReview = async () => {
-      let data = await getReviews(productData._id, currentPage);
+      let data = await getReviews(productData?._id, currentPage);
       if (data.length === 0) {
         setReachedEnd(true);
       }
