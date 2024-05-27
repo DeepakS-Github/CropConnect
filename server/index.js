@@ -19,7 +19,7 @@ const PORT = 8080;
 const app = express();
 
 app.use(cors({
-  origin:["https://localhost:5173", "https://crop-connect-lime.vercel.app"],
+  origin:["https://localhost:5173", "https://crop-connect-lime.vercel.app", "https://crop-connect-git-dev-deepaksgithubs-projects.vercel.app"],
   credentials:true
 }));
 
