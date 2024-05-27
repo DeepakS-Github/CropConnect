@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const faqController = require('../controllers/faqController');
+const verifyAccessToken = require('../middlewares/verifyAccessToken');
 
 // Add FAQ
-router.post("/add", faqController.addFAQ);
+router.post("/:productId", verifyAccessToken, faqController.addFAQ);
 
 // Show Paginated FAQ by Product
-router.get("/showbyproduct", faqController.showFAQsbyProduct);
+router.get("/product/:productId", faqController.showFAQsbyProduct);
 
-// Show Paginated FAQ by Seller
-router.get("/showbyseller", faqController.showFAQsbySeller);
+// Show FAQ by Seller
+router.get("/showbyseller", verifyAccessToken, faqController.showFAQsbySeller);
 
 // Answering the FAQ
-router.put("/ansfaq/:faqId", faqController.ansFAQ);
+router.patch("/:faqId", faqController.ansFAQ);
 
 module.exports = router;

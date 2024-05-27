@@ -1,23 +1,24 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getAPI } from "../../utils/api/getRequest";
-import { deleteAPI } from "../../utils/api/deleteRequest";
 import Spinner from "../../components/loading/Spinner";
 import { notify } from "../../utils/helper/notification";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editProductDetails } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import TableSkeleton from "../../components/skeleton/TableSkeleton";
 import EmptyStateText from "../../components/empty_state/EmptyStateText";
 import Heading from "../../components/heading/Heading";
+import useProducts from "../../hooks/products/useProducts";
+
 
 function SellerProducts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
 
-  const sellerData = useSelector((state) => state.sellerReducer);
+  const { getSellerProducts, deleteProduct } = useProducts();
 
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -33,7 +34,7 @@ function SellerProducts() {
     if (!isDeleting) {
       setIndexOfProduct(index);
       setIsDeleting(true);
-      await deleteAPI(`product/delete/${productId}`);
+      await deleteProduct(productId);
       setIsDataUpdated(true);
       setIndexOfProduct(-1);
       setIsDeleting(false);
@@ -44,9 +45,7 @@ function SellerProducts() {
 
   // API to GET Data
   const getProducts = async () => {
-    let productData = await getAPI(
-      `product/getProductData/${sellerData._id}`
-    );
+    let productData = await getSellerProducts();
     setData(productData);
     setIsDataFetching(false);
   };
@@ -59,7 +58,7 @@ function SellerProducts() {
   return (
     <>
       {/* Table Header */}
-      <Heading text={"Your Products"} textAlign="text-left"/>
+      <Heading text={"Your Products"} textAlign="text-left" />
       <div className="w-full flex flex-col gap-2 md:flex-row items-center justify-between px-4">
         <div className="mt-1 relative w-full  md:w-96">
           <input

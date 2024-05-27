@@ -1,102 +1,113 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FaLocationDot } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { PiSmileySadLight } from "react-icons/pi";
 import { IoBagRemoveOutline } from "react-icons/io5";
-import { addProductData, addToCart, removeFromCart } from "../../redux/actions";
-import { store } from "../../redux/store";
+import { addToCart, removeFromCart } from "../../redux/actions";
 import Heading from "../../components/heading/Heading";
-import io from "socket.io-client";
-import { getAPI } from "../../utils/api/getRequest";
+import useProducts from "../../hooks/products/useProducts";
+import useStockUpdateSocket from "../../hooks/socket/useStockUpdateSocket";
+import TextSkeleton from "../../components/skeleton/TextSkeleton";
+import { CiNoWaitingSign } from "react-icons/ci";
+import { useParams } from "react-router-dom";
+import BoxSkeleton from "../../components/skeleton/BoxSkeleton";
 
 function ProductDetails() {
   const dispatch = useDispatch();
+  const { productId } = useParams();
 
   const productData = useSelector((state) => state.productReducer);
-
   const cartData = useSelector((state) => state.cartReducer);
-  const isProductInCart = cartData.some((item) => item._id === productData._id);
+
+  const { getProductUserDashboardData, getMainProductData, isLoading } =
+    useProducts();
+
+  const [productDashboardData, setProductDashboardData] = useState(productData);
+  useStockUpdateSocket(setProductDashboardData);
 
   useEffect(() => {
-    const socket = io(import.meta.env.VITE_CROPCONNECT_API, {
-      transports: ["websocket"],
+    setProductDashboardData(productData);
+  }, [productData]);
+
+  const isProductInCart = cartData.some(
+    (item) => item._id === productDashboardData?._id
+  );
+
+  const fetchProductDashboardData = async () => {
+    let data = await getProductUserDashboardData(productData?._id || productId);
+    console.log(data);
+    setProductDashboardData((prevData) => {
+      return {
+        ...prevData,
+        ...data,
+      };
     });
+  };
 
-    socket.on("stockUpdate", (stockLeft) => {
-      dispatch(
-        addProductData({
-          ...productData,
-          quantity: stockLeft,
-        })
-      );
-    });
+  const fetchAllData = async () => {
+    if (!productData) {
+      await getMainProductData(productId);
+    }
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  const getCurrentStocks = async () => {
-    let stocks = await getAPI(
-      `product/getProductStocksById/${productData._id}`
-    );
-    dispatch(
-      addProductData({
-        ...productData,
-        quantity: stocks.quantityLeft,
-      })
-    );
+    await fetchProductDashboardData();
   };
 
   useEffect(() => {
-    getCurrentStocks();
+    fetchAllData();
   }, []);
 
   const addProductToCart = () => {
     let cartProductData = {
-      _id: productData._id,
-      sellerId: productData.sellerId,
-      image: productData.image,
-      name: productData.name,
-      category: productData.category,
-      qty: productData.minimumOrderQuantity,
-      brand: productData.brand,
-      minQty: productData.minimumOrderQuantity,
-      stocksLeft: productData.quantity,
-      pricePerUnit: productData.pricePerUnit,
-      unit: productData.measuringUnit,
-      currentPrice: productData.pricePerUnit * productData.minimumOrderQuantity,
+      _id: productDashboardData._id,
+      sellerId: productDashboardData.sellerId,
+      image: productDashboardData.image,
+      name: productDashboardData.name,
+      category: productDashboardData.category,
+      qty: productDashboardData.minimumOrderQuantity,
+      brand: productDashboardData.brand,
+      minQty: productDashboardData.minimumOrderQuantity,
+      stocksLeft: productDashboardData.quantity,
+      pricePerUnit: productDashboardData.pricePerUnit,
+      unit: productDashboardData.measuringUnit,
+      currentPrice:
+        productDashboardData.pricePerUnit *
+        productDashboardData.minimumOrderQuantity,
     };
     dispatch(addToCart(cartProductData));
-    // setIsProductInCart(true);
   };
 
   const removeProductFromCart = () => {
-    dispatch(removeFromCart(productData._id));
-    // setIsProductInCart(false);
+    dispatch(removeFromCart(productDashboardData?._id));
   };
 
   return (
     <>
       <div className="lg:w-11/12 mx-auto flex flex-wrap">
-        <img
-          className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-          // src={`https://source.unsplash.com/random/400x400?rice`}
-          src={productData.image}
-        />
+        {isLoading ? (
+          <BoxSkeleton height={"lg:h-auto h-64 "} width={"lg:w-1/2 w-full"} />
+        ) : (
+          <img
+            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+            src={productDashboardData?.image}
+          />
+        )}
+
         <div className="lg:w-1/2 w-full px-4 lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className="text-xs md:text-sm title-font text-gray-500 tracking-widest">
-            {productData.brand}
+            {productDashboardData?.brand}
           </h2>
           <Heading
-            text={productData.name}
+            text={productDashboardData?.name}
             marginY="mb-2"
             textAlign="left"
             paddingX="p-0"
           />
           <p className="leading-relaxed text-sm md:text-base">
-            {productData.description}
+            {isLoading ? (
+              <TextSkeleton noOfRows={12} />
+            ) : (
+              productDashboardData?.description
+            )}
           </p>
 
           <div className="relative overflow-x-auto my-6">
@@ -107,7 +118,11 @@ function ProductDetails() {
                     Stocks Left
                   </th>
                   <td className="px-2 md:px-6 py-2 md:py-4 ">
-                    {productData.quantity} {productData.measuringUnit}
+                    {isLoading ? (
+                      <TextSkeleton noOfRows={1} />
+                    ) : (
+                      `${productDashboardData?.quantity} ${productDashboardData?.measuringUnit}`
+                    )}
                   </td>
                 </tr>
                 <tr className="bg-white border-b">
@@ -115,7 +130,11 @@ function ProductDetails() {
                     Shelf Life
                   </th>
                   <td className="px-2 md:px-6 py-2 md:py-4 ">
-                    {productData.shelfLife}
+                    {isLoading ? (
+                      <TextSkeleton noOfRows={1} />
+                    ) : (
+                      productDashboardData?.shelfLife
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -123,19 +142,34 @@ function ProductDetails() {
           </div>
 
           <div className="flex justify-between flex-col md:flex-row">
-            <div>
-              <div className="text-green-600 font-medium text-sm md:text-base">
-                Minimum Order Quantity: {productData.minimumOrderQuantity}{" "}
-                {productData.measuringUnit}
-              </div>
-              <div className="flex justify-between">
-                <h2 className="text-2xl md:text-4xl text-left mb-1 font-medium">
-                  Rs. {productData.pricePerUnit}/{productData.measuringUnit}
-                </h2>
-              </div>
+            <div className="space-y-1">
+              {isLoading ? (
+                <TextSkeleton noOfRows={1} />
+              ) : (
+                <div className="text-green-600 font-medium text-sm md:text-base">
+                  Minimum Order Quantity:{" "}
+                  {productDashboardData?.minimumOrderQuantity}{" "}
+                  {productDashboardData?.measuringUnit}
+                </div>
+              )}
+              {isLoading ? (
+                <TextSkeleton
+                  noOfRows={1}
+                  fontSizeHeight="h-[24px]"
+                  fontSizeHeightMd="h-[36px]"
+                />
+              ) : (
+                <div className="flex justify-between">
+                  <h2 className="text-2xl md:text-4xl text-left mb-1 font-medium">
+                    Rs. {productDashboardData?.pricePerUnit}/
+                    {productDashboardData?.measuringUnit}
+                  </h2>
+                </div>
+              )}
             </div>
 
-            {productData.minimumOrderQuantity <= productData.quantity ? (
+            {productDashboardData?.minimumOrderQuantity <=
+            productDashboardData?.quantity ? (
               <button
                 className={`flex mb-2 md:mb-4 mt-4 md:mt-2  text-white ${
                   isProductInCart
@@ -166,10 +200,17 @@ function ProductDetails() {
             ) : (
               <button className="flex mb-4 mt-1  text-white bg-orange-600 border-0 py-4 px-12 focus:outline-none rounded">
                 {" "}
-                <span className="flex items-center text-lg h-full w-full justify-center">
-                  <PiSmileySadLight className=" text-3xl mr-2" />
-                  Out of Stock
-                </span>
+                {isLoading ? (
+                  <span className="flex items-center text-lg h-full w-full justify-center">
+                    <CiNoWaitingSign className=" text-3xl mr-2" />
+                    Please Wait
+                  </span>
+                ) : (
+                  <span className="flex items-center text-lg h-full w-full justify-center">
+                    <PiSmileySadLight className=" text-3xl mr-2" />
+                    Out of Stock
+                  </span>
+                )}
               </button>
             )}
           </div>

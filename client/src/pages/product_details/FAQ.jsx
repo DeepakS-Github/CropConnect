@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Spinner from "../../components/loading/Spinner";
-import { getAPI } from "../../utils/api/getRequest";
 import FAQSkeleton from "../../components/skeleton/FAQSkeleton";
 import EmptyStateText from "../../components/empty_state/EmptyStateText";
 import Heading from "../../components/heading/Heading";
+import useFaqs from "../../hooks/faqs/useFaqs";
 
 function FAQ() {
   const [reviewData, setReviewData] = useState([]);
   const [reachedEnd, setReachedEnd] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDataFetching, setIsDataFetching] = useState(true);
+  const [isFAQsFetchingFirstTime, setIsFAQsFetchingFirstTime] = useState(true);
+
+  const { getFaqs, isLoading } = useFaqs();
 
   const productData = useSelector((state) => state.productReducer);
 
   useEffect(() => {
     const getReview = async () => {
-      setIsLoading(true);
-      let data = await getAPI(
-        `faq/showbyproduct?productId=${productData._id}&page=${currentPage}&faq_per_page=6`
-      );
-      // console.log(data);
+      let data = await getFaqs(productData?._id, currentPage);
       if (data.length === 0) {
         setReachedEnd(true);
       }
       setReviewData([...reviewData, ...data]);
-      setIsLoading(false);
-      setIsDataFetching(false);
+      setIsFAQsFetchingFirstTime(false);
     };
 
     getReview();
@@ -35,7 +31,7 @@ function FAQ() {
 
   return (
     <>
-      <div className="w-11/12 mx-auto flex flex-wrap">
+      <div className="w-11/12 mx-auto flex flex-wrap pb-12">
         <div className="container mx-auto">
           <section className=" text-gray-900">
             <Heading
@@ -44,7 +40,7 @@ function FAQ() {
               textAlign="text-center"
             />
 
-            {isDataFetching ? (
+            {isFAQsFetchingFirstTime ? (
               <FAQSkeleton />
             ) : reviewData.length === 0 ? (
               <EmptyStateText text="No FAQs yet! Have a question about this product? Be the first to ask! Your inquiry could help others too. Start the conversation now!" />
@@ -71,10 +67,7 @@ function FAQ() {
                   }}
                 >
                   {isLoading && (
-                    <span className="mr-1">
-                      {" "}
-                      <Spinner width="w-5" color="#ffffff" />{" "}
-                    </span>
+                      <Spinner width="w-5" color="#ffffff" />
                   )}
                   Load More
                 </button>

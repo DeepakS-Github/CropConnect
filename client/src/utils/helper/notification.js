@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export const notify = (message, type) => {
   toast[type](message, {
-    position: "top-right",
+    position: "bottom-right",
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,

@@ -1,24 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import Cart from "../../pages/cart/Cart";
-import { useDispatch, useSelector } from "react-redux";
-import { addSellerData, addUserData } from "../../redux/actions";
 import { FaUserCircle } from "react-icons/fa";
 import { SiSellfy } from "react-icons/si";
 import { notify } from "../../utils/helper/notification";
+import Cart from "../../pages/cart";
+import { useCookies } from "react-cookie";
 
 function Navbar() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies([
+    "user_access_token",
+    "seller_access_token",
+    "brandName"
+  ]);
 
   const userDropdownRef = useRef();
   const sellerDropdownRef = useRef();
 
   const [openCart, setOpenCart] = useState(false);
-
-  const userData = useSelector((state) => state.userReducer);
-  const sellerData = useSelector((state) => state.sellerReducer);
 
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showSellerDropdown, setShowSellerDropdown] = useState(false);
@@ -64,14 +64,14 @@ function Navbar() {
               setShowSellerDropdown(false);
             }}
             onClick={() => {
-              if (!userData) {
+              if (!cookies.user_access_token) {
                 navigate("/account/user");
               }
             }}
           >
             <FaUserCircle />
             <span className="text-sm font-medium hidden md:block">User</span>
-            {userData && (
+            {cookies.user_access_token && (
               <div
                 className={`absolute ${
                   showUserDropdown ? "block" : "hidden"
@@ -80,7 +80,7 @@ function Navbar() {
                 <ul className="py-1 md:py-2 flex flex-col text-sm gap-2 text-gray-700 ">
                   <li
                     onClick={() => {
-                      dispatch(addUserData(null));
+                      setCookie("user_access_token", "", {expires: new Date(0) });
                       notify("User Logged Out", "info");
                       navigate("/");
                     }}
@@ -101,14 +101,14 @@ function Navbar() {
               setShowUserDropdown(false);
             }}
             onClick={() => {
-              if (!sellerData) {
+              if (!cookies.seller_access_token) {
                 navigate("/account/seller");
               }
             }}
           >
             <SiSellfy />
             <span className="text-sm font-medium hidden md:block">Seller</span>
-            {sellerData && (
+            {cookies.seller_access_token && (
               <div
                 className={`absolute ${
                   showSellerDropdown ? "block" : "hidden"
@@ -126,7 +126,9 @@ function Navbar() {
                   </li>
                   <li
                     onClick={() => {
-                      dispatch(addSellerData(null));
+                      setCookie("seller_access_token", "", {expires: new Date(0) });
+                      setCookie("brandName", "", {expires: new Date(0) });
+
                       navigate("/");
                       notify("Seller Logged Out", "info");
                     }}
