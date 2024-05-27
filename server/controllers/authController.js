@@ -102,18 +102,25 @@ const login = async (req, res) => {
         }
       }
 
-      setCookie(
-        res,
-        `${type}_access_token`,
-        generateAccessToken(type, data._id.toString())
-      );
+      // setCookie(
+      //   res,
+      //   `${type}_access_token`,
+      //   generateAccessToken(type, data._id.toString())
+      // );
 
-      if (type === "seller") {
-        setCookie(res, "brandName", data.brandName);
-      }
+      // if (type === "seller") {
+      //   setCookie(res, "brandName", data.brandName);
+      // }
 
       return res.status(200).send({
         message: `${capitalizeFirstLetter(type)} login successful`,
+        cookies: {
+          [`${type}_access_token`]: generateAccessToken(
+            type,
+            data._id.toString()
+          ),
+          ...(type === "seller" && { brandName: data.brandName }),
+        },
       });
     }
   } catch (error) {
@@ -151,17 +158,26 @@ const verifyToken = async (req, res) => {
 
     await Model.findByIdAndUpdate(data._id, { isVerified: true });
 
-    setCookie(
-      res,
-      `${type}_access_token`,
-      generateAccessToken(type, data._id.toString())
-    );
+    // setCookie(
+    //   res,
+    //   `${type}_access_token`,
+    //   generateAccessToken(type, data._id.toString())
+    // );
 
-    if (type === "seller") {
-      setCookie(res, "brandName", data.brandName);
-    }
+    // if (type === "seller") {
+    //   setCookie(res, "brandName", data.brandName);
+    // }
 
-    return res.status(200).send({ message: "Account verified successfully" });
+    return res.status(200).send({
+      message: "Account verified successfully",
+      cookies: {
+        [`${type}_access_token`]: generateAccessToken(
+          type,
+          data._id.toString()
+        ),
+        ...(type === "seller" && { brandName: data.brandName }),
+      },
+    });
   } catch (error) {
     res.status(500).send({ message: "Something went wrong!" });
     console.log(error);

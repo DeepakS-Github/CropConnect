@@ -8,7 +8,10 @@ axios.defaults.baseURL = import.meta.env.VITE_CROPCONNECT_API;
 
 const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [cookies] = useCookies(["user_access_token", "seller_access_token"]);
+  const [cookies, setCookie] = useCookies([
+    "user_access_token",
+    "seller_access_token",
+  ]);
 
   const sendRequest = async (
     url,
@@ -27,6 +30,13 @@ const useHttpClient = () => {
         headers,
         withCredentials,
       });
+
+      if (response.data.cookies) {
+        Object.keys(response.data.cookies).forEach((cookie) => {
+          setCookie(cookie, response.data.cookies[cookie]);
+        });
+      }
+
       console.log("URL RESPONSE", url, " ", response);
       if (showToast) notify(response.data.message, "success");
       return response;
