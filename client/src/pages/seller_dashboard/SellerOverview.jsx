@@ -1,9 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getAPI } from "../../utils/api/getRequest";
 import Heading from "../../components/heading/Heading";
-import { useSelector } from "react-redux";
 import AreaGraph from "../../components/graphs/AreaGraph";
 import BarGraph from "../../components/graphs/BarGraph";
 import GraphSkeleton from "../../components/skeleton/GraphSkeleton";

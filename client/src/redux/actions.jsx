@@ -1,18 +1,4 @@
-import { ADD_SELLER_DATA, EDIT_PRODUCT, ADD_PRODUCT_DATA, ADD_TO_CART, REMOVE_FROM_CART, INC_QTY_IN_CART, DEC_QTY_IN_CART, ADD_USER_DATA } from "./constants"
-
-export const addSellerData = (data) => {
-    return {
-        type: ADD_SELLER_DATA,
-        payload: data
-    }
-}
-
-export const addUserData = (data) => {
-    return {
-        type: ADD_USER_DATA,
-        payload: data
-    }
-}
+import { EDIT_PRODUCT, ADD_PRODUCT_DATA, ADD_TO_CART, REMOVE_FROM_CART, INC_QTY_IN_CART, DEC_QTY_IN_CART } from "./constants"
 
 export const addProductData = (data) => {
     return {

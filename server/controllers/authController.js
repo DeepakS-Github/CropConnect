@@ -19,6 +19,7 @@ const signup = async (req, res) => {
     data.password = await bcrypt.hash(data.password, salt);
 
     let result = await data.save();
+
     const isMailSentSuccessful = await saveAndSendVerficationToken(
       result._id.toString(),
       type,
@@ -83,7 +84,8 @@ const login = async (req, res) => {
       if (!data.isVerified) {
         const isMailSentSuccessful = await saveAndSendVerficationToken(
           data._id.toString(),
-          type
+          type,
+          req.get("Origin")
         );
         if (!isMailSentSuccessful) {
           return res.status(200).send({

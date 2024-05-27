@@ -9,24 +9,33 @@ import useProducts from "../../hooks/products/useProducts";
 import useStockUpdateSocket from "../../hooks/socket/useStockUpdateSocket";
 import TextSkeleton from "../../components/skeleton/TextSkeleton";
 import { CiNoWaitingSign } from "react-icons/ci";
+import { useParams } from "react-router-dom";
+import BoxSkeleton from "../../components/skeleton/BoxSkeleton";
 
 function ProductDetails() {
   const dispatch = useDispatch();
+  const { productId } = useParams();
 
   const productData = useSelector((state) => state.productReducer);
   const cartData = useSelector((state) => state.cartReducer);
 
-  const { getProductUserDashboardData, isLoading } = useProducts();
+  const { getProductUserDashboardData, getMainProductData, isLoading } =
+    useProducts();
 
   const [productDashboardData, setProductDashboardData] = useState(productData);
   useStockUpdateSocket(setProductDashboardData);
 
+  useEffect(() => {
+    setProductDashboardData(productData);
+  }, [productData]);
+
   const isProductInCart = cartData.some(
-    (item) => item._id === productDashboardData._id
+    (item) => item._id === productDashboardData?._id
   );
 
   const fetchProductDashboardData = async () => {
-    let data = await getProductUserDashboardData(productData._id);
+    let data = await getProductUserDashboardData(productData?._id || productId);
+    console.log(data);
     setProductDashboardData((prevData) => {
       return {
         ...prevData,
@@ -35,8 +44,16 @@ function ProductDetails() {
     });
   };
 
+  const fetchAllData = async () => {
+    if (!productData) {
+      await getMainProductData(productId);
+    }
+
+    await fetchProductDashboardData();
+  };
+
   useEffect(() => {
-    fetchProductDashboardData();
+    fetchAllData();
   }, []);
 
   const addProductToCart = () => {
@@ -60,23 +77,27 @@ function ProductDetails() {
   };
 
   const removeProductFromCart = () => {
-    dispatch(removeFromCart(productDashboardData._id));
+    dispatch(removeFromCart(productDashboardData?._id));
   };
 
   return (
     <>
       <div className="lg:w-11/12 mx-auto flex flex-wrap">
-        <img
-          className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-          // src={`https://source.unsplash.com/random/400x400?rice`}
-          src={productDashboardData.image}
-        />
+        {isLoading ? (
+          <BoxSkeleton height={"lg:h-auto h-64 "} width={"lg:w-1/2 w-full"} />
+        ) : (
+          <img
+            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+            src={productDashboardData?.image}
+          />
+        )}
+
         <div className="lg:w-1/2 w-full px-4 lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className="text-xs md:text-sm title-font text-gray-500 tracking-widest">
-            {productDashboardData.brand}
+            {productDashboardData?.brand}
           </h2>
           <Heading
-            text={productDashboardData.name}
+            text={productDashboardData?.name}
             marginY="mb-2"
             textAlign="left"
             paddingX="p-0"
@@ -85,7 +106,7 @@ function ProductDetails() {
             {isLoading ? (
               <TextSkeleton noOfRows={12} />
             ) : (
-              productDashboardData.description
+              productDashboardData?.description
             )}
           </p>
 
@@ -100,7 +121,7 @@ function ProductDetails() {
                     {isLoading ? (
                       <TextSkeleton noOfRows={1} />
                     ) : (
-                      `${productDashboardData.quantity} ${productDashboardData.measuringUnit}`
+                      `${productDashboardData?.quantity} ${productDashboardData?.measuringUnit}`
                     )}
                   </td>
                 </tr>
@@ -112,7 +133,7 @@ function ProductDetails() {
                     {isLoading ? (
                       <TextSkeleton noOfRows={1} />
                     ) : (
-                      productDashboardData.shelfLife
+                      productDashboardData?.shelfLife
                     )}
                   </td>
                 </tr>
@@ -121,22 +142,34 @@ function ProductDetails() {
           </div>
 
           <div className="flex justify-between flex-col md:flex-row">
-            <div>
-              <div className="text-green-600 font-medium text-sm md:text-base">
-                Minimum Order Quantity:{" "}
-                {productDashboardData.minimumOrderQuantity}{" "}
-                {productDashboardData.measuringUnit}
-              </div>
-              <div className="flex justify-between">
-                <h2 className="text-2xl md:text-4xl text-left mb-1 font-medium">
-                  Rs. {productDashboardData.pricePerUnit}/
-                  {productDashboardData.measuringUnit}
-                </h2>
-              </div>
+            <div className="space-y-1">
+              {isLoading ? (
+                <TextSkeleton noOfRows={1} />
+              ) : (
+                <div className="text-green-600 font-medium text-sm md:text-base">
+                  Minimum Order Quantity:{" "}
+                  {productDashboardData?.minimumOrderQuantity}{" "}
+                  {productDashboardData?.measuringUnit}
+                </div>
+              )}
+              {isLoading ? (
+                <TextSkeleton
+                  noOfRows={1}
+                  fontSizeHeight="h-[24px]"
+                  fontSizeHeightMd="h-[36px]"
+                />
+              ) : (
+                <div className="flex justify-between">
+                  <h2 className="text-2xl md:text-4xl text-left mb-1 font-medium">
+                    Rs. {productDashboardData?.pricePerUnit}/
+                    {productDashboardData?.measuringUnit}
+                  </h2>
+                </div>
+              )}
             </div>
 
-            {productDashboardData.minimumOrderQuantity <=
-            productDashboardData.quantity ? (
+            {productDashboardData?.minimumOrderQuantity <=
+            productDashboardData?.quantity ? (
               <button
                 className={`flex mb-2 md:mb-4 mt-4 md:mt-2  text-white ${
                   isProductInCart
