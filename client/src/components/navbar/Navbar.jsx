@@ -80,6 +80,7 @@ function Navbar() {
                 <ul className="py-1 md:py-2 flex flex-col text-sm gap-2 text-gray-700 ">
                   <li
                     onClick={() => {
+                      console.log("User log out clicked");
                       setCookie("user_access_token", "", {expires: new Date(0) });
                       notify("User Logged Out", "info");
                       navigate("/");
@@ -126,6 +127,7 @@ function Navbar() {
                   </li>
                   <li
                     onClick={() => {
+                      console.log("Seller log out clicked");
                       setCookie("seller_access_token", "", {expires: new Date(0) });
                       setCookie("brandName", "", {expires: new Date(0) });
 

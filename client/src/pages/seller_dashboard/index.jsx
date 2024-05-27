@@ -70,6 +70,7 @@ const NewSellerDashboard = () => {
             text="Logout"
             icon={<TbLogout2 />}
             onClick={() => {
+              console.log("Seller log out clicked");
               setCookie("seller_access_token", "", {expires: new Date(0) });
               setCookie("brandName", "", {expires: new Date(0) });
 
