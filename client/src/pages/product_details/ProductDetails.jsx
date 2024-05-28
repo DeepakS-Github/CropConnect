@@ -22,6 +22,7 @@ function ProductDetails() {
   const { getProductUserDashboardData, getMainProductData, isLoading } =
     useProducts();
 
+  const [isMainDataLoading, setIsMainDataLoading] = useState(false);
   const [productDashboardData, setProductDashboardData] = useState(productData);
   useStockUpdateSocket(setProductDashboardData);
 
@@ -46,7 +47,9 @@ function ProductDetails() {
 
   const fetchAllData = async () => {
     if (!productData) {
+      setIsMainDataLoading(true);
       await getMainProductData(productId);
+      setIsMainDataLoading(false);
     }
 
     await fetchProductDashboardData();
@@ -83,7 +86,7 @@ function ProductDetails() {
   return (
     <>
       <div className="lg:w-11/12 mx-auto flex flex-wrap">
-        {isLoading ? (
+        {isMainDataLoading ? (
           <BoxSkeleton height={"lg:h-auto h-64 "} width={"lg:w-1/2 w-full"} />
         ) : (
           <img
@@ -92,16 +95,26 @@ function ProductDetails() {
           />
         )}
 
-        <div className="lg:w-1/2 w-full px-4 lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+
+        <div className="lg:w-1/2 w-full px-4 space-y-1 lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className="text-xs md:text-sm title-font text-gray-500 tracking-widest">
-            {productDashboardData?.brand}
+            {isMainDataLoading ? (
+              <TextSkeleton noOfRows={1} width="w-[80px]" />
+            ) : (
+              productDashboardData?.brand
+            )}
           </h2>
-          <Heading
-            text={productDashboardData?.name}
-            marginY="mb-2"
-            textAlign="left"
-            paddingX="p-0"
-          />
+          {isMainDataLoading ? (
+            <TextSkeleton noOfRows={1} width="w-[100px]" />
+          ) : (
+            <Heading
+              text={productDashboardData?.name}
+              marginY="mb-2"
+              textAlign="left"
+              paddingX="p-0"
+            />
+          )}
+
           <p className="leading-relaxed text-sm md:text-base">
             {isLoading ? (
               <TextSkeleton noOfRows={12} />
@@ -143,7 +156,7 @@ function ProductDetails() {
 
           <div className="flex justify-between flex-col md:flex-row">
             <div className="space-y-1">
-              {isLoading ? (
+              {isMainDataLoading ? (
                 <TextSkeleton noOfRows={1} />
               ) : (
                 <div className="text-green-600 font-medium text-sm md:text-base">
@@ -152,7 +165,7 @@ function ProductDetails() {
                   {productDashboardData?.measuringUnit}
                 </div>
               )}
-              {isLoading ? (
+              {isMainDataLoading ? (
                 <TextSkeleton
                   noOfRows={1}
                   fontSizeHeight="h-[24px]"
