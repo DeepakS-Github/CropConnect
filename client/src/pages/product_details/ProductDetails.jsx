@@ -92,7 +92,7 @@ function ProductDetails() {
         ) : (
           <div className="lg:w-1/2 w-full lg:h-auto h-64 rounded relative">
             <img
-              className="object-cover object-center"
+              className="object-cover object-center h-64 w-full"
               src={productDashboardData?.image}
             />
             <span className="absolute top-0 right-0 m-2">
