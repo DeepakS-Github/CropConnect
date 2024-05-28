@@ -6,11 +6,17 @@ import { SiTicktick } from "react-icons/si";
 import { RxCross2 } from "react-icons/rx";
 import { FaRegFaceSmile } from "react-icons/fa6";
 import useEmailAuth from "../../hooks/auth/useEmailAuth";
+import useProgressiveImg from "../../hooks/image/useProgressiveImg";
 
 const Verify = () => {
   const { type, token } = useParams();
   const { verifyAccount } = useEmailAuth();
   const navigate = useNavigate();
+  const [src, { blur }] = useProgressiveImg(
+    "/images/verify-bg/verify-compressed.webp",
+    "/images/verify-bg/verify.webp"
+  );
+
 
   // console.log("token", token); //token gets automatically decode when passed as a param
 
@@ -124,7 +130,16 @@ const Verify = () => {
           </div>
         </div>
       </div>{" "}
-      <div className="relative w-full z-0 h-full bg-blue-200 bg-[url('/images/verify-bg/verify.webp')] bg-cover shadow"></div>
+      <div
+        className="relative w-full z-0 h-full bg-blue-200"
+        style={{
+          filter: blur ? "blur(20px)" : "none",
+          backgroundImage: `url(${src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      ></div>
     </section>
   );
 };

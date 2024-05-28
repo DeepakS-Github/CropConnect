@@ -3,9 +3,9 @@ Left
 8. Add the Paypal/others for pay now functionality - Maybe not required
 9. Add the skeleton loader on different sections - Done
 10. Show no data available when there is no data in different sections - Done
-11. Fix the OTP functionality
+11. Fix the OTP functionality - Done (but changed to link verification)
 12. Add the socket io in stocks left, minimum order qty, price - Done (stocks left only, no need in others)
-13. Improve the login and signup functionality from both backend and frontend
+13. Improve the login and signup functionality from both backend and frontend - Done
 14. Redesign the seller dashboard (with added graphs) - Done
 15. Add the order history api and UI for consumer
 16. Incorporate Gemini AI for AI stuffs. - Done

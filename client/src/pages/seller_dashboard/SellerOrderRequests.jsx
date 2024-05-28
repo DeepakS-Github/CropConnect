@@ -95,7 +95,7 @@ function SellerOrderRequests() {
                   >
                     <td className="px-6 py-4 font-medium">{index + 1}</td>
                     <td className="px-6 py-2">
-                      <img src={item.productId.image} alt="Image" />
+                      <img src={item.productId.image} alt="Image" loading="lazy"/>
                     </td>
                     <td className="px-6 py-4">{item.productId.category}</td>
                     <td className="px-6 py-4">{item.productId.name}</td>

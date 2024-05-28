@@ -5,6 +5,7 @@ function OrderCartCard({item}) {
     <div className="mt-4 md:mt-6 flex flex-row gap-2 justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
       <div className="pb-4 md:pb-8 w-full md:w-40 h-40">
         <img
+        loading="lazy"
           className="w-full max-h-full object-cover md:block"
           src={item.image}
           alt="product"

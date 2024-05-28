@@ -130,7 +130,7 @@ function SellerProducts() {
                   >
                     <td className="px-6 py-4 font-medium">{index + 1}</td>
                     <td className="px-6 py-2">
-                      <img src={item.image} alt="Image" />
+                      <img src={item.image} alt="Image" loading="lazy"/>
                     </td>
                     <td className="px-6 py-4">{item.category}</td>
                     <td className="px-6 py-4">{item.name}</td>

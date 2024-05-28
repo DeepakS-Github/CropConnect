@@ -73,12 +73,14 @@ function ProductReviews() {
                 {/* <div className="hidden md:flex mt-6 flex-row justify-start items-start space-x-4">
                 <div className="hidden md:block">
                   <img
+                  loading="lazy"
                     src={`https://source.unsplash.com/random/120x120?rice,indrink`}
                     alt="chair-3"
                   />
                 </div>
                 <div className="hidden md:block">
                   <img
+                  loading="lazy"
                     src={`https://source.unsplash.com/random/120x120?rice,indrawer`}
                     alt="chair-4"
                   />

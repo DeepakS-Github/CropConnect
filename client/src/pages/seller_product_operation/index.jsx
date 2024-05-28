@@ -117,6 +117,7 @@ function SellerProductOperation() {
                                   ? formData.image
                                   : URL.createObjectURL(formData.image)
                               }
+                              loading="lazy"
                               className="w-full h-full bg-blue-300"
                             />
                             <MdCancel

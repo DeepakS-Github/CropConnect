@@ -10,6 +10,8 @@ import useEmailAuth from "../../hooks/auth/useEmailAuth";
 function LoginAndSignup() {
   const { type } = useParams();
 
+
+
   const [isSignInForm, setIsSignInForm] = useState(true);
   const { isLoading, handleSignup, handleLogin } = useEmailAuth();
   

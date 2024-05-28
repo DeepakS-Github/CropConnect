@@ -92,6 +92,7 @@ function ProductDetails() {
         ) : (
           <div className="lg:w-1/2 w-full lg:h-auto h-64 rounded relative">
             <img
+            loading="lazy"
               className="object-cover object-center h-64 w-full"
               src={productDashboardData?.image}
             />
