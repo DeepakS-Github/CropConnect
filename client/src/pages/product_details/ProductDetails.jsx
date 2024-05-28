@@ -11,6 +11,7 @@ import TextSkeleton from "../../components/skeleton/TextSkeleton";
 import { CiNoWaitingSign } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import BoxSkeleton from "../../components/skeleton/BoxSkeleton";
+import ShareButton from "../../components/button/ShareButton";
 
 function ProductDetails() {
   const dispatch = useDispatch();
@@ -89,12 +90,16 @@ function ProductDetails() {
         {isMainDataLoading ? (
           <BoxSkeleton height={"lg:h-auto h-64 "} width={"lg:w-1/2 w-full"} />
         ) : (
-          <img
-            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-            src={productDashboardData?.image}
-          />
+          <div className="lg:w-1/2 w-full lg:h-auto h-64 rounded relative">
+            <img
+              className="object-cover object-center"
+              src={productDashboardData?.image}
+            />
+            <span className="absolute top-0 right-0 m-2">
+              <ShareButton url={window.location.href}/>
+            </span>
+          </div>
         )}
-
 
         <div className="lg:w-1/2 w-full px-4 space-y-1 lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className="text-xs md:text-sm title-font text-gray-500 tracking-widest">
