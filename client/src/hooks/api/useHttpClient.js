@@ -42,6 +42,14 @@ const useHttpClient = () => {
       return response;
     } catch (error) {
       console.log(error);
+
+      if (error.response.status === 504) {
+        notify(
+          "Gateway timeout occurred. Please try to reload the page.",
+          "error"
+        );
+        return;
+      }
       if (showToast)
         notify(error.response.data.message, notifyType(error.response.status));
       throw error;
