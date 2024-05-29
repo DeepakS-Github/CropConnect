@@ -17,7 +17,7 @@ const useEmailAuth = () => {
 
   const handleLogin = async (type, formData) => {
     try {
-      await sendRequest(LOGIN(type), "POST", formData, null, true, true);
+      await sendRequest(LOGIN(type), "POST", formData);
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -32,7 +32,6 @@ const useEmailAuth = () => {
         null,
         null,
         false,
-        true
       );
       return resp.status;
     } catch (error) {

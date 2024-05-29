@@ -14,8 +14,11 @@ Left
 19. Add the pagination in products, etc.
 20. Show only the products to the consumer that are near to that particular consumer.
 21. Change the format to .webp before saving any image to cloudinary.
-22. Add lazy loading on images
+22. Add lazy loading on images and first load the blur compressed images. - Done
 23. Modify the products api to first not fetch the product description, stocks left and shelf life, fetch it when user navigates to particular product page - Done
 24. Improve client side code by custom hooks for api handeling - Done
 25. add share product button - Done
 26. if any operation is performed notify the user through email.
+
+
+Fix: sometimes the product does not fetch, then the page goes blank
