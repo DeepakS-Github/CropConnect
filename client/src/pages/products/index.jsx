@@ -25,7 +25,7 @@ function Product() {
     <>
       {isLoading ? (
         <ProductSkeleton />
-      ) : productData.length === 0 ? (
+      ) : (productData && productData.length === 0) ? (
         <EmptyStateText
           marginY={"mt-12"}
           text="Oops! It seems like there are no products available in this category at the moment. Check back later or explore other categories to find what you're looking for!"

@@ -12,7 +12,7 @@ function Hero() {
       <section
         className={`relative overflow-hidden  lg:flex h-[30vh] sm:h-[30vh] lg:h-screen lg:items-center `}
       >
-        <div className="z-10 absolute mx-auto max-w-screen-xl lg:px-24 py-20 sm:py-44 px-4 sm:px-6">
+        <div className="z-10 absolute mx-auto max-w-screen-xl lg:px-24 px-4 sm:px-6 top-[50%] -translate-y-[50%]">
           <div className="max-w-xl text-center sm:text-left">
             <h1 className="text-3xl font-bold md:text-5xl">
               Crop
