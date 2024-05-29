@@ -90,10 +90,10 @@ function ProductDetails() {
         {isMainDataLoading ? (
           <BoxSkeleton height={"lg:h-auto h-64 "} width={"lg:w-1/2 w-full"} />
         ) : (
-          <div className="lg:w-1/2 w-full lg:h-auto h-64 rounded relative">
+          <div className="lg:w-1/2 w-full h-64 md:h-auto  rounded relative">
             <img
             loading="lazy"
-              className="object-cover object-center h-64 w-full"
+              className="object-cover object-center h-full w-full"
               src={productDashboardData?.image}
             />
             <span className="absolute top-0 right-0 m-2">
