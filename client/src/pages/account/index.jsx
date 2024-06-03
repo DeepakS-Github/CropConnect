@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import InputTag from "../../components/input/InputTag";
 import SubmitButton from "../../components/button/SubmitButton";
 import FormSwitch from "../../components/account/FormSwitch";
@@ -10,11 +10,8 @@ import useEmailAuth from "../../hooks/auth/useEmailAuth";
 function LoginAndSignup() {
   const { type } = useParams();
 
-
-
   const [isSignInForm, setIsSignInForm] = useState(true);
   const { isLoading, handleSignup, handleLogin } = useEmailAuth();
-  
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,6 +28,18 @@ function LoginAndSignup() {
       handleSignup(type, formData);
     }
   };
+
+  useEffect(() => {
+    if (isSignInForm) {
+      setFormData((prevData) => ({
+        ...prevData,
+        email: "jaloh53056@jahsec.com",
+        password: "12345678",
+      }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, email: "", password: "" }));
+    }
+  }, [isSignInForm]);
 
   return (
     <section className="flex flex-col-reverse md:flex-row  md:h-screen">
@@ -127,6 +136,25 @@ function LoginAndSignup() {
               isSignInForm={isSignInForm}
               setIsSignInForm={setIsSignInForm}
             />
+
+            {isSignInForm ? (
+              <div className="text-xs font-medium text-rose-600">
+                *In case you don't want to create an account, you can use the
+                following credentials to login: <br />
+                Email: jaloh53056@jahsec.com <br />
+                Password: 12345678
+              </div>
+            ) : (
+              <div className="text-xs font-medium text-rose-600">
+                *It is recommended to use temporary mail for creating account.{" "}
+                <Link
+                  className="underline"
+                  to={"https://temp-mail.org/en/10minutemail"}
+                >
+                  Click here to go to 10 minutes mail
+                </Link>
+              </div>
+            )}
           </form>
         </div>
       </div>
