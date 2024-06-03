@@ -22,7 +22,10 @@ const app = express();
 //   origin:["https://localhost:5173", "https://crop-connect-lime.vercel.app", "https://crop-connect-git-dev-deepaksgithubs-projects.vercel.app"],
 //   credentials:true
 // }));
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
 
 app.use(express.json());
 
