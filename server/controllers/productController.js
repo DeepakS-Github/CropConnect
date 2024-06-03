@@ -39,7 +39,15 @@ const addProduct = async (req, res) => {
 // Get Product Data By Category
 const getProductDataByCategory = async (req, res) => {
   try {
+    let page = req.query.page;
+    let products_per_page = req.query.products_per_page;
+
+    let skip = (page - 1) * products_per_page;
+
     let data = await Product.find({ category: req.params.category })
+      .sort({ date: -1 })
+      .skip(skip)
+      .limit(products_per_page)
       .select(
         "name image brand measuringUnit pricePerUnit minimumOrderQuantity location sellerId"
       )
