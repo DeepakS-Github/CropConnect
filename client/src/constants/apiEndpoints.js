@@ -1,12 +1,14 @@
 // Products
-export const GET_PRODUCTS_BY_CATEGORY = (cat) => `/products/category/${cat}`;
+export const GET_PRODUCTS_BY_CATEGORY = (cat, page, products_per_page) =>
+  `/products/category/${cat}?page=${page}&products_per_page=${products_per_page}`;
 export const GET_PRODUCT_DASHBOARD_DATA = (productId) =>
   `/products/dashboard/${productId}`;
 export const GET_SELLER_PRODUCTS = `/products/seller`;
 export const UPDATE_PRODUCT = (productId) => `/products/${productId}`;
 export const ADD_PRODUCT = `/products`;
 export const DELETE_PRODUCT = (productId) => `/products/${productId}`;
-export const GET_MAIN_PRODUCT_DASHBOARD_DATA = (productId) => `/products/mainProductData/${productId}`;
+export const GET_MAIN_PRODUCT_DASHBOARD_DATA = (productId) =>
+  `/products/mainProductData/${productId}`;
 
 // Product Reviews
 export const GET_PRODUCT_REVIEWS = (productId, page, review_per_page) =>
