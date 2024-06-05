@@ -61,7 +61,7 @@ function Product() {
 
   return (
     <>
-      <div className="grid gap-4 md:gap-8 my-6 md:my-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-11/12 mx-auto">
+      <div className="grid gap-4 md:gap-8 my-6 md:my-12 grid-cols-2 lg:grid-cols-4 w-11/12 mx-auto">
         {productData &&
           productData.length > 0 &&
           productData.map((data, index) => (

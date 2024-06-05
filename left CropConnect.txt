@@ -11,7 +11,7 @@ Left
 16. Incorporate Gemini AI for AI stuffs. - Done
 17. Implement Redis or Node Cache whichever better and possible for api optimization.
 18. Add the product filteration in the product dashboard.
-19. Add the pagination in products, etc.
+19. Add the pagination in products, etc. - Done
 20. Show only the products to the consumer that are near to that particular consumer.
 21. Change the format to .webp before saving any image to cloudinary.
 22. Add lazy loading on images and first load the blur compressed images. - Done
