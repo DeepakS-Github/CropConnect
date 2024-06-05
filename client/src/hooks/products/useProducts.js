@@ -18,9 +18,9 @@ const useProducts = () => {
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.productReducer);
 
-  const getProductsByCategory = async (category) => {
+  const getProductsByCategory = async (category, page, products_per_page) => {
     try {
-      const products = await sendRequest(GET_PRODUCTS_BY_CATEGORY(category));
+      const products = await sendRequest(GET_PRODUCTS_BY_CATEGORY(category, page, products_per_page));
       return products.data;
     } catch (error) {
       console.log(error);

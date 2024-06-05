@@ -39,12 +39,26 @@ const addProduct = async (req, res) => {
 // Get Product Data By Category
 const getProductDataByCategory = async (req, res) => {
   try {
+    let page = req.query.page;
+    let products_per_page = req.query.products_per_page;
+
+    let skip = (page - 1) * products_per_page;
+
+    const totalProduct = await Product.countDocuments({
+      category: req.params.category,
+    });
+
+    const hasMore = totalProduct > page * products_per_page ? true : false;
+
     let data = await Product.find({ category: req.params.category })
+      .sort({ date: -1 })
+      .skip(skip)
+      .limit(products_per_page)
       .select(
         "name image brand measuringUnit pricePerUnit minimumOrderQuantity location sellerId"
       )
       .lean();
-    res.status(200).send(data);
+    res.status(200).send({ products: data, hasMore });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Something went wrong!" });
