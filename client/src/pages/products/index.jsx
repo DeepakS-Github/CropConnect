@@ -7,7 +7,7 @@ import useProducts from "../../hooks/products/useProducts";
 
 function Product() {
   const { type } = useParams();
-  const products_per_page = 8;
+  const products_per_page = 4;
 
   const [productData, setProductData] = useState([]);
   const [page, setPage] = useState(1);
@@ -33,6 +33,17 @@ function Product() {
   // window.scrollY -> current vertical scroll position
   // document.body.offsetHeight -> height of the entire content of the webpage
 
+  const fetchData = async () => {
+    if (document.body.offsetHeight <= window.innerHeight) {
+      await getProductData();
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  });
+
+
   useEffect(() => {
     const handleScroll = () => {
       if (
@@ -48,13 +59,9 @@ function Product() {
     return () => window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
   }, [window.scrollY, window.innerHeight, document.body.offsetHeight]); // Updated dependency array
 
-  useEffect(() => {
-    getProductData();
-  }, []);
-
   return (
     <>
-      <div className="grid gap-4 md:gap-8 my-6 md:my-12 grid-cols-2 lg:grid-cols-4 w-11/12 mx-auto">
+      <div className="grid gap-4 md:gap-8 my-6 md:my-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-11/12 mx-auto">
         {productData &&
           productData.length > 0 &&
           productData.map((data, index) => (
