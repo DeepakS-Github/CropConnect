@@ -48,7 +48,7 @@ function Product() {
     const handleScroll = () => {
       if (
         window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 20
+        document.body.offsetHeight - 50
       ) {
         getProductData();
       }
