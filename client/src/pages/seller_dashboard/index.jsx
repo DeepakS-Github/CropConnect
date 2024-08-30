@@ -11,7 +11,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../utils/helper/notification";
 import SellerOverview from "./SellerOverview";
-import { SiGooglebard } from "react-icons/si";
+import { RiBardFill } from "react-icons/ri";
 import CropSenseAI from "./CropSenseAI";
 import {useCookies} from "react-cookie";
 
@@ -39,7 +39,7 @@ const links = [
   },
   {
     text: "CropSense AI",
-    icon: <SiGooglebard />, 
+    icon: <RiBardFill />, 
     renderComponent: <CropSenseAI />,
   }
 ];
