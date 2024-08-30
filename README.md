@@ -6,6 +6,10 @@ CropConnect is a web platform designed for wholesale crop trading, connecting se
 
 https://crop-connect-lime.vercel.app/
 
+## Architecture
+
+![diagram-export-8-15-2024-7_52_30-PM](https://github.com/user-attachments/assets/6587f476-8c76-4232-9ea5-5988ff6f3624)
+
 ## Features
 
 1. **Dual Interfaces**: CropConnect provides separate interfaces for consumers and sellers, accessible through the navbar with options for SignUp and SignIn including email verification for the created account.
@@ -65,8 +69,8 @@ To run CropConnect locally, ensure you have NodeJS and MongoDB installed. Follow
     ```
 
 2. **Frontend Setup**:
-    - Navigate to the CropConnect Frontend folder.
-    - Create a `.env` file in the root directory of the Frontend folder.
+    - Navigate to the CropConnect `client` folder.
+    - Create a `.env` file in the root directory of the `client` folder.
     - Add the following environment variables to the client `.env` file:
         ```plaintext
         VITE_CROPCONNECT_API = "https://cropconnect-backend.vercel.app/" 
@@ -74,13 +78,13 @@ To run CropConnect locally, ensure you have NodeJS and MongoDB installed. Follow
         ```
     - To run the Frontend:
         ```bash
-        cd Frontend
+        cd client
         npm run dev
         ```
 
 3. **Backend Setup**:
-    - Navigate to the CropConnect Backend folder.
-    - Create a `.env` file in the root directory of the Backend folder.
+    - Navigate to the CropConnect `server` folder.
+    - Create a `.env` file in the root directory of the `server` folder.
     - Add the following environment variables to the server `.env` file:
         ```plaintext
         MONGO_DB_URL = {your mongodb url}
