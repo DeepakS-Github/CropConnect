@@ -1,4 +1,4 @@
-require("./config/connectDB.js");
+const connectDB = require("./config/connectDB.js");
 const express = require("express");
 const cors = require("cors");
 const http = require("http");
@@ -18,6 +18,7 @@ const auth = require("./routes/auth");
 const PORT = 8080;
 const app = express();
 
+
 // app.use(cors({
 //   origin:["https://localhost:5173", "https://crop-connect-lime.vercel.app", "https://crop-connect-git-dev-deepaksgithubs-projects.vercel.app"],
 //   credentials:true
@@ -36,7 +37,7 @@ setupWebSocket(io);
 
 // Health Check
 app.get("/", (req, res) => {
-  res.send("CropConnect Server is running");
+  res.status(200).send("CropConnect Server is running");
 });
 
 // Routes
@@ -48,6 +49,12 @@ app.use("/faqs", faq);
 app.use("/graph", graph);
 app.use("/ai", ai);
 
-server.listen(PORT, () => {
-  console.log(`Server is running on PORT: ${PORT}`);
-});
+
+// Export app for testing, but start the server only if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(PORT, () => {
+    console.log(`Server is running on PORT: ${PORT}`);
+    connectDB();
+  });
+}
+module.exports = app;

@@ -22,6 +22,7 @@ const saveAndSendVerficationToken = async (id, type, origin) => {
 
   const verificationTokenLink = `${origin}/${type}/verify/${encodedToken}`;
 
+
   const mailRes = await sendMail(
     data.email,
     `Click <a href=${verificationTokenLink}>here</a> to verify your account`,
@@ -31,13 +32,11 @@ const saveAndSendVerficationToken = async (id, type, origin) => {
   return mailRes;
 };
 
-const authModelSelector = (type, res) => {
+const authModelSelector = (type) => {
   if (type === "seller") {
     return Seller;
   } else if (type === "user") {
     return User;
-  } else {
-    return res.status(400).send({ message: "Invalid type" });
   }
 };
 

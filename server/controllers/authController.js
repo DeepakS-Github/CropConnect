@@ -11,7 +11,9 @@ const bcrypt = require("bcryptjs");
 const signup = async (req, res) => {
   let type = req.params.type.toLowerCase();
   try {
-    let Model = authModelSelector(type, res);
+    let Model = authModelSelector(type);
+
+    if (!Model) return res.status(400).send({ message: "Invalid type" });
 
     let data = Model(req.body);
 
@@ -20,11 +22,14 @@ const signup = async (req, res) => {
 
     let result = await data.save();
 
+
+
     const isMailSentSuccessful = await saveAndSendVerficationToken(
       result._id.toString(),
       type,
       req.get("Origin")
     );
+
     if (isMailSentSuccessful) {
       return res.status(200).send({
         message: `${capitalizeFirstLetter(
@@ -40,13 +45,21 @@ const signup = async (req, res) => {
     }
   } catch (error) {
     if (error.code === 11000) {
-      if (error.keyPattern.email || error.keyPattern.contact) {
+      if (error.keyPattern.email) {
         return res.status(400).send({
           message: `${capitalizeFirstLetter(
             type
-          )} with this email or phone number already exists`,
+          )} with this email already exists`,
         });
-      } else if (type === "seller" && error.keyPattern.brandName) {
+      }
+      else if (error.keyPattern.contact) {
+        return res.status(400).send({
+          message: `${capitalizeFirstLetter(
+            type
+          )} with this phone number already exists`,
+        });
+      }
+      else if (type === "seller" && error.keyPattern.brandName) {
         return res
           .status(409)
           .send({ message: "This brand name already exists" });
@@ -58,6 +71,8 @@ const signup = async (req, res) => {
   }
 };
 
+
+
 // Login
 const login = async (req, res) => {
   try {
@@ -65,7 +80,9 @@ const login = async (req, res) => {
 
     let type = req.params.type.toLowerCase();
 
-    let Model = authModelSelector(type, res);
+    let Model = authModelSelector(type);
+
+    if (!Model) return res.status(400).send({ message: "Invalid type" });
 
     let data = await Model.findOne({ email }).select(
       `password isVerified ${type === "seller" && "brandName"}`
@@ -118,7 +135,7 @@ const login = async (req, res) => {
           [`${type}_access_token`]: generateAccessToken(
             type,
             data._id.toString()
-          ),
+          ),  
           ...(type === "seller" && { brandName: data.brandName }),
         },
       });
@@ -134,7 +151,7 @@ const verifyToken = async (req, res) => {
     const verificationToken = decodeURIComponent(req.params.token).toString();
     const type = req.params.type.toLowerCase();
 
-    let Model = authModelSelector(type, res);
+    let Model = authModelSelector(type);
 
     if (!Model) return res.status(400).send({ message: "Invalid type" });
 
