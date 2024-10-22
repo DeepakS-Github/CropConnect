@@ -15,14 +15,15 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
   orderLocation: {
-    latitude: {
-      type: Number,
-      required: true,
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point'
     },
-    longitude: {
-      type: Number,
-      required: true,
-    },
+    coordinates: {
+      type: [Number],  // [longitude, latitude]
+      required: true
+    }
   },
   sellerId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +36,6 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
-orderSchema.index({ sellerId: 1 });
+orderSchema.index({ sellerId: 1, location: "2dsphere"  });
 
 module.exports = mongoose.model("orders", orderSchema);
