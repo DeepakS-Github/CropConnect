@@ -32,15 +32,20 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  deliveryRadius: {
+    type: Number,
+    required: true
+  },
   location: {
-    latitude: {
-      type: Number,
-      required: true,
+    type: {
+      type: String, 
+      enum: ['Point'],
+      default: 'Point'
     },
-    longitude: {
-      type: Number,
-      required: true,
-    },
+    coordinates: {
+      type: [Number],  // [longitude, latitude]
+      required: true
+    }
   },
   quantity: {
     type: Number,
@@ -61,6 +66,6 @@ const productSchema = new mongoose.Schema({
   },
 });
 
-productSchema.index({ category: 1, sellerId: 1 });
+productSchema.index({ category: 1, sellerId: 1, location: "2dsphere" });
 
 module.exports = mongoose.model("products", productSchema);
