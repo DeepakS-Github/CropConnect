@@ -11,6 +11,7 @@ import {
 } from "../../constants/apiEndpoints";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductData } from "../../redux/actions";
+import { getCurrentLocation } from "../../utils/helper/getCurrentLocation";
 
 const useProducts = () => {
   const { sendRequest, sendAuthorizedRequest, isLoading, setIsLoading } =
@@ -20,7 +21,8 @@ const useProducts = () => {
 
   const getProductsByCategory = async (category, page, products_per_page) => {
     try {
-      const products = await sendRequest(GET_PRODUCTS_BY_CATEGORY(category, page, products_per_page));
+      const userCoordinates = await getCurrentLocation();
+      const products = await sendRequest(GET_PRODUCTS_BY_CATEGORY(category, page, products_per_page, userCoordinates[0], userCoordinates[1]));
       return products.data;
     } catch (error) {
       console.log(error);
@@ -60,6 +62,9 @@ const useProducts = () => {
   };
 
   const updateProduct = async (productId, formData) => {
+
+    console.log(formData, "kckladlfkja;fidj;oaizf;oid;lakj;oodihfi");
+
     try {
       await sendAuthorizedRequest(
         "seller",

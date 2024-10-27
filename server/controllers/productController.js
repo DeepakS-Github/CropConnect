@@ -206,7 +206,7 @@ const updateProduct = async (req, res) => {
     }
     const updatedFields = {};
 
-    const {
+    let {
       image,
       name,
       category,
@@ -217,7 +217,14 @@ const updateProduct = async (req, res) => {
       location,
       quantity,
       shelfLife,
+      deliveryRadius
     } = req.body;
+
+    pricePerUnit = parseFloat(pricePerUnit);
+    minimumOrderQuantity = parseInt(minimumOrderQuantity);
+    quantity = parseInt(quantity);
+    deliveryRadius = parseInt(deliveryRadius);
+    location.coordinates = location.coordinates.map((coord) => parseFloat(coord));
 
     console.log(updatedFields);
 
@@ -239,13 +246,16 @@ const updateProduct = async (req, res) => {
     if (measuringUnit && measuringUnit !== product.measuringUnit) {
       updatedFields.measuringUnit = measuringUnit;
     }
+    if(deliveryRadius && deliveryRadius !== product.deliveryRadius) {
+      updatedFields.deliveryRadius = deliveryRadius;
+    }
     if (
       minimumOrderQuantity &&
       minimumOrderQuantity !== product.minimumOrderQuantity
     ) {
       updatedFields.minimumOrderQuantity = minimumOrderQuantity;
     }
-    if (location && location.coordinates && location.coordinates.length === 2 && (parseFloat(location.coordinates[0]) !== product.location.coordinates[0] || parseFloat(location.coordinates[1]) !== product.location.coordinates[1])) {
+    if (location && location.coordinates && location.coordinates.length === 2 && ((location.coordinates[0]) !== product.location.coordinates[0] || (location.coordinates[1]) !== product.location.coordinates[1])) {
       updatedFields.location = {type: "Point", coordinates: location.coordinates};
     }
     if (quantity && quantity !== product.quantity) {

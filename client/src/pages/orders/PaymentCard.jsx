@@ -17,7 +17,7 @@ const PaymentCard = ({
 
   const orderNow = async () => {
     if (customerLatitude === null || customerLongitude === null) {
-      notify("Please select and submit valid delivery location", "info");
+      notify("Please allow the location access", "info");
       return;
     }
 
@@ -27,8 +27,7 @@ const PaymentCard = ({
         productId: element._id,
         orderQty: element.qty,
         orderLocation: {
-          latitude: customerLatitude,
-          longitude: customerLongitude,
+          coordinates: [customerLongitude, customerLatitude]
         },
         sellerId: element.sellerId,
       });
