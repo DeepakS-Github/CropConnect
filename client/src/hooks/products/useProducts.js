@@ -22,6 +22,7 @@ const useProducts = () => {
   const getProductsByCategory = async (category, page, products_per_page) => {
     try {
       const userCoordinates = await getCurrentLocation();
+      if(!userCoordinates) return;
       const products = await sendRequest(GET_PRODUCTS_BY_CATEGORY(category, page, products_per_page, userCoordinates[0], userCoordinates[1]));
       return products.data;
     } catch (error) {

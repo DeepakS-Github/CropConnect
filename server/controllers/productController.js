@@ -62,6 +62,7 @@ const getProductDataByCategory = async (req, res) => {
 
 
     let deliverableProducts = [];
+    let nonDeliverableProducts = [];
 
 
     products.map((product) => {
@@ -77,9 +78,12 @@ const getProductDataByCategory = async (req, res) => {
       if (distance <= product.deliveryRadius) {
         deliverableProducts.push(product);
       }
+      else {
+        nonDeliverableProducts.push(product);
+      }
     });
 
-    res.status(200).send({ products: deliverableProducts, hasMore });
+    res.status(200).send({ deliverableProducts, nonDeliverableProducts, hasMore });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Something went wrong!" });
