@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DEC_QTY_IN_CART, INC_QTY_IN_CART, REMOVE_FROM_CART } from "../constants";
+import { ADD_TO_CART, DEC_QTY_IN_CART, INC_QTY_IN_CART, REMOVE_ALL_FROM_CART, REMOVE_FROM_CART } from "../constants";
 
 let initialState = [];
 
@@ -6,6 +6,8 @@ export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       return [...state, action.payload];
+    case  REMOVE_ALL_FROM_CART:
+      return [];
     case REMOVE_FROM_CART:
       const productToRemove = action.payload;
       const updatedCart = state.filter((item) => item._id !== productToRemove);

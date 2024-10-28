@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import LeafletMap from "../../components/map/LeafletMap";
 import { notify } from "../../utils/helper/notification";
-import { getCurrentLocation } from "../../utils/helper/getCurrentLocation";
 
 
 const CustomerLocationSelector = ({

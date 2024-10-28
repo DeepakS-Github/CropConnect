@@ -1,4 +1,4 @@
-import { EDIT_PRODUCT, ADD_PRODUCT_DATA, ADD_TO_CART, REMOVE_FROM_CART, INC_QTY_IN_CART, DEC_QTY_IN_CART } from "./constants"
+import { EDIT_PRODUCT, ADD_PRODUCT_DATA, ADD_TO_CART, REMOVE_FROM_CART, INC_QTY_IN_CART, DEC_QTY_IN_CART, SET_USER_LOCATION, REMOVE_ALL_FROM_CART } from "./constants"
 
 export const addProductData = (data) => {
     return {
@@ -14,6 +14,13 @@ export const addToCart = (product) => {
     }
 }
 
+export const setUserLocation = (location) => {
+    return {
+        type: SET_USER_LOCATION,
+        payload: location
+    }
+}
+
 
 export const removeFromCart = (productId) => {
     return {
@@ -22,6 +29,12 @@ export const removeFromCart = (productId) => {
     }
 }
 
+export const removeAllProductfromCart = () => {
+    return {
+        type: REMOVE_ALL_FROM_CART,
+        payload: null
+    }
+}
 
 export const increaseProductQty = (productId) => {
     return {

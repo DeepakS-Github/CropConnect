@@ -1,4 +1,5 @@
 import { notify } from './notification'; 
+import { setUserLocation } from '../../redux/actions';
 
 export const getCurrentLocation = async () => {
     if (!navigator.geolocation) {

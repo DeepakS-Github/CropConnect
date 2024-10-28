@@ -7,7 +7,6 @@ import Heading from "../../components/heading/Heading";
 import CustomerLocationSelector from "./CustomerLocationSelector";
 import OrderSummary from "./OrderSummary";
 import PaymentCard from "./PaymentCard";
-import { getCurrentLocation } from "../../utils/helper/getCurrentLocation";
 
 function Order() {
   const deliveryCharge = 500;
@@ -20,6 +19,8 @@ function Order() {
   const [customerLatitude, setCustomerLatitude] = useState(null);
   const [customerLongitude, setCustomerLongitude] = useState(null);
 
+  const userLocation = useSelector((state) => state.userLocationReducer);
+
   useEffect(() => {
     let amount = 0;
     cartData.map((item) => {
@@ -29,13 +30,9 @@ function Order() {
   }, [cartData]);
 
   useEffect(() => {
-    const getUserLocation = async () => {
-      const location = await getCurrentLocation();
-      setCustomerLatitude(location[1]);
-      setCustomerLongitude(location[0]);
-    };
-    getUserLocation();
-  }, []);
+    setCustomerLatitude(userLocation[1]);
+    setCustomerLongitude(userLocation[0]);
+  }, [userLocation]);
 
   return (
     <>
