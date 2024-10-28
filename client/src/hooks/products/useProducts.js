@@ -1,4 +1,3 @@
-import React from "react";
 import useHttpClient from "../api/useHttpClient";
 import {
   ADD_PRODUCT,
@@ -10,9 +9,7 @@ import {
   UPDATE_PRODUCT,
 } from "../../constants/apiEndpoints";
 import { useDispatch, useSelector } from "react-redux";
-import { addProductData, removeAllProductfromCart } from "../../redux/actions";
-import { getCurrentLocation } from "../../utils/helper/getCurrentLocation";
-import { setUserLocation } from "../../redux/actions";
+import { addProductData } from "../../redux/actions";
 
 
 const useProducts = () => {
@@ -20,22 +17,10 @@ const useProducts = () => {
     useHttpClient();
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.productReducer);
-  const userLocation = useSelector((state) => state.userLocationReducer);
 
-  const getProductsByCategory = async (category, page, products_per_page) => {
+  const getProductsByCategory = async (category, page, products_per_page, lng, lat) => {
     try {
-      let userCoordinates;
-
-      try{
-        userCoordinates = await getCurrentLocation();
-        dispatch(setUserLocation(userCoordinates));
-      }
-      catch(err){
-        dispatch(removeAllProductfromCart());
-        return {locationAccess: false};
-      }
-
-      const products = await sendRequest(GET_PRODUCTS_BY_CATEGORY(category, page, products_per_page, userLocation[0], userLocation[1]));
+      const products = await sendRequest(GET_PRODUCTS_BY_CATEGORY(category, page, products_per_page, lng, lat));
       return products.data;
     } catch (error) {
       console.log(error);
