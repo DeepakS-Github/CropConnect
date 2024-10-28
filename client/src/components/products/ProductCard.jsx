@@ -21,8 +21,8 @@ function ProductCard({ data, addOverlay = false }) {
       }}
     >
       <div className="relative h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-        {addOverlay && <div className="absolute inset-0 bg-black opacity-70 rounded-lg z-50 flex justify-center items-center">
-          <span className="text-white">
+        {addOverlay && <div className="absolute inset-0 bg-black opacity-70 rounded-lg z-20 flex justify-center items-center">
+          <span className="text-white text-center text-sm px-4 md:text-base">
             Not Within Delivery Radius
           </span>
 

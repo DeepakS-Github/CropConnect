@@ -15,6 +15,11 @@ import ScrollToTop from "./components/scroll/ScrollToTop";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/home";
 import Verify from "./pages/verify";
+import SellerOverview from "./pages/seller_dashboard/SellerOverview";
+import SellerProducts from "./pages/seller_dashboard/SellerProducts";
+import SellerOrderRequests from "./pages/seller_dashboard/SellerOrderRequests";
+import SellerFAQs from "./pages/seller_dashboard/SellerFAQs";
+import CropSenseAI from "./pages/seller_dashboard/CropSenseAI";
 
 function App() {
   return (
@@ -31,7 +36,35 @@ function App() {
               exact
               path="/sellerdashboard"
               element={<SellerDashboard />}
-            />
+            >
+              <Route
+                exact
+                index
+                path="overview"
+                element={<SellerOverview />}
+              />
+              <Route
+                exact
+                path="products"
+                element={<SellerProducts />}
+              />
+              <Route
+                exact
+                path="orders"
+                element={<SellerOrderRequests />}
+              />
+              <Route
+                exact
+                path="faqs"
+                element={<SellerFAQs />}
+              />
+              <Route
+                exact
+                path="cropsense-ai"
+                element={<CropSenseAI/>}
+              />
+            </Route>
+            
             <Route
               exact
               path="/map/:latitude/:longitude"

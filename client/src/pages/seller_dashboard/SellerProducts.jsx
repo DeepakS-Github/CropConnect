@@ -64,7 +64,7 @@ function SellerProducts() {
           <input
             type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-            placeholder="Search for products"
+            placeholder="Search for products (Coming soon)"
           />
         </div>
         <Link to="product/add" className="w-full md:w-fit text-center">

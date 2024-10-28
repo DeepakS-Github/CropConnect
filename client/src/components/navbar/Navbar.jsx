@@ -75,7 +75,7 @@ function Navbar() {
               <div
                 className={`absolute ${
                   showUserDropdown ? "block" : "hidden"
-                } top-8 right-0 z-10 font-medium bg-white rounded-lg shadow-md pl-1 md:pl-4 pr-2 md:pr-8 py-0 md:py-2`}
+                } top-8 right-0 z-50 font-medium bg-white rounded-lg shadow-md pl-1 md:pl-4 pr-2 md:pr-8 py-0 md:py-2`}
               >
                 <ul className="py-1 md:py-2 flex flex-col text-sm gap-2 text-gray-700 ">
                   <li
@@ -113,7 +113,7 @@ function Navbar() {
               <div
                 className={`absolute ${
                   showSellerDropdown ? "block" : "hidden"
-                } top-8 right-0 z-10 font-medium bg-white rounded-lg shadow-md pl-1 md:pl-4 pr-2 md:pr-8 py-0 md:py-2`}
+                } top-8 right-0 z-50 font-medium bg-white rounded-lg shadow-md pl-1 md:pl-4 pr-2 md:pr-8 py-0 md:py-2`}
               >
                 <ul className="py-2 flex flex-col text-sm gap-2 text-gray-700 ">
                   <li
