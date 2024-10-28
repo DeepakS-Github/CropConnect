@@ -21,13 +21,13 @@ function SellerProductOperation() {
 
   const [renderMap, setRenderMap] = useState(false);
 
-  const [lat, setLat] = useState(0);
-  const [long, setLong] = useState(0);
+  const [lat, setLat] = useState(22.49);
+  const [long, setLong] = useState(80.10);
 
   useEffect(() => {
-    if (operation === "edit") {
-      setLat(productEditData.location.latitude);
-      setLong(productEditData.location.longitude);
+    if (operation === "edit") { 
+      setLong(productEditData.location.coordinates[0]);
+      setLat(productEditData.location.coordinates[1]);
       setRenderMap(true);
     }
   }, [productEditData]);
@@ -43,10 +43,9 @@ function SellerProductOperation() {
     minimumOrderQuantity:
       operation === "edit" ? productEditData.minimumOrderQuantity : null,
     location: {
-      latitude: operation === "edit" ? productEditData.location.latitude : null,
-      longitude:
-        operation === "edit" ? productEditData.location.longitude : null,
+      coordinates: operation === "edit" ? productEditData.location : [0, 0],
     },
+    deliveryRadius: operation === "edit" ? productEditData.deliveryRadius : null,
     quantity: operation === "edit" ? productEditData.quantity : null,
     shelfLife: operation === "edit" ? productEditData.shelfLife : null,
   });
@@ -54,7 +53,7 @@ function SellerProductOperation() {
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
-      location: { latitude: lat, longitude: long },
+      location: { coordinates: [long, lat]},
     }));
   }, [lat, long]);
 
@@ -64,7 +63,7 @@ function SellerProductOperation() {
       return;
     }
 
-    if (!formData.location.latitude || !formData.location.longitude) {
+    if (!formData.location.coordinates[1] || !formData.location.coordinates[0]) {
       notify("Please select location", "info");
       return;
     }
@@ -176,7 +175,7 @@ function SellerProductOperation() {
                     </div>
                   </div>
 
-                  <div className="col-span-full">
+                  <div className="col-span-4">
                     <InputTag
                       label={"Product Name"}
                       type={"text"}
@@ -272,6 +271,20 @@ function SellerProductOperation() {
                       outlineColor={"outline-cyan-800"}
                     />
                   </div>
+
+                  
+                  <div className="col-span-2">
+                    <InputTag
+                      label={"Delivery Radius"}
+                      type={"number"}
+                      placeholder={"10 km"}
+                      setFormData={setFormData}
+                      toUpdate={"deliveryRadius"}
+                      value={formData.deliveryRadius}
+                      outlineColor={"outline-cyan-800"}
+                    />
+                  </div>
+
 
                   <div className="col-span-full">
                     <label

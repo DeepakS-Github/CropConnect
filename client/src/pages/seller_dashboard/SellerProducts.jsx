@@ -106,6 +106,9 @@ function SellerProducts() {
                     Location
                   </th>
                   <th scope="col" className="px-6 py-4 whitespace-nowrap">
+                    Delivery Radius
+                  </th>
+                  <th scope="col" className="px-6 py-4 whitespace-nowrap">
                     Minimum Order Quantity
                   </th>
                   <th scope="col" className="px-6 py-4 whitespace-nowrap">
@@ -142,12 +145,15 @@ function SellerProducts() {
                       className="px-6 py-4 cursor-pointer font-medium text-sky-700 hover:underline whitespace-nowrap"
                       onClick={() => {
                         navigate(
-                          `/map/${item.location.latitude}/${item.location.longitude}`
+                          `/map/${item.location.coordinates[1]}/${item.location.coordinates[0]}`
                         );
                       }}
                     >
-                      {item.location.latitude.toFixed(4)},{" "}
-                      {item.location.longitude.toFixed(4)}
+                      {item.location.coordinates[1].toFixed(4)},{" "}
+                      {item.location.coordinates[0].toFixed(4)}
+                    </td>
+                    <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
+                      {item.deliveryRadius} km
                     </td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
                       {item.minimumOrderQuantity} {item.measuringUnit}

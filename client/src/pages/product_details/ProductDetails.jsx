@@ -67,6 +67,7 @@ function ProductDetails() {
       image: productDashboardData.image,
       name: productDashboardData.name,
       category: productDashboardData.category,
+      deliveryRadius: productDashboardData.deliveryRadius,
       qty: productDashboardData.minimumOrderQuantity,
       brand: productDashboardData.brand,
       minQty: productDashboardData.minimumOrderQuantity,
@@ -155,6 +156,19 @@ function ProductDetails() {
                       productDashboardData?.shelfLife
                     )}
                   </td>
+                </tr>
+                <tr className="bg-white border-b">
+                  <th className="px-2 md:px-6 py-2 md:py-4 font-medium text-gray-900 whitespace-nowrap">
+                    Deliverable Within
+                  </th>
+                  <td className="px-2 md:px-6 py-2 md:py-4 ">
+                    {isLoading ? (
+                      <TextSkeleton noOfRows={1} />
+                    ) : (
+                      productDashboardData?.deliveryRadius
+                    )}
+                    {" "}km
+                  </td> 
                 </tr>
               </tbody>
             </table>

@@ -8,9 +8,11 @@ function SellerContact() {
   const productData = useSelector((state) => state.productReducer);
   const { addFaq, isLoading } = useFaqs();
 
+  console.log("alam", productData);
+
   const position = [
-    productData?.location?.latitude,
-    productData?.location?.longitude,
+    productData?.location?.coordinates[1],
+    productData?.location?.coordinates[0],
   ];
 
 

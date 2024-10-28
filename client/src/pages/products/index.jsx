@@ -7,7 +7,7 @@ import useProducts from "../../hooks/products/useProducts";
 
 function Product() {
   const { type } = useParams();
-  const products_per_page = 4;
+  const products_per_page = 50;
 
   const [productData, setProductData] = useState([]);
   const [page, setPage] = useState(1);

@@ -1,6 +1,7 @@
 const Product = require("../models/productSchema");
 const Review = require("../models/reviewSchema");
 const { uploadImageToCloudinary } = require("../services/cloudinaryServices");
+const { calculateDistance } = require("../services/locationServices");
 
 // Add Product
 const addProduct = async (req, res) => {
@@ -50,15 +51,35 @@ const getProductDataByCategory = async (req, res) => {
 
     const hasMore = totalProduct > page * products_per_page ? true : false;
 
-    let data = await Product.find({ category: req.params.category })
+    let products = await Product.find({ category: req.params.category })
       .sort({ date: -1 })
       .skip(skip)
       .limit(products_per_page)
       .select(
-        "name image brand measuringUnit pricePerUnit minimumOrderQuantity location sellerId"
+        "name image brand measuringUnit pricePerUnit minimumOrderQuantity location sellerId deliveryRadius"
       )
-      .lean();
-    res.status(200).send({ products: data, hasMore });
+      .lean() || [];
+
+
+    let deliverableProducts = [];
+
+
+    products.map((product) => {
+      
+      let userCoordinates = [parseFloat(req.params.lng), parseFloat(req.params.lat)];
+
+      console.log(userCoordinates, product.location.coordinates);
+
+      const distance = calculateDistance(userCoordinates, product.location.coordinates);
+
+      console.log(distance, product.deliveryRadius);
+
+      if (distance <= product.deliveryRadius) {
+        deliverableProducts.push(product);
+      }
+    });
+
+    res.status(200).send({ products: deliverableProducts, hasMore });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Something went wrong!" });
@@ -185,7 +206,7 @@ const updateProduct = async (req, res) => {
     }
     const updatedFields = {};
 
-    const {
+    let {
       image,
       name,
       category,
@@ -196,7 +217,16 @@ const updateProduct = async (req, res) => {
       location,
       quantity,
       shelfLife,
+      deliveryRadius
     } = req.body;
+
+    pricePerUnit = parseFloat(pricePerUnit);
+    minimumOrderQuantity = parseInt(minimumOrderQuantity);
+    quantity = parseInt(quantity);
+    deliveryRadius = parseInt(deliveryRadius);
+    location.coordinates = location.coordinates.map((coord) => parseFloat(coord));
+
+    console.log(updatedFields);
 
     if (image && image !== product.image) {
       updatedFields.image = image;
@@ -216,27 +246,17 @@ const updateProduct = async (req, res) => {
     if (measuringUnit && measuringUnit !== product.measuringUnit) {
       updatedFields.measuringUnit = measuringUnit;
     }
+    if(deliveryRadius && deliveryRadius !== product.deliveryRadius) {
+      updatedFields.deliveryRadius = deliveryRadius;
+    }
     if (
       minimumOrderQuantity &&
       minimumOrderQuantity !== product.minimumOrderQuantity
     ) {
       updatedFields.minimumOrderQuantity = minimumOrderQuantity;
     }
-    if (
-      location &&
-      location.latitude &&
-      location.longitude &&
-      location.latitude !== product.location.latitude
-    ) {
-      updatedFields["location.latitude"] = location.latitude;
-    }
-    if (
-      location &&
-      location.latitude &&
-      location.longitude &&
-      location.longitude !== product.location.longitude
-    ) {
-      updatedFields["location.longitude"] = location.longitude;
+    if (location && location.coordinates && location.coordinates.length === 2 && ((location.coordinates[0]) !== product.location.coordinates[0] || (location.coordinates[1]) !== product.location.coordinates[1])) {
+      updatedFields.location = {type: "Point", coordinates: location.coordinates};
     }
     if (quantity && quantity !== product.quantity) {
       updatedFields.quantity = quantity;
@@ -266,7 +286,7 @@ const getMainProductDataById = async (req, res) => {
   try {
     let product = await Product.findById(req.params.productId)
       .select(
-        "name image brand measuringUnit pricePerUnit minimumOrderQuantity location sellerId"
+        "name image brand measuringUnit pricePerUnit minimumOrderQuantity location.coordinates sellerId"
       )
       .lean();
 

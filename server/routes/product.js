@@ -14,7 +14,7 @@ router.post(
 );
 
 // Get Product Data By Category
-router.get("/category/:category", productController.getProductDataByCategory);
+router.get("/category/:category/:lng/:lat", productController.getProductDataByCategory);
 
 // Get Product Dashboard Data By Id
 router.get("/dashboard/:productId", productController.getProductDashboardData);

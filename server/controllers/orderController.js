@@ -42,7 +42,7 @@ const showOrdersBySeller = async (req, res) => {
     console.log(data);
 
     data = data.map((order) => {
-      const totalPrice = order.orderQty * order.productId.pricePerUnit;
+      const totalPrice = order.orderQty * order.productId?.pricePerUnit;
       return { ...order, totalAmount: totalPrice };
     });
 

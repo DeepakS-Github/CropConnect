@@ -66,7 +66,8 @@ function LeafletMap({
     <MapContainer
       className={`${width} ${height}`}
       center={[latitude, longitude]}
-      zoom={13}
+      zoomAnimation={true}
+      zoom={5}
       scrollWheelZoom={true}
     >
       {showSearchBox && searchBox}

@@ -116,12 +116,12 @@ function SellerOrderRequests() {
                       className=" px-6 py-4 max-w-sm cursor-pointer font-medium text-sky-700 hover:underline whitespace-nowrap"
                       onClick={() => {
                         navigate(
-                          `/map/${item.orderLocation.latitude}/${item.orderLocation.longitude}`
+                          `/map/${item.orderLocation.coordinates[1]}/${item.orderLocation.coordinates[0]}`
                         );
                       }}
                     >
-                      {item.orderLocation.latitude.toFixed(4)},{" "}
-                      {item.orderLocation.longitude.toFixed(4)}
+                      {item.orderLocation.coordinates[1].toFixed(4)},{" "}
+                      {item.orderLocation.coordinates[0].toFixed(4)}
                     </td>
                     <td className=" px-6 py-4 max-w-sm truncate hover:whitespace-normal">
                       Rs.{item.totalAmount}
