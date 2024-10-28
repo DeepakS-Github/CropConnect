@@ -9,7 +9,8 @@ function Product() {
   const { type } = useParams();
   const products_per_page = 50;
 
-  const [productData, setProductData] = useState([]);
+  const [deliverableProductData, setDeliverableProductData] = useState([]);
+  const [nonDeliverableProductData, setNonDeliverableProductData] = useState([]);
   const [page, setPage] = useState(1);
 
   const { getProductsByCategory, isLoading } = useProducts();
@@ -19,13 +20,15 @@ function Product() {
   const getProductData = async () => {
     if (!isReachingEnd) {
       let data = await getProductsByCategory(type, page, products_per_page);
-      let productDetails = data.products;
-      console.log(productDetails);
+      let deliverableProductDetails = data.deliverableProducts;
+      let nonDeliverableProductDetails = data.nonDeliverableProducts;
+      console.log(deliverableProductDetails);
       console.log(data.hasMore);
       setIsReachingEnd(!data.hasMore);
 
       setPage(page + 1);
-      setProductData([...productData, ...productDetails]);
+      setDeliverableProductData([...deliverableProductData, ...deliverableProductDetails]);
+      setNonDeliverableProductData([...nonDeliverableProductData, ...nonDeliverableProductDetails]);
     }
   };
 
@@ -62,11 +65,14 @@ function Product() {
   return (
     <>
       <div className="grid gap-4 md:gap-8 my-6 md:my-12 grid-cols-2 lg:grid-cols-4 w-11/12 mx-auto">
-        {productData &&
-          productData.length > 0 &&
-          productData.map((data, index) => (
-            <ProductCard data={data} key={index} />
+        {deliverableProductData &&
+          deliverableProductData.length > 0 &&
+          deliverableProductData.map((data, index) => (
+            <ProductCard data={data} key={index} addOverlay={false} />
           ))}
+        {nonDeliverableProductData && nonDeliverableProductData.length > 0 && nonDeliverableProductData.map((data, index) => (
+          <ProductCard data={data} key={index} addOverlay={true} />
+        ))}
         {isLoading && <ProductSkeleton noOfBoxes={products_per_page} />}
       </div>
 

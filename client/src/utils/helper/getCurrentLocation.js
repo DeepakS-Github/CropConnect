@@ -19,7 +19,7 @@ export const getCurrentLocation = async () => {
             (error) => {
                 console.error(`Error Code: ${error.code} - ${error.message}`);
                 notify("Unable to retrieve your location. Please allow location access.", "error");
-                reject(new Error(`Geolocation error: ${error.message}`));  
+                reject([new Error(`Geolocation error: ${error.message}`)]);  
             }
         );
     });

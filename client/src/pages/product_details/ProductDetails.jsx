@@ -93,12 +93,12 @@ function ProductDetails() {
         ) : (
           <div className="lg:w-1/2 w-full h-64 md:h-auto  rounded relative">
             <img
-            loading="lazy"
+              loading="lazy"
               className="object-cover object-center h-full w-full"
               src={productDashboardData?.image}
             />
             <span className="absolute top-0 right-0 m-2">
-              <ShareButton url={window.location.href}/>
+              <ShareButton url={window.location.href} />
             </span>
           </div>
         )}
@@ -165,10 +165,11 @@ function ProductDetails() {
                     {isLoading ? (
                       <TextSkeleton noOfRows={1} />
                     ) : (
-                      productDashboardData?.deliveryRadius
+                      <span>
+                        {productDashboardData?.deliveryRadius} km
+                      </span>
                     )}
-                    {" "}km
-                  </td> 
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -202,13 +203,12 @@ function ProductDetails() {
             </div>
 
             {productDashboardData?.minimumOrderQuantity <=
-            productDashboardData?.quantity ? (
+              productDashboardData?.quantity ? (
               <button
-                className={`flex mb-2 md:mb-4 mt-4 md:mt-2  text-white ${
-                  isProductInCart
+                className={`flex mb-2 md:mb-4 mt-4 md:mt-2  text-white ${isProductInCart
                     ? "bg-amber-500 hover:bg-amber-600"
                     : " bg-[#e11d48] hover:bg-[#e5345a]"
-                } border-0 py-4 px-12 focus:outline-none rounded`}
+                  } border-0 py-4 px-12 focus:outline-none rounded`}
                 onClick={(e) => {
                   e.preventDefault();
                   if (isProductInCart) {
