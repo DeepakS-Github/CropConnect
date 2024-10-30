@@ -7,6 +7,10 @@ import useProducts from "../../hooks/products/useProducts";
 import { removeAllProductfromCart, setUserLocation } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentLocation } from "../../utils/helper/getCurrentLocation";
+import NavItem from "../../components/seller_dashboard/NavItem";
+import { FaLocationCrosshairs } from "react-icons/fa6";
+import LeafletMap from "../../components/map/LeafletMap";
+import { RxCross2 } from "react-icons/rx";
 
 function Product() {
   const { type } = useParams();
@@ -16,13 +20,20 @@ function Product() {
   const [nonDeliverableProductData, setNonDeliverableProductData] = useState([]);
   const [page, setPage] = useState(1);
 
+  const userLocation = useSelector((state) => state.userLocationReducer);
+
+  const [selectedLatitute, setSelectedLatitute] = useState(userLocation[1] || 20.59);
+  const [selectedLongitude, setSelectedLongitude] = useState(userLocation[0] || 78.96);
+
+  const [showMap, setShowMap] = useState(false);
+
   const dispatch = useDispatch();
 
   const { getProductsByCategory, isLoading } = useProducts();
 
   const [isReachingEnd, setIsReachingEnd] = useState(false);
 
-  const userLocation = useSelector((state) => state.userLocationReducer);
+  
 
   useEffect(() => {
     const getLocInfo = async () => {
@@ -38,13 +49,12 @@ function Product() {
   }, []);
 
 
+
   const getProductData = async () => {
     if (!isReachingEnd) {
-      let data = await getProductsByCategory(type, page, products_per_page, userLocation[0], userLocation[1]);
+      let data = await getProductsByCategory(type, page, products_per_page, selectedLongitude, selectedLongitude);
       let deliverableProductDetails = data.deliverableProducts;
       let nonDeliverableProductDetails = data.nonDeliverableProducts;
-      console.log(deliverableProductDetails);
-      console.log(data.hasMore);
       setIsReachingEnd(!data.hasMore);
 
       setPage(page + 1);
@@ -58,14 +68,14 @@ function Product() {
   // document.body.offsetHeight -> height of the entire content of the webpage
 
   const fetchData = async () => {
-    if (document.body.offsetHeight <= window.innerHeight) {
-      await getProductData();
-    }
+    // if (document.body.offsetHeight <= window.innerHeight) {
+    await getProductData();
+    // }
   };
 
   useEffect(() => {
     fetchData();
-  }, [userLocation]);
+  }, []);
 
 
   useEffect(() => {
@@ -103,6 +113,36 @@ function Product() {
           text="Oops! It seems like you have reached at the end of the page in this category. Check back later or explore other categories to find what you're looking for!"
         />
       )}
+
+      <NavItem text={"Choose Location"} icon={<FaLocationCrosshairs />} isSelected={true} className={"fixed bottom-0 left-0 mb-2 ml-2 z-20 w-fit rounded-full"} onClick={() => {
+        setShowMap(true);
+      }} />
+
+      {showMap &&
+        <div className="mx-auto w-screen h-full fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-30 flex justify-center items-center">
+          <div className="absolute opacity-90 bg-black z-30 w-full h-full">
+
+          </div>
+          <div className="z-40 w-11/12 h-[90%] relative">
+            <div className="absolute bg-red-900 p-2 text-xl rounded-sm right-0 top-0 z-[999] m-2 cursor-pointer text-white" onClick={() => {
+              setShowMap(false);
+            }}><RxCross2 /></div>
+            <div className="absolute bg-red-900 px-3 py-1.5 text-sm font-medium rounded-sm right-0 bottom-0 z-[999] m-2 cursor-pointer text-white">
+              {selectedLatitute.toFixed(2)}, {selectedLongitude.toFixed(2)}
+            </div>
+            <div className="absolute text-red-700 px-3 py-1.5 text-xs font-medium rounded-sm left-[50%] -translate-x-[50%] bottom-0 z-[999] m-2">
+              Red Marker: Your Location
+            </div>
+            <button className="absolute bg-red-900 px-3 py-1.5 font-medium text-sm rounded-sm left-0 bottom-0 z-[999] m-2 cursor-pointer text-white" onClick={() => {
+              setShowMap(false);
+              dispatch(setUserLocation([selectedLongitude, selectedLatitute]));
+            }}>Select Location</button>
+            <LeafletMap showSearchBox={true} latitude={selectedLatitute} longitude={selectedLongitude} width="w-full" height="h-full" setLatitude={setSelectedLatitute} setLongitude={setSelectedLongitude} />
+          </div>
+        </div>
+      }
+
+
     </>
   );
 }

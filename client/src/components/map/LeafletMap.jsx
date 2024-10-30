@@ -21,6 +21,7 @@ function LeafletMap({
   longitude,
   setLatitude,
   setLongitude,
+  zoom = 5
 }) {
   // const [position, setPosition] = useState({
   //   latitude: 0,
@@ -44,8 +45,6 @@ function LeafletMap({
   }
 
   function LocationPicker() {
-    const map = useMap();
-
     useMapEvents({
       click: (event) => {
         const { lat, lng } = event.latlng;
@@ -67,7 +66,7 @@ function LeafletMap({
       className={`${width} ${height}`}
       center={[latitude, longitude]}
       zoomAnimation={true}
-      zoom={5}
+      zoom={zoom}
       scrollWheelZoom={true}
     >
       {showSearchBox && searchBox}
