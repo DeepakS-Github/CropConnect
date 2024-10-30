@@ -73,7 +73,7 @@ To run CropConnect locally, ensure you have NodeJS and MongoDB installed. Follow
     - Create a `.env` file in the root directory of the `client` folder.
     - Add the following environment variables to the client `.env` file:
         ```plaintext
-        VITE_CROPCONNECT_API = "https://cropconnect-backend.vercel.app/" 
+        VITE_CROPCONNECT_API = "http://cropconnect-backend.vercel.app/" 
         # Replace if you want to run the Backend local server to http://localhost:8080/
         ```
     - To run the Frontend:
