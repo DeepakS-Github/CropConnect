@@ -52,7 +52,7 @@ function Product() {
 
   const getProductData = async () => {
     if (!isReachingEnd) {
-      let data = await getProductsByCategory(type, page, products_per_page, selectedLongitude, selectedLongitude);
+      let data = await getProductsByCategory(type, page, products_per_page, selectedLongitude, selectedLatitute);
       let deliverableProductDetails = data.deliverableProducts;
       let nonDeliverableProductDetails = data.nonDeliverableProducts;
       setIsReachingEnd(!data.hasMore);
@@ -75,23 +75,31 @@ function Product() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page, isReachingEnd]);
 
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 50
-      ) {
-        getProductData();
-      }
-    };
+    setDeliverableProductData([]);
+    setNonDeliverableProductData([]);
+    setPage(1);
+    setIsReachingEnd(false);
+  }, [userLocation]);
 
-    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
-  }, [window.scrollY, window.innerHeight, document.body.offsetHeight]); // Updated dependency array
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (
+  //       window.innerHeight + window.scrollY >=
+  //       document.body.offsetHeight - 50
+  //     ) {
+  //       getProductData();
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   return () => window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
+  // }, [window.scrollY, window.innerHeight, document.body.offsetHeight]); // Updated dependency array
 
   return (
     <>
