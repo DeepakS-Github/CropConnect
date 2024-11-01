@@ -84,6 +84,7 @@ const NewSellerDashboard = () => {
               navigate("/");
               notify("Seller Logged Out", "info");
             }}
+            className={"w-full"}
           />
         </div>
       </div>

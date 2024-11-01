@@ -122,7 +122,7 @@ function Product() {
         />
       )}
 
-      <NavItem text={"Choose Location"} icon={<FaLocationCrosshairs />} isSelected={true} className={"fixed bottom-0 left-0 mb-2 ml-2 z-20 w-fit rounded-full"} onClick={() => {
+      <NavItem text={"Choose Location"} icon={<FaLocationCrosshairs />} isSelected={true} className={"fixed bottom-0 left-0 mb-2 ml-2 z-20 rounded-full"} onClick={() => {
         setShowMap(true);
       }} />
 
