@@ -18,7 +18,7 @@ function Product() {
 
   const [deliverableProductData, setDeliverableProductData] = useState([]);
   const [nonDeliverableProductData, setNonDeliverableProductData] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   const userLocation = useSelector((state) => state.userLocationReducer);
 
@@ -51,7 +51,7 @@ function Product() {
 
 
   const getProductData = async () => {
-    if (!isReachingEnd) {
+    if (!isReachingEnd && selectedLatitute && selectedLongitude) {
       let data = await getProductsByCategory(type, page, products_per_page, selectedLongitude, selectedLatitute);
       let deliverableProductDetails = data.deliverableProducts;
       let nonDeliverableProductDetails = data.nonDeliverableProducts;
@@ -74,7 +74,9 @@ function Product() {
   };
 
   useEffect(() => {
-    fetchData();
+    if(page >= 1) {
+      fetchData();
+    }
   }, [page, isReachingEnd]);
 
 

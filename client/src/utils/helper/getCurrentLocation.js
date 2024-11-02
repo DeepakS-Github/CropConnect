@@ -20,6 +20,7 @@ export const getCurrentLocation = async () => {
             (error) => {
                 console.error(`Error Code: ${error.code} - ${error.message}`);
                 notify("Unable to retrieve your location. Please allow location access.", "error");
+                notify("Setting (20.59,78.96) as default location.", "info");
                 reject([new Error(`Geolocation error: ${error.message}`)]);  
             }
         );
