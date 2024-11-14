@@ -174,7 +174,7 @@ function SellerProducts() {
                           onClick={(e) => {
                             e.preventDefault();
                             dispatch(editProductDetails(item));
-                            navigate(`product/edit`);
+                            navigate(`edit`);
                           }}
                         >
                           <i className="fa-regular fa-pen-to-square mr-2"></i>

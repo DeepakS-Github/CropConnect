@@ -72,7 +72,7 @@ function App() {
           />
           <Route
             exact
-            path="/sellerdashboard/product/:operation"
+            path="/sellerdashboard/products/:operation"
             element={<SellerProductOperation />}
           />
           <Route exact path="/category/:type" element={<Product />} />
