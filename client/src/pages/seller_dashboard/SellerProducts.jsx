@@ -67,7 +67,7 @@ function SellerProducts() {
             placeholder="Search for products (Coming soon)"
           />
         </div>
-        <Link to="product/add" className="w-full md:w-fit text-center">
+        <Link to="add" className="w-full md:w-fit text-center">
           <div className="text-md py-2 px-4 text-white rounded cursor-pointer bg-sky-700">
             <i className="fa-regular fa-plus mr-2"></i>Add Product
           </div>
