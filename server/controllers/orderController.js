@@ -41,9 +41,9 @@ const showOrdersBySeller = async (req, res) => {
 
     console.log(data);
 
-    data = data.map((order) => {
-      const totalPrice = order.orderQty * order.productId?.pricePerUnit;
-      return { ...order, totalAmount: totalPrice };
+    data = data.filter(order => order.productId).filter(order => order.orderLocation.coordinates[0] && order.orderLocation.coordinates[1]).map((order) => {
+        const totalPrice = order.orderQty * order.productId?.pricePerUnit;
+        return { ...order, totalAmount: totalPrice };
     });
 
     res.status(200).send(data);
